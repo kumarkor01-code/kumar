@@ -436,5 +436,46 @@
                     break;
                 }
             }
+            
             if(!won) {
-   
+                if(!board.includes("")) {
+                    statusEl.innerText = "🤝 It's a Draw!";
+                    statusEl.style.color = "#9ca3af";
+                    gameActive = false;
+                } else {
+                    currentPlayer = currentPlayer === "X" ? "O" : "X";
+                    if(!isWaitingForAI) {
+                        statusEl.innerText = `Player ${currentPlayer}'s Turn`;
+                    }
+                }
+            }
+            createBoard();
+        }
+
+        function giveReward() {
+            if(currentUserTgId) {
+                currentUserCoins += 1;
+                updateDashboard();
+                
+                // Save to Firebase
+                database.ref('users/' + currentUserTgId).update({ coins: currentUserCoins });
+
+                // Send Telegram Message
+                const msg = encodeURIComponent(`🎉 Congratulations ${currentUserName}!\n\nYou won a match and earned 1 Coin! 🪙\nTotal Coins: ${currentUserCoins}`);
+                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${currentUserTgId}&text=${msg}`);
+            }
+        }
+
+        function resetLocalGame() {
+            board = ["", "", "", "", "", "", "", "", ""];
+            currentPlayer = "X"; 
+            gameActive = true;
+            isWaitingForAI = false;
+            winLine.style.display = "none"; // Hide line
+            statusEl.innerText = "Player X's Turn";
+            statusEl.style.color = "#9ca3af";
+            createBoard();
+        }
+    </script>
+</body>
+</html>
