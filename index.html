@@ -1,20 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="mr">
 <head>
-    <title>Tic Tac Toe</title>
+    <meta charset="UTF-8">
+    <title>OTP Login - OX Game</title>
     <style>
-        body { text-align: center; font-family: sans-serif; background: #34495e; color: white; }
+        body { text-align: center; font-family: sans-serif; background: #2c3e50; color: white; padding: 20px; }
+        
+        /* लॉगिन बॉक्स डिझाईन */
+        .login-box { background: #34495e; padding: 30px; border-radius: 10px; display: inline-block; margin-top: 50px; border: 2px solid #f1c40f; }
+        input { padding: 10px; font-size: 16px; margin: 10px 0; width: 80%; border-radius: 5px; border: none; text-align: center; }
+        button { padding: 10px 20px; font-size: 16px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        
+        /* गेम डिझाईन */
         .board { display: grid; grid-template-columns: repeat(3, 100px); gap: 5px; justify-content: center; margin-top: 20px; }
         .cell { width: 100px; height: 100px; background: #ecf0f1; color: #2c3e50; font-size: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 10px; }
+        .game-section { display: none; /* गेम सुरुवातीला लपवलेला असेल */ }
     </style>
 </head>
 <body>
-    <h1>OX Game (Tic Tac Toe)</h1>
-    <div class="board" id="board"></div>
-    <h2 id="status">खेळ सुरू करा!</h2>
-    <button onclick="resetGame()" style="padding: 10px; margin-top: 20px;">रीसेट करा</button>
+
+    <!-- 1. लॉगिन सेक्शन -->
+    <div class="login-box" id="loginSection">
+        <h2>🔒 गेम लॉगिन</h2>
+        <p>तुझा Telegram User ID टाक:</p>
+        <input type="text" id="telegramId" placeholder="उदा. 7335163273">
+        <br>
+        <button onclick="sendOTP()">OTP पाठवा 🚀</button>
+
+        <div id="otpSection" style="display: none; margin-top: 20px;">
+            <p style="color: #f1c40f;">बोटवर आलेला ४ अंकी OTP टाक:</p>
+            <input type="number" id="otpInput" placeholder="OTP इथे टाक">
+            <br>
+            <button onclick="verifyOTP()" style="background: #e74c3c;">लॉगिन करा ✔️</button>
+        </div>
+    </div>
+
+    <!-- 2. गेम सेक्शन (लॉगिन झाल्यावर दिसेल) -->
+    <div class="game-section" id="gameSection">
+        <h1 style="color: #f1c40f;">OX Game (Tic Tac Toe)</h1>
+        <div class="board" id="board"></div>
+        <h2 id="status">खेळ सुरू करा!</h2>
+        <button onclick="resetGame()" style="background: #e74c3c; margin-top: 20px;">पुन्हा खेळा 🔄</button>
+    </div>
 
     <script>
+        // ==========================================
+        // इथे तुझा BOT TOKEN टाक 👇
+        const BOT_TOKEN = "8861473974:AAENTh2kYJbApxH8JFTsURJkDeYoixm8mtg"; 
+        // ==========================================
+        
+        let generatedOTP = null;
+
+        // OTP पाठवणारी सिस्टिम
+        function sendOTP() {
+            const chatId = document.getElementById("telegramId").value;
+            
+            if(chatId === "") {
+                alert("कृपया आधी तुझा Telegram ID टाक!");
+                return;
+            }
+
+            // ४ अंकी रँडम OTP तयार करणे
+            generatedOTP = Math.floor(1000 + Math.random() * 9000); 
+            const message = encodeURIComponent(`🔐 तुझा OX गेमसाठी लॉगिन OTP आहे: ${generatedOTP}`);
+            
+            // टेलिग्राम API ला मेसेज पाठवायला सांगणे
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${chatId}&text=${message}`;
+
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if(data.ok) {
+                    alert("OTP यशस्वीरीत्या पाठवला! तुझा टेलिग्राम बोट चेक कर.");
+                    document.getElementById("otpSection").style.display = "block";
+                } else {
+                    alert("एरर! तू आयडी चुकीचा टाकला आहे किंवा तू बोटला आधी /start केलेलं नाही.");
+                }
+            })
+            .catch(error => {
+                alert("नेटवर्क प्रॉब्लेम, पुन्हा प्रयत्न कर.");
+            });
+        }
+
+        // OTP चेक करणारी सिस्टिम
+        function verifyOTP() {
+            const userOTP = document.getElementById("otpInput").value;
+            
+            if(userOTP == generatedOTP) {
+                alert("✅ लॉगिन यशस्वी! चला गेम खेळूया!");
+                document.getElementById("loginSection").style.display = "none"; // लॉगिन लपवणे
+                document.getElementById("gameSection").style.display = "block"; // गेम दाखवणे
+                createBoard(); // गेम चालू करणे
+            } else {
+                alert("❌ चुकीचा OTP! कृपया पुन्हा तपासा.");
+            }
+        }
+
+        // ==========================================
+        // OX गेमचा मूळ कोड (Tic Tac Toe)
+        // ==========================================
         let board = ["", "", "", "", "", "", "", "", ""];
         let currentPlayer = "X";
         const boardEl = document.getElementById("board");
@@ -35,7 +119,7 @@
             if (board[i] === "" && !checkWinner()) {
                 board[i] = currentPlayer;
                 currentPlayer = currentPlayer === "X" ? "O" : "X";
-                statusEl.innerText = checkWinner() ? `विजेता: ${checkWinner()}` : `पुढचा चाली: ${currentPlayer}`;
+                statusEl.innerText = checkWinner() ? `विजेता: ${checkWinner()} 🏆` : `पुढची चाल: ${currentPlayer}`;
                 createBoard();
             }
         }
@@ -48,8 +132,12 @@
             return board.includes("") ? null : "ड्रॉ!";
         }
 
-        function resetGame() { board = ["", "", "", "", "", "", "", "", ""]; currentPlayer = "X"; statusEl.innerText = "खेळ सुरू करा!"; createBoard(); }
-        createBoard();
+        function resetGame() { 
+            board = ["", "", "", "", "", "", "", "", ""]; 
+            currentPlayer = "X"; 
+            statusEl.innerText = "खेळ सुरू करा!"; 
+            createBoard(); 
+        }
     </script>
 </body>
 </html>
