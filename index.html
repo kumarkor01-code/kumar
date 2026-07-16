@@ -111,16 +111,22 @@
         <button class="btn btn-danger" onclick="showScreen('homeScreen')">⬅ Back</button>
     </div>
 
-    <!-- 5. GAME SCREEN -->
-    <div class="container screen" id="gameScreen">
-        <h1>OX <span>GAME</span></h1>
-        <p class="subtitle" id="gameStatus">Player's Turn</p>
-        <div class="board-wrapper">
-            <div class="board" id="board"></div>
-        </div>
-        <button class="btn btn-gold" id="playAgainBtn" style="display:none;" onclick="resetGame()">🔄 Play Again</button>
-        <button class="btn btn-dark" onclick="showScreen('homeScreen')">🏠 Dashboard</button>
-    </div>
+    <!-- 5. GAME SCREEN -->  
+<div class="container screen" id="gameScreen">  
+    <h1>OX <span>GAME</span></h1>  
+    <p class="subtitle" id="gameStatus">Player's Turn</p>  
+    
+    <div class="board-wrapper">  
+        <!-- ही ती रेषेची (Winning Line) div आहे, जी HTML मध्ये असावी -->
+        <div id="winLine" class="win-line"></div>  
+        
+        <div class="board" id="board"></div>  
+    </div>  
+    
+    <button class="btn btn-gold" id="playAgainBtn" style="display:none;" onclick="resetGame()">🔄 Play Again</button>  
+    <button class="btn btn-dark" onclick="showScreen('homeScreen')">🏠 Dashboard</button>  
+</div>
+        
 
     <!-- 6. SHOP SCREEN -->
     <div class="container screen" id="shopScreen">
@@ -386,17 +392,67 @@
         }
 
         function aiMove() {
-            let empty = board.map((v, i) => v === "" ? i : null).filter(v => v !== null);
-            if(empty.length > 0) { board[empty[Math.floor(Math.random() * empty.length)]] = "O"; checkWinOrDraw(true); } // Basic AI for brevity, Minimax makes code too large
+    let bestScore = -Infinity;
+    let move;
+    for (let i = 0; i < 9; i++) {
+        if (board[i] === "") {
+            board[i] = "O";
+            let score = minimax(board, 0, false);
+            board[i] = "";
+            if (score > bestScore) { bestScore = score; move = i; }
         }
+    }
+    board[move] = "O";
+    checkWinOrDraw();
+}
 
-        function checkWinOrDraw(isAiTurn = false) {
-            const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-            let winner = null;
-            for(let [a,b,c] of lines) {
-                if(board[a] && board[a]===board[b] && board[a]===board[c]) { winner = board[a]; break; }
+function minimax(board, depth, isMaximizing) {
+    let scores = { "O": 10, "X": -10, "tie": 0 };
+    let res = checkWinnerSilent();
+    if (res !== null) return scores[res];
+
+    if (isMaximizing) {
+        let best = -Infinity;
+        for (let i = 0; i < 9; i++) {
+            if (board[i] == "") {
+                board[i] = "O";
+                best = Math.max(best, minimax(board, depth + 1, false));
+                board[i] = "";
             }
+        }
+        return best;
+    } else {
+        let best = Infinity;
+        for (let i = 0; i < 9; i++) {
+            if (board[i] == "") {
+                board[i] = "X";
+                best = Math.min(best, minimax(board, depth + 1, true));
+                board[i] = "";
+            }
+        }
+        return best;
+    }
+}
 
+        ffunction checkWinOrDraw() {
+    let won = false;
+    for(let i = 0; i < 8; i++) {
+        // हा तो कोड आहे जो तू वर टाकला होतास 
+        let [a, b, c, lineClass] = winningConditions[i]; 
+        
+        if(board[a] && board[a] === board[b] && board[a] === board[c]) {
+            document.getElementById("gameStatus").innerText = `🎉 Player ${board[a]} Wins!`;
+            
+            // रेषा दाखवणारा कोड इथे पाहिजे
+            let winLine = document.getElementById("winLine");
+            winLine.className = `win-line ${lineClass}`;
+            winLine.style.display = "block"; 
+            
+            gameActive = false; 
+            won = true; 
+            break;
+        }
+    }  
             if(winner) {
                 gameActive = false; document.getElementById('playAgainBtn').style.display = 'block';
                 if(!user.history) user.history = {wins:0, losses:0, draws:0};
