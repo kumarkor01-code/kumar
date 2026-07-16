@@ -1,108 +1,178 @@
 <!DOCTYPE html>
-<html lang="mr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>OTP Login - OX Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumar Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { text-align: center; font-family: sans-serif; background: #2c3e50; color: white; padding: 20px; }
+        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { 
+            margin: 0; padding: 0; background-color: #0b0f19; color: #ffffff; 
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            background-image: linear-gradient(#1a2035 1px, transparent 1px), linear-gradient(90deg, #1a2035 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
         
-        /* लॉगिन बॉक्स डिझाईन */
-        .login-box { background: #34495e; padding: 30px; border-radius: 10px; display: inline-block; margin-top: 50px; border: 2px solid #f1c40f; }
-        input { padding: 10px; font-size: 16px; margin: 10px 0; width: 80%; border-radius: 5px; border: none; text-align: center; }
-        button { padding: 10px 20px; font-size: 16px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .container { 
+            background-color: #111827; width: 90%; max-width: 400px; padding: 30px; 
+            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #1f2937;
+            text-align: center;
+        }
+
+        h1 { color: #ffffff; font-size: 28px; margin-bottom: 5px; letter-spacing: 2px; }
+        h1 span { color: #fbbf24; } /* Gold Color */
+        p.subtitle { color: #9ca3af; font-size: 12px; margin-bottom: 30px; }
+
+        label { display: block; text-align: left; color: #9ca3af; font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+        input { 
+            width: 100%; padding: 15px; background-color: #1f2937; border: 1px solid #374151; 
+            border-radius: 10px; color: white; font-size: 14px; margin-bottom: 20px; outline: none;
+        }
+        input:focus { border-color: #fbbf24; }
+
+        .btn { 
+            width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 16px; font-weight: 700;
+            cursor: pointer; transition: 0.3s; margin-bottom: 15px;
+        }
+        .btn-gold { background: linear-gradient(to right, #f59e0b, #fbbf24); color: #000; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
+        .btn-gold:hover { transform: translateY(-2px); }
         
-        /* गेम डिझाईन */
-        .board { display: grid; grid-template-columns: repeat(3, 100px); gap: 5px; justify-content: center; margin-top: 20px; }
-        .cell { width: 100px; height: 100px; background: #ecf0f1; color: #2c3e50; font-size: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 10px; }
-        .game-section { display: none; /* गेम सुरुवातीला लपवलेला असेल */ }
+        .btn-dark { background-color: #1f2937; border: 1px solid #374151; color: #fbbf24; }
+        .btn-dark:hover { background-color: #374151; }
+
+        .support-text { margin-top: 20px; font-size: 12px; color: #6b7280; }
+        .support-text a { color: #fbbf24; text-decoration: none; }
+
+        /* Game Board Styles */
+        .board { display: grid; grid-template-columns: repeat(3, 80px); gap: 10px; justify-content: center; margin-top: 20px; margin-bottom: 20px; }
+        .cell { 
+            width: 80px; height: 80px; background: #1f2937; color: #fbbf24; 
+            font-size: 40px; font-weight: bold; display: flex; align-items: center; justify-content: center; 
+            border-radius: 15px; cursor: pointer; border: 1px solid #374151;
+        }
+        .cell:active { transform: scale(0.95); }
+
+        /* Screen Management */
+        .screen { display: none; }
+        .active-screen { display: block; }
     </style>
 </head>
 <body>
 
-    <!-- 1. लॉगिन सेक्शन -->
-    <div class="login-box" id="loginSection">
-        <h2>🔒 गेम लॉगिन</h2>
-        <p>तुझा Telegram User ID टाक:</p>
-        <input type="text" id="telegramId" placeholder="उदा. 7335163273">
-        <br>
-        <button onclick="sendOTP()">OTP पाठवा 🚀</button>
+    <div class="container screen active-screen" id="loginScreen">
+        <h1>KUMAR <span>GAME</span></h1>
+        <p class="subtitle">PREMIUM SECURE GAMING</p>
 
-        <div id="otpSection" style="display: none; margin-top: 20px;">
-            <p style="color: #f1c40f;">बोटवर आलेला ४ अंकी OTP टाक:</p>
-            <input type="number" id="otpInput" placeholder="OTP इथे टाक">
-            <br>
-            <button onclick="verifyOTP()" style="background: #e74c3c;">लॉगिन करा ✔️</button>
+        <label>TELEGRAM CHAT ID</label>
+        <input type="number" id="telegramId" placeholder="e.g. 123456789">
+
+        <button class="btn btn-dark" onclick="window.open('https://t.me/Kumarotpbot', '_blank')">
+            <span style="font-size: 18px;">✈️</span> Start bot first to get OTP
+        </button>
+
+        <button class="btn btn-gold" id="sendOtpBtn" onclick="sendOTP()">SEND OTP TO TELEGRAM</button>
+
+        <div id="otpBox" style="display: none; margin-top: 15px;">
+            <label>ENTER 4-DIGIT OTP</label>
+            <input type="number" id="otpInput" placeholder="Enter OTP">
+            <button class="btn btn-gold" onclick="verifyOTP()">SECURE LOGIN</button>
         </div>
     </div>
 
-    <!-- 2. गेम सेक्शन (लॉगिन झाल्यावर दिसेल) -->
-    <div class="game-section" id="gameSection">
-        <h1 style="color: #f1c40f;">OX Game (Tic Tac Toe)</h1>
+    <div class="container screen" id="homeScreen">
+        <h1>KUMAR <span>GAME</span></h1>
+        <p class="subtitle">WELCOME TO THE DASHBOARD</p>
+        <br><br>
+        <button class="btn btn-gold" onclick="showScreen('modeScreen')">🎮 Play OX Game</button>
+        
+        <div class="support-text">Support:- <a href="https://t.me/kumarkor" target="_blank">@kumarkor</a></div>
+    </div>
+
+    <div class="container screen" id="modeScreen">
+        <h1>SELECT <span>MODE</span></h1>
+        <p class="subtitle">CHOOSE YOUR OPPONENT</p>
+        <br>
+        <button class="btn btn-gold" onclick="startGame('user')">👤 User vs User</button>
+        <button class="btn btn-dark" onclick="startGame('ai')">🤖 User vs AI</button>
+        
+        <button class="btn btn-dark" style="margin-top: 30px; border: none;" onclick="showScreen('homeScreen')">⬅ Back</button>
+    </div>
+
+    <div class="container screen" id="gameScreen">
+        <h1>OX <span>GAME</span></h1>
+        <p class="subtitle" id="gameStatus">Player X's Turn</p>
+        
         <div class="board" id="board"></div>
-        <h2 id="status">खेळ सुरू करा!</h2>
-        <button onclick="resetGame()" style="background: #e74c3c; margin-top: 20px;">पुन्हा खेळा 🔄</button>
+
+        <button class="btn btn-gold" onclick="resetGame()">🔄 Play Again</button>
+        <button class="btn btn-dark" onclick="showScreen('homeScreen')">🏠 Home</button>
     </div>
 
     <script>
         // ==========================================
-        // इथे तुझा BOT TOKEN टाक 👇
+        // 🚨 TUKA BOT TOKEN IThe TAK 👇
         const BOT_TOKEN = "8861473974:AAENTh2kYJbApxH8JFTsURJkDeYoixm8mtg"; 
         // ==========================================
-        
+
         let generatedOTP = null;
 
-        // OTP पाठवणारी सिस्टिम
+        // Screen Navigation
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
+            document.getElementById(screenId).classList.add('active-screen');
+        }
+
+        // OTP Logic
         function sendOTP() {
             const chatId = document.getElementById("telegramId").value;
-            
-            if(chatId === "") {
-                alert("कृपया आधी तुझा Telegram ID टाक!");
-                return;
-            }
+            if(chatId === "") { alert("Please enter your Telegram ID!"); return; }
 
-            // ४ अंकी रँडम OTP तयार करणे
             generatedOTP = Math.floor(1000 + Math.random() * 9000); 
-            const message = encodeURIComponent(`🔐 तुझा OX गेमसाठी लॉगिन OTP आहे: ${generatedOTP}`);
+            const message = encodeURIComponent(`🔒 KUMAR GAME\n\nYour secure login OTP is: ${generatedOTP}`);
             
-            // टेलिग्राम API ला मेसेज पाठवायला सांगणे
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${chatId}&text=${message}`;
 
+            document.getElementById("sendOtpBtn").innerText = "SENDING...";
+
             fetch(url)
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
+                document.getElementById("sendOtpBtn").innerText = "OTP SENT SUCCESSFULLY";
                 if(data.ok) {
-                    alert("OTP यशस्वीरीत्या पाठवला! तुझा टेलिग्राम बोट चेक कर.");
-                    document.getElementById("otpSection").style.display = "block";
+                    document.getElementById("otpBox").style.display = "block";
                 } else {
-                    alert("एरर! तू आयडी चुकीचा टाकला आहे किंवा तू बोटला आधी /start केलेलं नाही.");
+                    alert("Error! Please make sure you started @Kumarotpbot first.");
+                    document.getElementById("sendOtpBtn").innerText = "SEND OTP TO TELEGRAM";
                 }
-            })
-            .catch(error => {
-                alert("नेटवर्क प्रॉब्लेम, पुन्हा प्रयत्न कर.");
+            }).catch(err => {
+                alert("Network error. Try again.");
+                document.getElementById("sendOtpBtn").innerText = "SEND OTP TO TELEGRAM";
             });
         }
 
-        // OTP चेक करणारी सिस्टिम
         function verifyOTP() {
             const userOTP = document.getElementById("otpInput").value;
-            
             if(userOTP == generatedOTP) {
-                alert("✅ लॉगिन यशस्वी! चला गेम खेळूया!");
-                document.getElementById("loginSection").style.display = "none"; // लॉगिन लपवणे
-                document.getElementById("gameSection").style.display = "block"; // गेम दाखवणे
-                createBoard(); // गेम चालू करणे
+                showScreen('homeScreen'); // Login successful
             } else {
-                alert("❌ चुकीचा OTP! कृपया पुन्हा तपासा.");
+                alert("❌ Invalid OTP! Please try again.");
             }
         }
 
-        // ==========================================
-        // OX गेमचा मूळ कोड (Tic Tac Toe)
-        // ==========================================
+        // Game Logic
         let board = ["", "", "", "", "", "", "", "", ""];
         let currentPlayer = "X";
+        let gameMode = "user"; // 'user' or 'ai'
+        let gameActive = true;
         const boardEl = document.getElementById("board");
-        const statusEl = document.getElementById("status");
+        const statusEl = document.getElementById("gameStatus");
+
+        function startGame(mode) {
+            gameMode = mode;
+            showScreen('gameScreen');
+            resetGame();
+        }
 
         function createBoard() {
             boardEl.innerHTML = "";
@@ -110,33 +180,70 @@
                 let cell = document.createElement("div");
                 cell.className = "cell";
                 cell.innerText = val;
+                if(val === "X") cell.style.color = "#ef4444"; // Red for X
+                if(val === "O") cell.style.color = "#3b82f6"; // Blue for O
                 cell.onclick = () => play(i);
                 boardEl.appendChild(cell);
             });
         }
 
         function play(i) {
-            if (board[i] === "" && !checkWinner()) {
+            if (board[i] === "" && gameActive) {
                 board[i] = currentPlayer;
-                currentPlayer = currentPlayer === "X" ? "O" : "X";
-                statusEl.innerText = checkWinner() ? `विजेता: ${checkWinner()} 🏆` : `पुढची चाल: ${currentPlayer}`;
-                createBoard();
+                checkWinOrDraw();
+
+                if (gameActive && gameMode === 'ai' && currentPlayer === "O") {
+                    setTimeout(aiMove, 500); // AI plays after 0.5 sec
+                }
             }
         }
 
-        function checkWinner() {
+        function aiMove() {
+            let emptyCells = [];
+            board.forEach((val, i) => { if(val === "") emptyCells.push(i); });
+            
+            if(emptyCells.length > 0 && gameActive) {
+                let randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                board[randomCell] = "O";
+                checkWinOrDraw();
+            }
+        }
+
+        function checkWinOrDraw() {
             const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            let won = false;
+
             for(let [a,b,c] of lines) {
-                if(board[a] && board[a] === board[b] && board[a] === board[c]) return board[a];
+                if(board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    statusEl.innerText = `🎉 Player ${board[a]} Wins!`;
+                    statusEl.style.color = "#10b981"; // Green win text
+                    gameActive = false;
+                    won = true;
+                    break;
+                }
             }
-            return board.includes("") ? null : "ड्रॉ!";
+
+            if(!won) {
+                if(!board.includes("")) {
+                    statusEl.innerText = "🤝 It's a Draw!";
+                    statusEl.style.color = "#9ca3af";
+                    gameActive = false;
+                } else {
+                    currentPlayer = currentPlayer === "X" ? "O" : "X";
+                    statusEl.innerText = gameMode === 'ai' && currentPlayer === 'O' ? "🤖 AI is thinking..." : `Player ${currentPlayer}'s Turn`;
+                    statusEl.style.color = "#9ca3af";
+                }
+            }
+            createBoard();
         }
 
-        function resetGame() { 
-            board = ["", "", "", "", "", "", "", "", ""]; 
-            currentPlayer = "X"; 
-            statusEl.innerText = "खेळ सुरू करा!"; 
-            createBoard(); 
+        function resetGame() {
+            board = ["", "", "", "", "", "", "", "", ""];
+            currentPlayer = "X";
+            gameActive = true;
+            statusEl.innerText = "Player X's Turn";
+            statusEl.style.color = "#9ca3af";
+            createBoard();
         }
     </script>
 </body>
