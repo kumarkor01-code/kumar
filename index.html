@@ -3,197 +3,758 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KUMAR GAME - ULTIMATE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>KUMAR GAME - ULTIMATE PREMIUM</title>
+    
+    <!-- Google Fonts for Premium Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Firebase Server Links -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <style>
-        /* 1. THEMES & BASE STYLES */
+        /* ==========================================================================
+           1. CSS VARIABLES & THEME ENGINE (SUPER STYLISH)
+           ========================================================================== */
         :root {
-            --bg: #0b0f19; --box: rgba(17,24,39,0.9); --border: #1f2937; --text: #fff; --text-muted: #9ca3af;
-            --gold: #fbbf24; --btn-grad: linear-gradient(135deg, #f59e0b, #fbbf24);
+            /* Default Dark Theme */
+            --bg-color: #0b0f19;
+            --box-bg: rgba(17, 24, 39, 0.95);
+            --border-color: #1f2937;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --accent-main: #fbbf24; /* Gold */
+            --accent-hover: #f59e0b;
+            --gradient-btn: linear-gradient(135deg, #f59e0b, #fbbf24);
+            --danger: #ef4444;
+            --success: #10b981;
+            --shadow-glow: 0 0 15px rgba(251, 191, 36, 0.3);
         }
-        body.theme-neon { --bg: #09090b; --box: rgba(9,9,11,0.9); --border: #ec4899; --gold: #2dd4bf; --btn-grad: linear-gradient(135deg, #ec4899, #8b5cf6); }
-        body.theme-hacker { --bg: #000; --box: rgba(0,20,0,0.9); --border: #22c55e; --gold: #4ade80; --btn-grad: linear-gradient(135deg, #16a34a, #22c55e); font-family: 'Courier New', monospace; }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; background-image: radial-gradient(var(--border) 1px, transparent 1px); background-size: 30px 30px; transition: 0.3s; }
-        .container { background: var(--box); width: 100%; max-width: 420px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid var(--border); text-align: center; backdrop-filter: blur(10px); margin-bottom: 20px;}
-        
-        h1 { font-size: 26px; font-weight: 800; letter-spacing: 1px; margin-bottom: 5px; }
-        h1 span { color: var(--gold); text-shadow: 0 0 10px var(--gold); }
-        p.subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 20px; }
 
-        /* 2. INPUTS & BUTTONS */
-        input { width: 100%; padding: 14px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 14px; outline: none; margin-bottom: 12px; }
-        input:focus { border-color: var(--gold); }
-        .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 10px; text-transform: uppercase; }
-        .btn-gold { background: var(--btn-grad); color: #000; font-weight: 800; }
-        .btn-gold:hover { transform: translateY(-2px); filter: brightness(1.1); }
-        .btn-dark { background: transparent; border: 2px solid var(--border); color: var(--gold); }
-        .btn-danger { background: #ef4444; color: white; border: none; }
-        
-        /* 3. DASHBOARD */
-        .profile-card { display: flex; align-items: center; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 20px; text-align: left;}
-        .profile-avatar { font-size: 40px; margin-right: 15px; background: rgba(255,255,255,0.1); border-radius: 50%; width: 65px; height: 65px; display: flex; justify-content: center; align-items: center; border: 2px solid var(--gold); }
-        .profile-title { font-size: 11px; color: var(--gold); background: rgba(251,191,36,0.1); padding: 2px 6px; border-radius: 5px; font-weight: bold; }
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;}
-        .menu-card { background: rgba(0,0,0,0.4); padding: 15px 10px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; font-size: 13px; font-weight: 700; color: var(--gold); transition: 0.3s; }
-        .menu-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+        /* Neon Theme */
+        body.theme-neon {
+            --bg-color: #09090b;
+            --box-bg: rgba(24, 24, 27, 0.95);
+            --border-color: #ec4899;
+            --accent-main: #2dd4bf;
+            --accent-hover: #14b8a6;
+            --gradient-btn: linear-gradient(135deg, #ec4899, #8b5cf6);
+            --shadow-glow: 0 0 20px rgba(236, 72, 153, 0.5);
+        }
 
-        /* 4. GAMES */
-        .board { display: grid; grid-template-columns: repeat(3, 80px); gap: 10px; justify-content: center; margin: 20px 0; position: relative; }
-        .cell { width: 80px; height: 80px; background: rgba(0,0,0,0.5); font-size: 45px; font-weight: 800; display: flex; align-items: center; justify-content: center; border-radius: 15px; cursor: pointer; border: 1px solid var(--border); }
-        .win-line { position: absolute; background: #10b981; border-radius: 10px; z-index: 10; display: none; box-shadow: 0 0 15px #10b981; }
-        
-        /* Shop Tabs & Lists */
-        .shop-tabs { display: flex; gap: 5px; margin-bottom: 15px; }
-        .tab-btn { flex: 1; padding: 8px; background: rgba(0,0,0,0.4); border: none; color: var(--text-muted); font-weight: bold; border-radius: 8px; font-size: 12px; cursor: pointer;}
-        .tab-btn.active { background: var(--btn-grad); color: #000; }
-        .list-container { max-height: 350px; overflow-y: auto; text-align: left; }
-        .shop-item { background: rgba(0,0,0,0.4); padding: 15px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        /* Hacker Theme */
+        body.theme-hacker {
+            --bg-color: #000000;
+            --box-bg: rgba(0, 20, 0, 0.95);
+            --border-color: #22c55e;
+            --text-primary: #4ade80;
+            --text-secondary: #166534;
+            --accent-main: #22c55e;
+            --accent-hover: #16a34a;
+            --gradient-btn: linear-gradient(135deg, #16a34a, #22c55e);
+            --shadow-glow: 0 0 20px rgba(34, 197, 94, 0.5);
+            font-family: 'Courier New', Courier, monospace;
+        }
 
-        .screen { display: none; }
-        .active-screen { display: block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        /* Gold VIP Theme */
+        body.theme-gold {
+            --bg-color: #1c1917;
+            --box-bg: linear-gradient(145deg, #292524, #1c1917);
+            --border-color: #eab308;
+            --accent-main: #fde047;
+            --accent-hover: #eab308;
+            --gradient-btn: linear-gradient(135deg, #ca8a04, #eab308);
+            --shadow-glow: 0 0 25px rgba(234, 179, 8, 0.6);
+        }
+
+        /* ==========================================================================
+           2. GLOBAL STYLES & BACKGROUND ANIMATIONS
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            /* Cool Grid Background */
+            background-image: 
+                linear-gradient(var(--border-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            overflow-y: auto;
+        }
+
+        .container {
+            background: var(--box-bg);
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), var(--shadow-glow);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(15px);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        h1 span {
+            color: var(--accent-main);
+            text-shadow: 0 0 15px var(--accent-main);
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* ==========================================================================
+           3. FORM ELEMENTS (INPUTS & BUTTONS)
+           ========================================================================== */
+        label {
+            display: block;
+            text-align: left;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            color: var(--text-primary);
+            font-size: 15px;
+            outline: none;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        input:focus {
+            border-color: var(--accent-main);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-gold {
+            background: var(--gradient-btn);
+            color: #000;
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6);
+            filter: brightness(1.1);
+        }
+
+        .btn-dark {
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--accent-main);
+        }
+
+        .btn-dark:hover {
+            background: var(--border-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-admin {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: white;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-admin:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.2);
+        }
+
+        .link-text {
+            color: var(--accent-main);
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 25px;
+            display: inline-block;
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent-main);
+        }
+
+        .link-text:hover {
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--text-primary);
+        }
+
+        /* ==========================================================================
+           4. DASHBOARD & PROFILE UI
+           ========================================================================== */
+        .profile-card {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+            text-align: left;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .profile-avatar {
+            font-size: 50px;
+            margin-right: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 3px solid var(--accent-main);
+            box-shadow: 0 0 15px var(--accent-main);
+        }
+
+        .profile-title {
+            font-size: 12px;
+            color: var(--accent-main);
+            background: rgba(251, 191, 36, 0.15);
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .coin-display {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent-main);
+            margin-top: 5px;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .menu-card {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px 10px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--accent-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .menu-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent-main);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        .menu-icon {
+            font-size: 30px;
+        }
+
+        /* ==========================================================================
+           5. SHOP & LIST UI
+           ========================================================================== */
+        .shop-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 5px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 700;
+            border-radius: 10px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: var(--gradient-btn);
+            color: #000;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+        }
+
+        .list-container {
+            max-height: 400px;
+            overflow-y: auto;
+            text-align: left;
+            padding-right: 5px;
+        }
+
+        /* Scrollbar Styling */
+        .list-container::-webkit-scrollbar { width: 6px; }
+        .list-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px;}
+        .list-container::-webkit-scrollbar-thumb { background: var(--accent-main); border-radius: 10px; }
+
+        .shop-item {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .shop-item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        /* ==========================================================================
+           6. OX GAME BOARD (TIC-TAC-TOE)
+           ========================================================================== */
+        .board-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 25px 0;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 90px);
+            gap: 15px;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .cell {
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 50px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .cell:hover {
+            border-color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .cell:active {
+            transform: scale(0.9);
+        }
+
+        /* Winning Line Configuration */
+        .win-line {
+            position: absolute;
+            background: var(--success);
+            border-radius: 10px;
+            z-index: 10;
+            display: none;
+            box-shadow: 0 0 20px var(--success);
+            animation: lineDraw 0.4s ease-out forwards;
+        }
+
+        @keyframes lineDraw {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .line-row-0 { top: 16%; left: 3%; width: 94%; height: 8px; }
+        .line-row-1 { top: 50%; left: 3%; width: 94%; height: 8px; transform: translateY(-50%);}
+        .line-row-2 { top: 84%; left: 3%; width: 94%; height: 8px; }
+        .line-col-0 { left: 16%; top: 3%; height: 94%; width: 8px; }
+        .line-col-1 { left: 50%; top: 3%; height: 94%; width: 8px; transform: translateX(-50%);}
+        .line-col-2 { left: 84%; top: 3%; height: 94%; width: 8px; }
+        .line-diag-0 { top: 49%; left: -5%; width: 110%; height: 8px; transform: rotate(45deg); }
+        .line-diag-1 { top: 49%; left: -5%; width: 110%; height: 8px; transform: rotate(-45deg); }
+
+        /* Status Bar (Undo/Coins) */
+        .powerup-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 12px 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* ==========================================================================
+           7. SCREEN MANAGEMENT & ANIMATIONS
+           ========================================================================== */
+        .screen {
+            display: none;
+        }
+
+        .active-screen {
+            display: block;
+            animation: screenEntry 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes screenEntry {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
     </style>
 </head>
-<body id="appBody">
+<body id="appBody" class="theme-classic">
 
-    <!-- 1. LOGIN SCREEN -->
+    <!-- ==========================================================================
+         SCREEN 1: LOGIN
+         ========================================================================== -->
     <div class="container screen active-screen" id="loginScreen">
         <h1>KUMAR <span>GAME</span></h1>
-        <p class="subtitle">Premium Gaming & Rewards</p>
-        <input type="number" id="loginId" placeholder="Telegram Chat ID">
-        <input type="password" id="loginPass" placeholder="Password">
-        <button class="btn btn-gold" onclick="loginUser()">LOGIN NOW</button>
-        <p style="color:var(--gold); font-size:13px; margin-top:20px; cursor:pointer;" onclick="showScreen('signupScreen')">Create New Account</p>
+        <p class="subtitle">The Ultimate Premium Gaming Platform</p>
+        
+        <label>TELEGRAM CHAT ID</label>
+        <input type="number" id="loginId" placeholder="e.g. 123456789">
+        
+        <label>ACCOUNT PASSWORD</label>
+        <input type="password" id="loginPass" placeholder="Enter Your Secure Password">
+        
+        <button class="btn btn-gold" onclick="loginUser()">🔓 SECURE LOGIN</button>
+        <br>
+        <span class="link-text" onclick="showScreen('signupScreen')">🚀 Don't have an account? Join Now</span>
     </div>
 
-    <!-- 2. SIGNUP SCREEN -->
+    <!-- ==========================================================================
+         SCREEN 2: SIGNUP / REGISTER
+         ========================================================================== -->
     <div class="container screen" id="signupScreen">
         <h1>JOIN <span>PREMIUM</span></h1>
-        <input type="text" id="regName" placeholder="Full Name">
-        <input type="password" id="regPass" placeholder="Create Password">
-        <input type="number" id="regTgId" placeholder="Telegram Chat ID">
-        <button class="btn btn-dark" onclick="window.open('https://t.me/Kumarotpbot', '_blank')">✈️ Start Bot for OTP</button>
-        <button class="btn btn-gold" id="sendOtpBtn" onclick="sendOTP()">SEND OTP</button>
-        <div id="otpBox" style="display:none; margin-top:15px;">
-            <input type="number" id="regOtpInput" placeholder="Enter OTP">
-            <button class="btn btn-gold" onclick="registerUser()">VERIFY & REGISTER</button>
+        <p class="subtitle">Create your account and get 20 Welcome Coins!</p>
+        
+        <label>FULL NAME</label>
+        <input type="text" id="regName" placeholder="e.g. Rahul Patil">
+        
+        <label>CREATE PASSWORD</label>
+        <input type="password" id="regPass" placeholder="Create a strong password">
+        
+        <label>TELEGRAM CHAT ID</label>
+        <input type="number" id="regTgId" placeholder="Your Telegram ID">
+        
+        <button class="btn btn-dark" onclick="window.open('https://t.me/Kumarotpbot', '_blank')">✈️ 1. START BOT FOR OTP</button>
+        <button class="btn btn-gold" id="sendOtpBtn" onclick="sendOTP()">📩 2. SEND OTP TO TELEGRAM</button>
+        
+        <!-- Hidden OTP Verification Box -->
+        <div id="otpBox" style="display:none; margin-top:20px; background:rgba(0,0,0,0.5); padding:20px; border-radius:15px; border:1px solid var(--accent-main);">
+            <label style="color:var(--accent-main);">ENTER 4-DIGIT OTP</label>
+            <input type="number" id="regOtpInput" placeholder="Enter OTP received on Telegram">
+            <button class="btn btn-gold" onclick="registerUser()">✅ VERIFY & REGISTER</button>
         </div>
-        <p style="color:var(--gold); font-size:13px; margin-top:20px; cursor:pointer;" onclick="showScreen('loginScreen')">Back to Login</p>
+        
+        <br>
+        <span class="link-text" onclick="showScreen('loginScreen')">⬅ Back to Login Screen</span>
     </div>
 
-    <!-- 3. DASHBOARD -->
+    <!-- ==========================================================================
+         SCREEN 3: MAIN DASHBOARD
+         ========================================================================== -->
     <div class="container screen" id="homeScreen">
+        <!-- Player Profile Card -->
         <div class="profile-card">
             <div class="profile-avatar" id="dashAvatar">👤</div>
             <div>
                 <span class="profile-title" id="dashTitle">NEWBIE</span>
-                <div style="font-size:18px; font-weight:700;" id="dashName">Player</div>
-                <div style="font-size:22px; font-weight:800; color:var(--gold);">🪙 <span id="dashCoins">0</span></div>
+                <div class="profile-name" id="dashName">Loading Player...</div>
+                <div class="coin-display">🪙 <span id="dashCoins">0</span></div>
             </div>
         </div>
         
-        <button class="btn btn-gold" style="font-size:18px; padding:18px;" onclick="showScreen('gameSelectScreen')">🎮 PLAY GAMES</button>
+        <!-- Big Play Button -->
+        <button class="btn btn-gold" style="font-size: 20px; padding: 20px;" onclick="showScreen('gameSelectScreen')">
+            🎮 PLAY GAMES NOW
+        </button>
         
+        <!-- Grid Menu Features -->
         <div class="menu-grid">
-            <div class="menu-card" onclick="openShop('avatars')"><span style="font-size:24px;">🛒</span> Store</div>
-            <div class="menu-card" onclick="showScreen('questScreen')"><span style="font-size:24px;">🎯</span> Quests</div>
-            <div class="menu-card" onclick="loadLeaderboard()"><span style="font-size:24px;">🏆</span> Top 10</div>
-            <div class="menu-card" onclick="showScreen('historyScreen')"><span style="font-size:24px;">📜</span> History</div>
+            <div class="menu-card" onclick="openShop('avatars')">
+                <span class="menu-icon">🛒</span> 
+                <span>STORE</span>
+            </div>
+            <div class="menu-card" onclick="openQuests()">
+                <span class="menu-icon">🎯</span> 
+                <span>DAILY QUESTS</span>
+            </div>
+            <div class="menu-card" onclick="loadLeaderboard()">
+                <span class="menu-icon">🏆</span> 
+                <span>LEADERBOARD</span>
+            </div>
+            <div class="menu-card" onclick="openHistory()">
+                <span class="menu-icon">📜</span> 
+                <span>HISTORY</span>
+            </div>
         </div>
         
-        <button class="btn btn-dark" id="adminBtn" style="display:none; border-color:#8b5cf6; color:#8b5cf6;" onclick="showScreen('adminScreen')">👑 ADMIN PANEL</button>
-        <button class="btn btn-danger" onclick="logoutUser()">🚪 LOGOUT</button>
+        <!-- Admin Button (Hidden by default, shown only to Admin) -->
+        <button class="btn btn-admin" id="adminBtn" style="display:none; margin-bottom: 15px;" onclick="showScreen('adminScreen')">
+            👑 OPEN ADMIN PANEL
+        </button>
+        
+        <button class="btn btn-danger" onclick="logoutUser()">🚪 SECURE LOGOUT</button>
     </div>
 
-    <!-- 4. GAME SELECT -->
+    <!-- ==========================================================================
+         SCREEN 4: GAME SELECTION
+         ========================================================================== -->
     <div class="container screen" id="gameSelectScreen">
         <h1>SELECT <span>GAME</span></h1>
-        <button class="btn btn-gold" onclick="startOXGame()">❌ OX GAME (Super AI)</button>
-        <button class="btn btn-dark" onclick="alert('Dots Game Multiplayer Coming Soon!')">🔲 DOTS & BOXES</button>
-        <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ Back</button>
+        <p class="subtitle">Choose your challenge</p>
+        
+        <button class="btn btn-gold" onclick="startOXGame()" style="padding: 25px; font-size: 18px;">
+            ❌ OX GAME (VS SUPER AI) ⭕
+        </button>
+        
+        <button class="btn btn-dark" onclick="alert('Dots & Boxes is currently under maintenance! Coming in next update.')" style="padding: 25px; font-size: 18px; margin-top:20px;">
+            🔲 DOTS & BOXES (SOON) 🔲
+        </button>
+        
+        <button class="btn btn-danger" style="margin-top:30px;" onclick="showScreen('homeScreen')">⬅ Back to Dashboard</button>
     </div>
 
-    <!-- 5. OX GAME SCREEN (With Undo) -->
+    <!-- ==========================================================================
+         SCREEN 5: OX GAME (TIC-TAC-TOE)
+         ========================================================================== -->
     <div class="container screen" id="oxScreen">
         <h1>OX <span>GAME</span></h1>
-        <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.5); padding:10px; border-radius:10px; margin-bottom:10px;">
-            <span style="font-weight:bold; font-size:12px;">Coins: <span id="oxCoinDisp">0</span></span>
-            <button class="btn btn-dark" style="margin:0; width:auto; padding:5px 15px; font-size:12px;" onclick="undoMove()">⏪ Undo (5 Coins)</button>
-        </div>
-        <p class="subtitle" id="oxStatus" style="color:var(--gold); font-size:16px; font-weight:bold;">Your Turn</p>
         
-        <div style="position:relative; display:inline-block;">
+        <!-- Undo Power-Up Bar -->
+        <div class="powerup-bar">
+            <span style="font-weight:800; font-size:14px; color:var(--text-primary);">
+                Balance: <span style="color:var(--accent-main);">🪙 <span id="oxCoinDisp">0</span></span>
+            </span>
+            <button class="btn btn-dark" style="margin:0; width:auto; padding:8px 15px; font-size:12px; border-radius:10px;" onclick="undoMove()">
+                ⏪ UNDO (5 Coins)
+            </button>
+        </div>
+
+        <p class="subtitle" id="oxStatus" style="color:var(--accent-main); font-size:18px; font-weight:800; text-transform:uppercase;">
+            Your Turn
+        </p>
+        
+        <!-- Game Board -->
+        <div class="board-wrapper">
             <div id="winLine" class="win-line"></div>
-            <div class="board" id="oxBoard"></div>
+            <div class="board" id="oxBoard">
+                <!-- Cells generated by JavaScript -->
+            </div>
         </div>
         
-        <button class="btn btn-gold" id="oxPlayAgain" style="display:none;" onclick="resetOXGame()">🔄 Play Again</button>
-        <button class="btn btn-danger" style="margin-top:15px;" onclick="showScreen('homeScreen')">🏠 Dashboard</button>
+        <button class="btn btn-gold" id="oxPlayAgain" style="display:none;" onclick="resetOXGame()">🔄 PLAY AGAIN</button>
+        <button class="btn btn-danger" style="margin-top:15px;" onclick="showScreen('homeScreen')">🏠 LEAVE MATCH</button>
     </div>
 
-    <!-- 6. SHOP SCREEN -->
+    <!-- ==========================================================================
+         SCREEN 6: PREMIUM STORE (SHOP)
+         ========================================================================== -->
     <div class="container screen" id="shopScreen">
         <h1>PREMIUM <span>STORE</span></h1>
+        <p class="subtitle">Customize your profile & gameplay</p>
+        
+        <!-- Shop Categories -->
         <div class="shop-tabs">
             <button class="tab-btn active" id="tabAvatars" onclick="openShop('avatars')">Avatars</button>
             <button class="tab-btn" id="tabThemes" onclick="openShop('themes')">Themes</button>
             <button class="tab-btn" id="tabTitles" onclick="openShop('titles')">Titles</button>
-            <button class="tab-btn" id="tabSkins" onclick="openShop('skins')">X/O Skins</button>
+            <button class="tab-btn" id="tabSkins" onclick="openShop('skins')">Game Skins</button>
         </div>
-        <div class="list-container" id="shopList"></div>
-        <button class="btn btn-danger" style="margin-top:15px;" onclick="showScreen('homeScreen')">⬅ Back</button>
+        
+        <!-- Shop Items List -->
+        <div class="list-container" id="shopList">
+            <!-- Items injected by JavaScript -->
+        </div>
+        
+        <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ Back to Dashboard</button>
     </div>
 
-    <!-- 7. QUESTS, LEADERBOARD, HISTORY & ADMIN (Combined briefly) -->
+    <!-- ==========================================================================
+         SCREEN 7: DAILY QUESTS
+         ========================================================================== -->
     <div class="container screen" id="questScreen">
         <h1>DAILY <span>QUESTS</span></h1>
-        <div style="background:rgba(0,0,0,0.5); padding:20px; border-radius:15px; margin:20px 0;">
-            <h3 style="color:var(--gold);">Play 3 Matches</h3>
-            <p>Progress: <strong id="questProg" style="color:#10b981;">0</strong> / 3</p>
-            <button class="btn btn-gold" id="claimBtn" onclick="claimQuest()" disabled>Claim 10 Coins</button>
+        <p class="subtitle">Complete tasks to earn free coins</p>
+        
+        <div style="background:rgba(0,0,0,0.6); padding:25px; border-radius:20px; margin:20px 0; border:1px solid var(--border-color); box-shadow: inset 0 0 15px rgba(0,0,0,0.5);">
+            <h3 style="color:var(--accent-main); font-size:20px; margin-bottom:15px;">🕹️ Play 3 Matches Today</h3>
+            <p style="font-size:16px; margin-bottom:10px;">Progress: <strong id="questProg" style="color:var(--success); font-size:20px;">0</strong> / 3</p>
+            <p style="font-size:14px; color:var(--text-secondary); margin-bottom:20px;">Reward: 🪙 10 Coins</p>
+            
+            <button class="btn btn-gold" id="claimBtn" onclick="claimQuest()" disabled style="opacity:0.5;">🔒 Play More to Claim</button>
         </div>
-        <button class="btn btn-danger" onclick="showScreen('homeScreen')">⬅ Back</button>
+        
+        <button class="btn btn-danger" onclick="showScreen('homeScreen')">⬅ Back to Dashboard</button>
     </div>
 
+    <!-- ==========================================================================
+         SCREEN 8: LEADERBOARD
+         ========================================================================== -->
     <div class="container screen" id="leaderboardScreen">
         <h1>TOP 10 <span>PLAYERS</span></h1>
-        <div class="list-container" id="leaderboardList"></div>
-        <button class="btn btn-danger" onclick="showScreen('homeScreen')">⬅ Back</button>
+        <p class="subtitle">The richest players of Kumar Game</p>
+        
+        <div class="list-container" id="leaderboardList">
+            <!-- Ranks injected by JavaScript -->
+            <p>Loading leaderboard data...</p>
+        </div>
+        
+        <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ Back to Dashboard</button>
     </div>
 
+    <!-- ==========================================================================
+         SCREEN 9: MATCH HISTORY
+         ========================================================================== -->
     <div class="container screen" id="historyScreen">
         <h1>MATCH <span>HISTORY</span></h1>
-        <div class="list-container" style="background:rgba(0,0,0,0.5); padding:20px; border-radius:15px;">
-            <p style="font-size:18px; margin-bottom:10px;">🏆 Wins: <strong id="histW" style="color:#10b981;">0</strong></p>
-            <p style="font-size:18px; margin-bottom:10px;">💀 Losses: <strong id="histL" style="color:#ef4444;">0</strong></p>
-            <p style="font-size:18px;">🤝 Draws: <strong id="histD" style="color:var(--text-muted);">0</strong></p>
+        <p class="subtitle">Your lifetime performance stats</p>
+        
+        <div class="list-container" style="background:rgba(0,0,0,0.6); padding:25px; border-radius:20px; border:1px solid var(--border-color);">
+            <div style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid var(--border-color); padding-bottom:10px;">
+                <span style="font-size:18px; font-weight:700;">🏆 Total Wins:</span> 
+                <strong id="histW" style="color:var(--success); font-size:22px;">0</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid var(--border-color); padding-bottom:10px;">
+                <span style="font-size:18px; font-weight:700;">💀 Total Losses:</span> 
+                <strong id="histL" style="color:var(--danger); font-size:22px;">0</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+                <span style="font-size:18px; font-weight:700;">🤝 Total Draws:</span> 
+                <strong id="histD" style="color:var(--text-secondary); font-size:22px;">0</strong>
+            </div>
         </div>
-        <button class="btn btn-danger" onclick="showScreen('homeScreen')">⬅ Back</button>
+        
+        <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ Back to Dashboard</button>
     </div>
 
+    <!-- ==========================================================================
+         SCREEN 10: ADMIN PANEL (OWNER ONLY)
+         ========================================================================== -->
     <div class="container screen" id="adminScreen">
         <h1>👑 ADMIN <span>PANEL</span></h1>
-        <input type="number" id="admId" placeholder="User Telegram ID">
-        <input type="number" id="admCoins" placeholder="Coin Amount (+ or -)">
-        <button class="btn btn-gold" onclick="adminAction('coins')">UPDATE COINS</button>
+        <p class="subtitle">Master Control Room</p>
         
-        <input type="text" id="admMsg" placeholder="Broadcast Message..." style="margin-top:20px;">
-        <button class="btn btn-dark" style="border-color:#8b5cf6; color:#8b5cf6;" onclick="adminAction('broadcast')">SEND TO ALL</button>
-        <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ Exit Admin</button>
+        <!-- Add/Remove Coins -->
+        <div style="background:rgba(0,0,0,0.5); padding:20px; border-radius:15px; margin-bottom:20px; border:1px solid var(--border-color); text-align:left;">
+            <h3 style="color:var(--accent-main); font-size:14px; margin-bottom:15px;">💰 ADD / REMOVE COINS</h3>
+            <label>User Telegram ID</label>
+            <input type="number" id="admId" placeholder="Enter ID">
+            <label>Coin Amount (+ to add, - to remove)</label>
+            <input type="number" id="admCoins" placeholder="e.g. 100 or -50">
+            <button class="btn btn-gold" onclick="adminAction('coins')">UPDATE COINS</button>
+        </div>
+        
+        <!-- Broadcast Message -->
+        <div style="background:rgba(0,0,0,0.5); padding:20px; border-radius:15px; border:1px solid var(--border-color); text-align:left;">
+            <h3 style="color:#8b5cf6; font-size:14px; margin-bottom:15px;">📢 BROADCAST MESSAGE</h3>
+            <label>Message Content</label>
+            <input type="text" id="admMsg" placeholder="Type message for all bot users...">
+            <button class="btn btn-admin" onclick="adminAction('broadcast')">SEND TO ALL</button>
+        </div>
+
+        <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ Exit Admin Panel</button>
     </div>
 
-    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <!-- ==========================================================================
+         JAVASCRIPT LOGIC (THE BRAIN)
+         ========================================================================== -->
     <script>
-        // 🚨 CONFIGURATION 🚨
+        // ----------------------------------------------------------------------
+        // 🚨 CONFIGURATION - CHANGE THESE 3 VALUES 🚨
+        // ----------------------------------------------------------------------
         const BOT_TOKEN = "8861473974:AAENTh2kYJbApxH8JFTsURJkDeYoixm8mtg"; 
-        const ADMIN_TG_ID = "7335163273"; // 👈 तुझा टेलिग्राम आयडी
+        const ADMIN_TG_ID = "7335163273"; // 👈 PUT YOUR TELEGRAM ID HERE TO BE ADMIN
+        
+        // 👈 PUT YOUR FIREBASE CONFIG HERE
         const firebaseConfig = {
             apiKey: "AIzaSyC8umQwCdC9EJ7rbOxI1MKik4L9SNvAIBw", 
             authDomain: "kumarkor.firebaseapp.com",
@@ -203,206 +764,567 @@
             messagingSenderId: "167839596471",
             appId: "1:167839596471:web:ab0fe79da9fa2c03beb232"
         };
+        // ----------------------------------------------------------------------
 
+        // 1. Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-        let user = null, otp = null, today = new Date().toLocaleDateString();
         
-        // Shop Data
+        // Global State Variables
+        let user = null;
+        let generatedOTP = null;
+        let todayDateStr = new Date().toLocaleDateString();
+        
+        // 2. Shop & Store Database (Extensive Items)
         const STORE = {
             avatars: [
-                {id:'av1', name:'Ninja', icon:'🥷', price:20}, {id:'av2', name:'King', icon:'👑', price:50},
-                {id:'av3', name:'Lion', icon:'🦁', price:40}, {id:'av4', name:'Cyborg', icon:'🤖', price:30}
+                {id:'av1', name:'Ninja Master', icon:'🥷', price:20},
+                {id:'av2', name:'The King', icon:'👑', price:50},
+                {id:'av3', name:'Fierce Lion', icon:'🦁', price:40},
+                {id:'av4', name:'Cyborg AI', icon:'🤖', price:30},
+                {id:'av5', name:'Alien Overlord', icon:'👽', price:60},
+                {id:'av6', name:'Ghost', icon:'👻', price:35}
             ],
             themes: [
-                {id:'theme-classic', name:'Dark (Default)', icon:'🌑', price:0},
-                {id:'theme-neon', name:'Neon Pink', icon:'🌺', price:50},
-                {id:'theme-hacker', name:'Hacker Green', icon:'💻', price:50},
-                {id:'theme-gold', name:'Gold VIP', icon:'🌟', price:100}
+                {id:'theme-classic', name:'Dark Matrix (Default)', icon:'🌑', price:0},
+                {id:'theme-neon', name:'Cyberpunk Neon', icon:'🌺', price:50},
+                {id:'theme-hacker', name:'Terminal Hacker', icon:'💻', price:50},
+                {id:'theme-gold', name:'Gold VIP Exclusive', icon:'🌟', price:150}
             ],
             titles: [
-                {id:'t1', name:'[NEWBIE]', icon:'🔰', price:0}, {id:'t2', name:'[PRO]', icon:'⚡', price:50},
-                {id:'t3', name:'[VIP]', icon:'💎', price:100}, {id:'t4', name:'[LEGEND]', icon:'🔥', price:200}
+                {id:'t1', name:'[NEWBIE]', icon:'🔰', price:0},
+                {id:'t2', name:'[PRO]', icon:'⚡', price:50},
+                {id:'t3', name:'[ELITE]', icon:'⚔️', price:80},
+                {id:'t4', name:'[VIP]', icon:'💎', price:120},
+                {id:'t5', name:'[LEGEND]', icon:'🔥', price:200}
             ],
             skins: [
-                {id:'sk1', name:'Classic', icon:'X/O', price:0, x:'X', o:'O'},
-                {id:'sk2', name:'Stars', icon:'⭐', price:30, x:'⭐', o:'🌟'},
-                {id:'sk3', name:'Hearts', icon:'💖', price:40, x:'💖', o:'💙'}
+                {id:'sk1', name:'Classic Blood & Water', icon:'X/O', price:0, x:'X', o:'O'},
+                {id:'sk2', name:'Star Dust', icon:'⭐', price:30, x:'⭐', o:'🌟'},
+                {id:'sk3', name:'Love War', icon:'💖', price:40, x:'💖', o:'💔'},
+                {id:'sk4', name:'Fire & Ice', icon:'🔥', price:60, x:'🔥', o:'🧊'}
             ]
         };
 
-        function showScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen')); document.getElementById(id).classList.add('active-screen'); }
-        function saveDB() { if(user) db.ref('users/'+user.tgId).update(user); updateUI(); }
+        // 3. Helper Functions
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
+            document.getElementById(screenId).classList.add('active-screen');
+        }
 
-        // --- AUTH ---
+        function saveUserToDatabase() {
+            if (user && user.tgId) {
+                db.ref('users/' + user.tgId).update(user);
+                updateDashboardUI();
+            }
+        }
+
+        // 4. Authentication Logic
         function sendOTP() {
-            let tg = document.getElementById("regTgId").value; if(!tg) return alert("Enter Telegram ID!");
-            otp = Math.floor(1000 + Math.random() * 9000); 
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${tg}&text=OTP: ${otp}`)
-            .then(r=>r.json()).then(d=>{ if(d.ok) document.getElementById("otpBox").style.display="block"; else alert("Start bot first!"); });
+            let tgId = document.getElementById("regTgId").value;
+            if (!tgId) return alert("Please enter your Telegram ID!");
+            
+            generatedOTP = Math.floor(1000 + Math.random() * 9000); 
+            let message = encodeURIComponent(`🔒 *KUMAR GAME REGISTRATION*\n\nYour secret OTP is: \`${generatedOTP}\`\n\nDo not share this with anyone!`);
+            let url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${tgId}&text=${message}&parse_mode=Markdown`;
+            
+            document.getElementById("sendOtpBtn").innerText = "SENDING...";
+            
+            fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                if (data.ok) {
+                    document.getElementById("sendOtpBtn").innerText = "OTP SENT SUCCESSFULLY";
+                    document.getElementById("otpBox").style.display = "block";
+                } else {
+                    alert("Error! Please make sure you started the bot in Telegram first.");
+                    document.getElementById("sendOtpBtn").innerText = "SEND OTP AGAIN";
+                }
+            })
+            .catch(err => alert("Network Error! Try again."));
         }
+
         function registerUser() {
-            if(document.getElementById("regOtpInput").value != otp) return alert("Wrong OTP!");
-            let u = {
-                tgId: document.getElementById("regTgId").value, name: document.getElementById("regName").value,
-                password: document.getElementById("regPass").value, coins: 20, isBanned: false,
-                avatar: '👤', theme: 'theme-classic', title: 'NEWBIE', skin: 'sk1', owned: ['theme-classic','sk1','t1'],
-                history: {w:0, l:0, d:0}, quest: {plays:0, claimed:false, date:today}
+            let inputOtp = document.getElementById("regOtpInput").value;
+            if (inputOtp != generatedOTP) return alert("❌ Wrong OTP entered!");
+            
+            let tgId = document.getElementById("regTgId").value;
+            let name = document.getElementById("regName").value;
+            let pass = document.getElementById("regPass").value;
+
+            if(!name || !pass) return alert("Please fill all details!");
+
+            // Create default user profile
+            let newUser = {
+                tgId: tgId,
+                name: name,
+                password: pass,
+                coins: 20, // Free welcome coins
+                isBanned: false,
+                avatar: '👤',
+                theme: 'theme-classic',
+                title: 'NEWBIE',
+                skin: 'sk1',
+                owned: ['theme-classic', 'sk1', 't1'], // Default owned items
+                history: { w: 0, l: 0, d: 0 },
+                quest: { plays: 0, claimed: false, date: todayDateStr }
             };
-            db.ref('users/'+u.tgId).set(u); alert("Registered! Login to play."); showScreen('loginScreen');
+            
+            db.ref('users/' + tgId).set(newUser);
+            alert("✅ Account Registered! You received 20 Welcome Coins! Please Login.");
+            showScreen('loginScreen');
         }
+
         function loginUser() {
-            let id = document.getElementById('loginId').value, pass = document.getElementById('loginPass').value;
-            db.ref('users/'+id).once('value', snap => {
-                if(snap.exists() && snap.val().password === pass) {
-                    user = snap.val(); if(user.isBanned) return alert("BANNED!");
-                    if(!user.quest || user.quest.date !== today) { user.quest = {plays:0, claimed:false, date:today}; user.coins+=5; saveDB(); alert("Daily +5 Coins!"); }
-                    updateUI(); showScreen('homeScreen');
-                    if(id === ADMIN_TG_ID) document.getElementById('adminBtn').style.display='block';
-                } else alert("Invalid ID/Password!");
+            let id = document.getElementById('loginId').value;
+            let pass = document.getElementById('loginPass').value;
+            
+            if(!id || !pass) return alert("Please enter ID and Password!");
+
+            db.ref('users/' + id).once('value', snapshot => {
+                if(snapshot.exists()) {
+                    let data = snapshot.val();
+                    if(data.password === pass) {
+                        if(data.isBanned) return alert("🚫 YOUR ACCOUNT HAS BEEN BANNED BY ADMIN.");
+                        
+                        user = data;
+                        checkDailyRewards();
+                        updateDashboardUI();
+                        showScreen('homeScreen');
+                        
+                        // Admin Panel Check
+                        if(id === ADMIN_TG_ID) {
+                            document.getElementById('adminBtn').style.display = 'block';
+                        }
+                    } else {
+                        alert("❌ Incorrect Password!");
+                    }
+                } else {
+                    alert("❌ Account not found!");
+                }
             });
         }
-        function logoutUser() { user = null; document.getElementById('adminBtn').style.display='none'; showScreen('loginScreen'); }
 
-        // --- UI & SHOP ---
-        function updateUI() {
+        function checkDailyRewards() {
+            if(!user.quest || user.quest.date !== todayDateStr) {
+                // New Day - Reset Quests and Give Daily Bonus
+                user.quest = { plays: 0, claimed: false, date: todayDateStr };
+                user.coins += 5; // Daily login reward
+                saveUserToDatabase();
+                alert("🎁 Daily Login Bonus: +5 Coins added to your account!");
+            }
+        }
+
+        function logoutUser() {
+            user = null;
+            document.getElementById('loginId').value = "";
+            document.getElementById('loginPass').value = "";
+            document.getElementById('adminBtn').style.display = 'none';
+            document.getElementById('appBody').className = 'theme-classic';
+            showScreen('loginScreen');
+        }
+
+        // 5. UI Updates & Store Logic
+        function updateDashboardUI() {
+            if(!user) return;
+            
+            // Text updates
             document.getElementById('dashName').innerText = user.name;
             document.getElementById('dashCoins').innerText = user.coins;
             document.getElementById('dashAvatar').innerText = user.avatar;
             document.getElementById('dashTitle').innerText = `[${user.title}]`;
-            document.getElementById('appBody').className = user.theme;
             
-            // Quest & History
-            let q = user.quest; document.getElementById('questProg').innerText = q.plays;
-            let btn = document.getElementById('claimBtn');
-            if(q.plays>=3 && !q.claimed) { btn.disabled=false; btn.innerText="Claim 10 Coins!"; }
-            else { btn.disabled=true; btn.innerText = q.claimed ? "Claimed" : "Play More"; }
+            // Theme update
+            document.getElementById('appBody').className = user.theme || 'theme-classic';
             
-            document.getElementById('histW').innerText = user.history.w;
-            document.getElementById('histL').innerText = user.history.l;
-            document.getElementById('histD').innerText = user.history.d;
+            // Quests
+            let q = user.quest || {plays:0, claimed:false};
+            document.getElementById('questProg').innerText = q.plays;
+            let claimBtn = document.getElementById('claimBtn');
+            
+            if(q.plays >= 3 && !q.claimed) { 
+                claimBtn.disabled = false; 
+                claimBtn.innerText = "🎁 CLAIM 10 COINS NOW!"; 
+                claimBtn.style.opacity = "1";
+            } else if (q.claimed) { 
+                claimBtn.disabled = true; 
+                claimBtn.innerText = "✅ REWARD CLAIMED"; 
+                claimBtn.style.opacity = "0.5";
+            } else { 
+                claimBtn.disabled = true; 
+                claimBtn.innerText = "🔒 PLAY MORE TO CLAIM"; 
+                claimBtn.style.opacity = "0.5";
+            }
+            
+            // History
+            let h = user.history || {w:0, l:0, d:0};
+            document.getElementById('histW').innerText = h.w;
+            document.getElementById('histL').innerText = h.l;
+            document.getElementById('histD').innerText = h.d;
         }
 
-        function openShop(cat) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab'+cat.charAt(0).toUpperCase()+cat.slice(1)).classList.add('active');
-            let list = document.getElementById('shopList'); list.innerHTML = "";
+        function openShop(category) {
+            // Tab styling
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            let activeTabId = 'tab' + category.charAt(0).toUpperCase() + category.slice(1);
+            document.getElementById(activeTabId).classList.add('active');
             
-            STORE[cat].forEach(item => {
-                let owned = (user.owned || []).includes(item.id);
-                let active = (user.avatar===item.icon || user.theme===item.id || user.title===item.name.replace(/[\[\]]/g,'') || user.skin===item.id);
-                let btn = active ? `<button class="btn btn-dark" style="margin:0;width:80px;padding:5px;">Equipped</button>` :
-                          owned ? `<button class="btn btn-gold" style="margin:0;width:80px;padding:5px;" onclick="equipItem('${cat}','${item.id}')">Equip</button>` :
-                          `<button class="btn btn-gold" style="margin:0;width:80px;padding:5px;" onclick="buyItem('${cat}','${item.id}',${item.price})">🪙 ${item.price}</button>`;
+            let list = document.getElementById('shopList');
+            list.innerHTML = "";
+            
+            STORE[category].forEach(item => {
+                let isOwned = (user.owned || []).includes(item.id);
+                let cleanTitle = item.name.replace(/[\[\]]/g,''); // For titles
+                let isActive = (user.avatar === item.icon || user.theme === item.id || user.title === cleanTitle || user.skin === item.id);
                 
-                list.innerHTML += `<div class="shop-item"><div><span style="font-size:24px;">${item.icon}</span><br><small>${item.name}</small></div>${btn}</div>`;
+                let btnHtml = "";
+                if(isActive) {
+                    btnHtml = `<button class="btn btn-dark" style="margin:0; width:90px; padding:8px; font-size:12px;">EQUIPPED</button>`;
+                } else if(isOwned) {
+                    btnHtml = `<button class="btn btn-gold" style="margin:0; width:90px; padding:8px; font-size:12px;" onclick="equipStoreItem('${category}','${item.id}')">EQUIP</button>`;
+                } else {
+                    btnHtml = `<button class="btn btn-gold" style="margin:0; width:90px; padding:8px; font-size:12px;" onclick="purchaseStoreItem('${category}','${item.id}',${item.price})">🪙 ${item.price}</button>`;
+                }
+                
+                let displayIcon = item.icon;
+                if(category === 'skins') displayIcon = `${item.x} vs ${item.o}`;
+                
+                list.innerHTML += `
+                    <div class="shop-item">
+                        <div style="display:flex; flex-direction:column; gap:5px;">
+                            <span style="font-size:26px;">${displayIcon}</span>
+                            <span style="font-size:14px; font-weight:700; color:var(--text-secondary);">${item.name}</span>
+                        </div>
+                        ${btnHtml}
+                    </div>
+                `;
             });
             showScreen('shopScreen');
         }
-        function buyItem(cat, id, price) {
-            if(user.coins >= price) { user.coins-=price; user.owned.push(id); saveDB(); openShop(cat); alert("Purchased!"); }
-            else alert("Not enough coins!");
+
+        function purchaseStoreItem(category, id, price) {
+            if(user.coins >= price) {
+                user.coins -= price;
+                if(!user.owned) user.owned = [];
+                user.owned.push(id);
+                saveUserToDatabase();
+                openShop(category);
+                alert("🎉 Purchase Successful!");
+            } else {
+                alert("❌ Not enough coins!");
+            }
         }
-        function buyItem(cat, id, price) {
-            if(user.coins >= price) { user.coins-=price; user.owned.push(id); saveDB(); openShop(cat); alert("Purchased!"); }
-            else alert("Not enough coins!");
-        }
-        function equipItem(cat, id) {
-            let item = STORE[cat].find(i=>i.id===id);
-            if(cat==='avatars') user.avatar = item.icon;
-            if(cat==='themes') user.theme = item.id;
-            if(cat==='titles') user.title = item.name.replace(/[\[\]]/g,'');
-            if(cat==='skins') user.skin = item.id;
-            saveDB(); openShop(cat);
+
+        function equipStoreItem(category, id) {
+            let item = STORE[category].find(i => i.id === id);
+            if(category === 'avatars') user.avatar = item.icon;
+            if(category === 'themes') user.theme = item.id;
+            if(category === 'titles') user.title = item.name.replace(/[\[\]]/g,'');
+            if(category === 'skins') user.skin = item.id;
+            
+            saveUserToDatabase();
+            openShop(category);
         }
         
-        function claimQuest() { user.coins+=10; user.quest.claimed=true; saveDB(); }
+        function openQuests() {
+            updateDashboardUI();
+            showScreen('questScreen');
+        }
+
+        function claimQuest() {
+            user.coins += 10;
+            user.quest.claimed = true;
+            saveUserToDatabase();
+            alert("🎉 10 Coins Claimed Successfully!");
+        }
+
+        function openHistory() {
+            updateDashboardUI();
+            showScreen('historyScreen');
+        }
+
         function loadLeaderboard() {
-            db.ref('users').orderByChild('coins').limitToLast(10).once('value', snap => {
-                let arr=[], html=""; snap.forEach(c => { if(!c.val().isBanned) arr.push(c.val()); });
-                arr.reverse().forEach((p,i) => { html+=`<div class="shop-item"><span style="font-weight:bold;">#${i+1} ${p.avatar} [${p.title}] ${p.name}</span> <strong style="color:var(--gold);">🪙 ${p.coins}</strong></div>`;});
-                document.getElementById('leaderboardList').innerHTML=html; showScreen('leaderboardScreen');
+            showScreen('leaderboardScreen');
+            document.getElementById('leaderboardList').innerHTML = "<p style='padding:20px;'>Loading Top Players...</p>";
+            
+            db.ref('users').orderByChild('coins').limitToLast(10).once('value', snapshot => {
+                let players = [];
+                snapshot.forEach(child => {
+                    let p = child.val();
+                    if(!p.isBanned) players.push(p);
+                });
+                
+                players.reverse(); // Highest coins first
+                let html = "";
+                
+                players.forEach((p, index) => {
+                    let rankIcon = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index+1}`;
+                    let title = p.title ? `[${p.title}]` : '[NEWBIE]';
+                    let avatar = p.avatar || '👤';
+                    
+                    html += `
+                        <div class="shop-item" style="padding:15px 10px;">
+                            <span style="font-weight:800; font-size:14px; display:flex; align-items:center; gap:8px;">
+                                <span style="font-size:20px;">${rankIcon}</span> 
+                                <span style="font-size:20px;">${avatar}</span> 
+                                <span><span style="color:var(--accent-main); font-size:10px;">${title}</span><br>${p.name}</span>
+                            </span> 
+                            <strong style="color:var(--accent-main); font-size:18px;">🪙 ${p.coins}</strong>
+                        </div>
+                    `;
+                });
+                document.getElementById('leaderboardList').innerHTML = html;
             });
         }
 
-        // --- ADMIN ---
+        // 6. Admin Panel Functions
         function adminAction(type) {
-            if(user.tgId !== ADMIN_TG_ID) return;
-            if(type==='coins') {
-                let id = document.getElementById('admId').value, amt = parseInt(document.getElementById('admCoins').value);
-                db.ref('users/'+id).once('value', s=>{ if(s.exists()){ db.ref('users/'+id).update({coins: s.val().coins+amt}); alert("Updated!"); }});
+            if (user.tgId !== ADMIN_TG_ID) return alert("Unauthorized access!");
+            
+            if (type === 'coins') {
+                let id = document.getElementById('admId').value;
+                let amt = parseInt(document.getElementById('admCoins').value);
+                
+                if (!id || isNaN(amt)) return alert("Enter valid ID and Amount");
+                
+                db.ref('users/' + id).once('value', s => {
+                    if (s.exists()) {
+                        let newTotal = s.val().coins + amt;
+                        db.ref('users/' + id).update({ coins: newTotal });
+                        alert(`✅ Success! Updated balance for ${id} is ${newTotal}`);
+                        document.getElementById('admId').value = "";
+                        document.getElementById('admCoins').value = "";
+                    } else {
+                        alert("❌ User ID not found in database.");
+                    }
+                });
             }
-            if(type==='broadcast') {
+            
+            if (type === 'broadcast') {
                 let msg = document.getElementById('admMsg').value;
-                db.ref('users').once('value', s=>{ s.forEach(c=>{ fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${c.val().tgId}&text=📢 ${msg}`); }); alert("Sent!"); });
+                if(!msg) return alert("Please type a message.");
+                
+                db.ref('users').once('value', s => {
+                    let counter = 0;
+                    s.forEach(child => {
+                        let uid = child.val().tgId;
+                        let text = encodeURIComponent(`📢 *MESSAGE FROM ADMIN*\n\n${msg}`);
+                        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${uid}&text=${text}&parse_mode=Markdown`);
+                        counter++;
+                    });
+                    alert(`✅ Broadcast sent to ${counter} users!`);
+                    document.getElementById('admMsg').value = "";
+                });
             }
         }
 
-        // --- OX GAME (Super AI & Undo) ---
-        let board=["","","","","","","","",""], historyBoards=[], gameActive=false, aiWait=false;
-        const winLines = [[0,1,2,'line-row-0'],[3,4,5,'line-row-1'],[6,7,8,'line-row-2'],[0,3,6,'line-col-0'],[1,4,7,'line-col-1'],[2,5,8,'line-col-2'],[0,4,8,'line-diag-0'],[2,4,6,'line-diag-1']];
+        // 7. OX GAME ENGINE (Tic-Tac-Toe with Super AI & Undo)
+        let boardState = ["", "", "", "", "", "", "", "", ""];
+        let historyBoards = []; // For Undo functionality
+        let gameIsActive = false;
+        let isAiThinking = false;
         
-        function startOXGame() { showScreen('oxScreen'); resetOXGame(); document.getElementById('oxCoinDisp').innerText = user.coins; }
+        // Winning combinations + corresponding line classes
+        const winLinesData = [
+            [0,1,2,'line-row-0'], [3,4,5,'line-row-1'], [6,7,8,'line-row-2'],
+            [0,3,6,'line-col-0'], [1,4,7,'line-col-1'], [2,5,8,'line-col-2'],
+            [0,4,8,'line-diag-0'], [2,4,6,'line-diag-1']
+        ];
         
-        function drawOX() {
-            let b=document.getElementById('oxBoard'); b.innerHTML=""; let s = STORE.skins.find(x=>x.id===user.skin) || STORE.skins[0];
-            board.forEach((v,i) => {
-                let c = document.createElement('div'); c.className="cell";
-                c.innerText = v==='X'?s.x:v==='O'?s.o:''; c.style.color = v==='X'?"#ef4444":"#3b82f6";
-                c.onclick = ()=>playOX(i); b.appendChild(c);
+        function startOXGame() { 
+            showScreen('oxScreen'); 
+            resetOXGame(); 
+            document.getElementById('oxCoinDisp').innerText = user.coins; 
+        }
+        
+        function drawOXBoard() {
+            let boardDiv = document.getElementById('oxBoard');
+            boardDiv.innerHTML = ""; 
+            
+            // Get active skin symbols
+            let currentSkin = STORE.skins.find(x => x.id === user.skin) || STORE.skins[0];
+            
+            boardState.forEach((val, index) => {
+                let cell = document.createElement('div');
+                cell.className = "cell";
+                
+                if (val === 'X') {
+                    cell.innerText = currentSkin.x;
+                    cell.style.color = "var(--danger)";
+                } else if (val === 'O') {
+                    cell.innerText = currentSkin.o;
+                    cell.style.color = "#3b82f6"; // Blueish for AI
+                } else {
+                    cell.innerText = "";
+                }
+                
+                cell.onclick = () => handlePlayerMove(index);
+                boardDiv.appendChild(cell);
             });
         }
 
-        function playOX(i) {
-            if(board[i]==="" && gameActive && !aiWait) {
-                historyBoards.push([...board]); // Save state for undo
-                board[i]="X"; if(checkWin()) return;
-                aiWait=true; document.getElementById('oxStatus').innerText="🤖 AI Thinking...";
-                setTimeout(()=>{ aiMoveOX(); aiWait=false; }, 400);
+        function handlePlayerMove(index) {
+            if (boardState[index] === "" && gameIsActive && !isAiThinking) {
+                // Save current state for Undo feature
+                historyBoards.push([...boardState]); 
+                
+                boardState[index] = "X"; 
+                if (checkGameStatus()) return; // Stop if game over
+                
+                isAiThinking = true; 
+                document.getElementById('oxStatus').innerText = "🤖 AI IS THINKING...";
+                
+                // Add slight delay for realism
+                setTimeout(() => { 
+                    executeSuperAiMove(); 
+                    isAiThinking = false; 
+                }, 400);
             }
         }
         
         function undoMove() {
-            if(historyBoards.length>0 && gameActive && user.coins>=5) {
-                user.coins-=5; document.getElementById('oxCoinDisp').innerText = user.coins; saveDB();
-                board = historyBoards.pop(); drawOX();
-            } else if(user.coins<5) alert("Not enough coins for Undo!");
-        }
-
-        // Unbeatable Minimax
-        function aiMoveOX() {
-            let best=-Infinity, move;
-            for(let i=0; i<9; i++) { if(board[i]==="") { board[i]="O"; let score=minimax(board,0,false); board[i]=""; if(score>best){best=score;move=i;} } }
-            if(move!==undefined){ board[move]="O"; checkWin(); }
-        }
-        function minimax(b, d, max) {
-            let w=checkW(b); if(w==="O") return 10-d; if(w==="X") return d-10; if(!b.includes("")) return 0;
-            let best = max ? -Infinity : Infinity;
-            for(let i=0; i<9; i++) {
-                if(b[i]==="") { b[i]=max?"O":"X"; let s=minimax(b,d+1,!max); b[i]=""; best = max ? Math.max(best,s) : Math.min(best,s); }
-            } return best;
-        }
-        function checkW(b) { for(let [a,x,c] of winLines) { if(b[a]&&b[a]===b[x]&&b[a]===b[c]) return b[a]; } return null; }
-
-        function checkWin() {
-            let w = checkW(board);
-            if(w) {
-                gameActive=false; user.quest.plays++; 
-                let wl = winLines.find(([a,b,c])=>board[a]===w&&board[b]===w&&board[c]===w);
-                if(wl) { let line=document.getElementById('winLine'); line.className=`win-line ${wl[3]}`; line.style.display="block"; }
-                if(w==="X") { user.coins++; user.history.w++; document.getElementById('oxStatus').innerText="🎉 YOU WIN! +1 Coin"; } 
-                else { user.history.l++; document.getElementById('oxStatus').innerText="💀 AI WINS!"; }
-                saveDB(); document.getElementById('oxPlayAgain').style.display="block"; return true;
-            } else if(!board.includes("")) {
-                gameActive=false; user.quest.plays++; user.history.d++; saveDB();
-                document.getElementById('oxStatus').innerText="🤝 DRAW!";
-                document.getElementById('oxPlayAgain').style.display="block"; return true;
+            if (historyBoards.length > 0 && gameIsActive && user.coins >= 5) {
+                user.coins -= 5; 
+                document.getElementById('oxCoinDisp').innerText = user.coins; 
+                saveUserToDatabase();
+                
+                // Revert to previous state
+                boardState = historyBoards.pop(); 
+                drawOXBoard();
+            } else if (user.coins < 5) {
+                alert("❌ Not enough coins to use Undo! (Requires 5 Coins)");
             }
-            document.getElementById('oxStatus').innerText="Your Turn"; drawOX(); return false;
         }
 
-        function resetOXGame() { board=["","","","","","","","",""]; historyBoards=[]; gameActive=true; aiWait=false; document.getElementById('winLine').style.display="none"; document.getElementById('oxPlayAgain').style.display="none"; document.getElementById('oxStatus').innerText="Your Turn"; drawOX(); }
+        // --- THE UNBEATABLE MINIMAX ALGORITHM ---
+        function executeSuperAiMove() {
+            let bestScore = -Infinity;
+            let bestMove;
+            
+            for (let i = 0; i < 9; i++) {
+                if (boardState[i] === "") {
+                    boardState[i] = "O";
+                    let currentScore = minimaxAlgorithm(boardState, 0, false);
+                    boardState[i] = "";
+                    if (currentScore > bestScore) {
+                        bestScore = currentScore;
+                        bestMove = i;
+                    }
+                }
+            }
+            
+            if (bestMove !== undefined) {
+                boardState[bestMove] = "O";
+                checkGameStatus();
+            }
+        }
+
+        function minimaxAlgorithm(simBoard, depth, isMaximizingPlayer) {
+            let winner = getWinnerSilent(simBoard);
+            if (winner === "O") return 10 - depth;
+            if (winner === "X") return depth - 10;
+            if (!simBoard.includes("")) return 0; // Tie
+            
+            if (isMaximizingPlayer) {
+                let maxEval = -Infinity;
+                for (let i = 0; i < 9; i++) {
+                    if (simBoard[i] === "") {
+                        simBoard[i] = "O";
+                        let eval = minimaxAlgorithm(simBoard, depth + 1, false);
+                        simBoard[i] = "";
+                        maxEval = Math.max(maxEval, eval);
+                    }
+                }
+                return maxEval;
+            } else {
+                let minEval = Infinity;
+                for (let i = 0; i < 9; i++) {
+                    if (simBoard[i] === "") {
+                        simBoard[i] = "X";
+                        let eval = minimaxAlgorithm(simBoard, depth + 1, true);
+                        simBoard[i] = "";
+                        minEval = Math.min(minEval, eval);
+                    }
+                }
+                return minEval;
+            }
+        }
+
+        function getWinnerSilent(b) {
+            for (let [a, x, c] of winLinesData) {
+                if (b[a] && b[a] === b[x] && b[a] === b[c]) return b[a];
+            }
+            return null;
+        }
+
+        function checkGameStatus() {
+            let winner = getWinnerSilent(boardState);
+            
+            if (winner) {
+                gameIsActive = false; 
+                
+                // Update Quest Plays
+                if(!user.quest) user.quest = {plays:0, claimed:false, date:todayDateStr};
+                user.quest.plays++; 
+                
+                // Draw the winning line
+                let winLineInfo = winLinesData.find(([a,b,c]) => boardState[a]===winner && boardState[b]===winner && boardState[c]===winner);
+                if (winLineInfo) { 
+                    let lineDiv = document.getElementById('winLine'); 
+                    lineDiv.className = `win-line ${winLineInfo[3]}`; 
+                    lineDiv.style.display = "block"; 
+                }
+                
+                // Assign Rewards and History
+                if(!user.history) user.history = {w:0, l:0, d:0};
+                
+                if (winner === "X") { 
+                    user.coins++; 
+                    user.history.w++; 
+                    document.getElementById('oxStatus').innerHTML = "🎉 YOU WIN! +1 COIN"; 
+                    document.getElementById('oxCoinDisp').innerText = user.coins;
+                } else { 
+                    user.history.l++; 
+                    document.getElementById('oxStatus').innerHTML = "💀 AI DESTROYED YOU!"; 
+                }
+                
+                saveUserToDatabase(); 
+                document.getElementById('oxPlayAgain').style.display = "block"; 
+                return true;
+                
+            } else if (!boardState.includes("")) {
+                // Draw Condition
+                gameIsActive = false; 
+                if(!user.quest) user.quest = {plays:0, claimed:false, date:todayDateStr};
+                user.quest.plays++; 
+                
+                if(!user.history) user.history = {w:0, l:0, d:0};
+                user.history.d++; 
+                
+                saveUserToDatabase();
+                
+                document.getElementById('oxStatus').innerHTML = "🤝 IT'S A TIE!";
+                document.getElementById('oxPlayAgain').style.display = "block"; 
+                return true;
+            }
+            
+            document.getElementById('oxStatus').innerText = "YOUR TURN"; 
+            drawOXBoard(); 
+            return false;
+        }
+
+        function resetOXGame() { 
+            boardState = ["", "", "", "", "", "", "", "", ""]; 
+            historyBoards = []; 
+            gameIsActive = true; 
+            isAiThinking = false; 
+            
+            document.getElementById('winLine').style.display = "none"; 
+            document.getElementById('oxPlayAgain').style.display = "none"; 
+            document.getElementById('oxStatus').innerText = "YOUR TURN"; 
+            drawOXBoard(); 
+        }
+
     </script>
 </body>
 </html>
-     
