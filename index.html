@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KUMAR GAME - ESPORTS EDITION</title>
+    <title>KUMAR GAME - ESPORTS ELITE</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -14,41 +14,26 @@
            1. CSS VARIABLES & ESPORTS THEME (FREE FIRE STYLE)
            ========================================================================== */
         :root {
-            --bg-color: #050505;
-            --box-bg: rgba(15, 15, 20, 0.95);
-            --border-color: #333;
-            --text-primary: #ffffff;
-            --text-secondary: #9ca3af;
-            --accent-main: #ff4500; /* Esports Orange/Red */
-            --accent-hover: #ff6347;
+            --bg-color: #050505; --box-bg: rgba(15, 15, 20, 0.95); --border-color: #333;
+            --text-primary: #ffffff; --text-secondary: #9ca3af;
+            --accent-main: #ff4500; --accent-hover: #ff6347;
             --gradient-btn: linear-gradient(135deg, #ff4500, #ff8c00);
-            --danger: #ff0000;
-            --success: #00ff00;
-            --shadow-glow: 0 0 20px rgba(255, 69, 0, 0.4);
-            
-            /* Rank Colors */
-            --bronze: #cd7f32;
-            --silver: #c0c0c0;
-            --gold: #ffd700;
-            --platinum: #00ced1;
-            --diamond: #b9f2ff;
-            --heroic: #ff0055;
-            --grandmaster: #ff00ff;
+            --danger: #ff0000; --success: #00ff00;
+            --bronze: #cd7f32; --silver: #c0c0c0; --gold: #ffd700;
+            --platinum: #00ced1; --diamond: #b9f2ff; --heroic: #ff0055; --grandmaster: #ff00ff;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.3s ease; font-family: 'Poppins', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
         
         body {
             background-color: var(--bg-color); color: var(--text-primary);
             display: flex; justify-content: center; align-items: flex-start;
-            min-height: 100vh; padding: 20px; overflow-y: auto;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(255, 69, 0, 0.08), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(0, 255, 255, 0.05), transparent 25%);
+            min-height: 100vh; padding: 20px; overflow-x: hidden;
+            background-image: radial-gradient(circle at 15% 50%, rgba(255, 69, 0, 0.08), transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(0, 255, 255, 0.05), transparent 25%);
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--accent-main); border-radius: 10px; }
 
@@ -66,10 +51,10 @@
            2. FORM ELEMENTS
            ========================================================================== */
         label { display: block; text-align: left; color: var(--text-secondary); font-size: 12px; font-weight: 700; margin-top: 15px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        input { width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.7); border: 2px solid #333; border-radius: 12px; color: #fff; font-size: 15px; outline: none; margin-bottom: 15px; font-weight: 600; }
+        input { width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.7); border: 2px solid #333; border-radius: 12px; color: #fff; font-size: 15px; outline: none; margin-bottom: 15px; font-weight: 600; transition: 0.3s;}
         input:focus { border-color: var(--accent-main); box-shadow: 0 0 15px rgba(255, 69, 0, 0.3); }
         
-        .btn { width: 100%; padding: 18px; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px; }
+        .btn { width: 100%; padding: 18px; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
         .btn-gold { background: var(--gradient-btn); color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); box-shadow: 0 5px 20px rgba(255, 69, 0, 0.4); }
         .btn-gold:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 30px rgba(255, 69, 0, 0.6); }
         .btn-dark { background: transparent; border: 2px solid var(--accent-main); color: var(--accent-main); }
@@ -83,32 +68,27 @@
         /* ==========================================================================
            3. ESPORTS DASHBOARD & PROFILE
            ========================================================================== */
-        .profile-card {
-            background: linear-gradient(145deg, #111, #0a0a0a); padding: 25px;
-            border-radius: 20px; border: 1px solid #333; margin-bottom: 25px;
-            position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-        }
-        
-        /* Rank Badge Background Glow */
+        .profile-card { background: linear-gradient(145deg, #111, #0a0a0a); padding: 25px; border-radius: 20px; border: 1px solid #333; margin-bottom: 25px; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
         .rank-glow { position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; border-radius: 50%; filter: blur(50px); z-index: 0; opacity: 0.3; }
-
         .profile-header { display: flex; align-items: center; position: relative; z-index: 1; text-align: left;}
         
-        /* Custom File Upload for Avatar */
         .avatar-wrapper { position: relative; width: 85px; height: 85px; margin-right: 20px; cursor: pointer; }
         .profile-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid #fff; background: #222; display: flex; justify-content: center; align-items: center; font-size: 30px;}
         .avatar-edit-icon { position: absolute; bottom: 0; right: 0; background: var(--accent-main); width: 25px; height: 25px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; border: 2px solid #000; }
         #avatarUpload { display: none; }
 
         .profile-name { font-size: 22px; font-weight: 900; color: #fff; letter-spacing: 1px; }
-        
-        /* Free Fire Style Rank Badge */
         .rank-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 900; letter-spacing: 1px; margin-top: 5px; text-transform: uppercase; color: #000; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .coin-display { font-size: 26px; font-weight: 900; color: #fff; margin-top: 10px; }
+        
+        /* Refresh Button Area */
+        .balance-area { display: flex; align-items: center; gap: 15px; margin-top: 10px; }
+        .coin-display { font-size: 26px; font-weight: 900; color: #fff; }
         .coin-display span { color: var(--gold); }
+        .refresh-btn { background: #222; border: 1px solid #444; color: #fff; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; font-size: 16px;}
+        .refresh-btn:hover { background: var(--accent-main); border-color: #fff; transform: rotate(180deg); }
 
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 25px 0; }
-        .menu-card { background: rgba(0,0,0,0.5); padding: 20px 10px; border-radius: 15px; border: 1px solid #333; cursor: pointer; font-size: 14px; font-weight: 800; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .menu-card { background: rgba(0,0,0,0.5); padding: 20px 10px; border-radius: 15px; border: 1px solid #333; cursor: pointer; font-size: 14px; font-weight: 800; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: 0.3s;}
         .menu-card:hover { background: rgba(255,69,0,0.1); border-color: var(--accent-main); transform: translateY(-5px); }
         .menu-icon { font-size: 32px; }
 
@@ -117,93 +97,119 @@
            ========================================================================== */
         .list-container { max-height: 400px; overflow-y: auto; text-align: left; padding-right: 5px; }
         .list-item { background: rgba(0,0,0,0.6); padding: 15px; border: 1px solid #333; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        
         .rank-number { font-size: 20px; font-weight: 900; color: #555; width: 30px; }
         .leaderboard-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #555; margin-right: 10px; }
 
         /* ==========================================================================
-           5. GAME BOARDS (OX & RPS)
+           5. OX GAME (FIXED LINE CSS)
            ========================================================================== */
         .board-wrapper { position: relative; display: inline-block; margin: 25px 0; }
-        .board { display: grid; grid-template-columns: repeat(3, 90px); gap: 10px; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 20px; border: 1px solid #333; }
+        .board { position: relative; display: grid; grid-template-columns: repeat(3, 90px); gap: 10px; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 20px; border: 1px solid #333; z-index: 1;}
         .cell { width: 90px; height: 90px; background: #111; font-size: 50px; display: flex; align-items: center; justify-content: center; border-radius: 15px; cursor: pointer; border: 2px solid #222; }
-        .cell:active { transform: scale(0.9); }
+        .cell:active { transform: scale(0.95); }
         
-        /* Flawless Winning Line */
-        .win-line { position: absolute; background: var(--success); border-radius: 10px; z-index: 10; display: none; box-shadow: 0 0 20px var(--success); opacity: 0.9; }
-        .line-row-0 { top: 16%; left: 2%; width: 96%; height: 6px; }
-        .line-row-1 { top: 50%; left: 2%; width: 96%; height: 6px; transform: translateY(-50%); }
-        .line-row-2 { top: 84%; left: 2%; width: 96%; height: 6px; }
-        .line-col-0 { left: 16%; top: 2%; height: 96%; width: 6px; }
-        .line-col-1 { left: 50%; top: 2%; height: 96%; width: 6px; transform: translateX(-50%); }
-        .line-col-2 { left: 84%; top: 2%; height: 96%; width: 6px; }
-        .line-diag-0 { top: 49%; left: -5%; width: 110%; height: 6px; transform: rotate(45deg); }
-        .line-diag-1 { top: 49%; left: -5%; width: 110%; height: 6px; transform: rotate(-45deg); }
+        /* Perfect Centered Winning Lines */
+        .win-line { position: absolute; background: var(--success); border-radius: 10px; z-index: 10; display: none; box-shadow: 0 0 20px var(--success); opacity: 0.85; transition: 0.3s; }
+        
+        /* Box total width: 15px padding + 3*90px + 2*10px gap + 15px padding = 320px */
+        .line-row-0 { top: 18.7%; left: 5%; width: 90%; height: 6px; }
+        .line-row-1 { top: 50%; left: 5%; width: 90%; height: 6px; transform: translateY(-50%); }
+        .line-row-2 { top: 81.3%; left: 5%; width: 90%; height: 6px; }
+        
+        .line-col-0 { left: 18.7%; top: 5%; height: 90%; width: 6px; }
+        .line-col-1 { left: 50%; top: 5%; height: 90%; width: 6px; transform: translateX(-50%); }
+        .line-col-2 { left: 81.3%; top: 5%; height: 90%; width: 6px; }
+        
+        .line-diag-0 { top: 49%; left: -2%; width: 104%; height: 6px; transform: rotate(45deg); }
+        .line-diag-1 { top: 49%; left: -2%; width: 104%; height: 6px; transform: rotate(-45deg); }
 
-        /* Rock Paper Scissors Game UI */
-        .rps-arena { display: flex; justify-content: space-between; align-items: center; margin: 30px 0; padding: 20px; background: #111; border-radius: 20px; border: 1px solid #333; }
-        .rps-player { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .rps-choice-display { font-size: 60px; background: #222; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; border-radius: 50%; border: 3px solid #444; }
-        .rps-controls { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
-        .rps-btn { font-size: 35px; background: #222; border: 2px solid #444; border-radius: 50%; width: 70px; height: 70px; cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; }
-        .rps-btn:hover { background: var(--accent-main); border-color: #fff; transform: scale(1.1); }
-        
         .powerup-bar { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); padding: 15px 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #333; }
 
-        /* Screen Animations */
+        /* ==========================================================================
+           6. DOTS & BOXES GAME (NEW CSS)
+           ========================================================================== */
+        .db-container { position: relative; margin: 20px auto; width: 280px; height: 280px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border: 1px solid #333; }
+        .db-board { position: relative; width: 240px; height: 240px; margin: 0 auto; }
+        .db-dot { position: absolute; width: 14px; height: 14px; background: #666; border-radius: 50%; transform: translate(-50%, -50%); z-index: 5; box-shadow: 0 0 5px #000; }
+        
+        .db-line-h { position: absolute; height: 16px; background: rgba(255,255,255,0.05); cursor: pointer; transform: translateY(-50%); border-radius: 8px; z-index: 2; transition: 0.2s;}
+        .db-line-v { position: absolute; width: 16px; background: rgba(255,255,255,0.05); cursor: pointer; transform: translateX(-50%); border-radius: 8px; z-index: 2; transition: 0.2s;}
+        .db-line-h:hover, .db-line-v:hover { background: rgba(255,255,255,0.2); }
+        
+        .line-p1 { background: var(--success) !important; box-shadow: 0 0 10px var(--success); }
+        .line-p2 { background: var(--danger) !important; box-shadow: 0 0 10px var(--danger); }
+        
+        .db-box { position: absolute; display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: 900; z-index: 1; opacity: 0; transition: 0.3s; border-radius: 10px;}
+        .box-p1 { background: rgba(0, 255, 0, 0.2); color: var(--success); opacity: 1; }
+        .box-p2 { background: rgba(255, 0, 0, 0.2); color: var(--danger); opacity: 1; }
+
+        /* ==========================================================================
+           7. SCREEN ANIMATIONS & SPLASH
+           ========================================================================== */
         .screen { display: none; }
         .active-screen { display: block; animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         
-        /* Splash Screen */
-        #splash { position: fixed; top:0; left:0; width:100%; height:100%; background:#050505; z-index:9999; display:flex; flex-direction:column; justify-content:center; align-items:center; transition: opacity 0.5s; }
-        .splash-logo { font-size: 40px; font-weight: 900; color: #fff; letter-spacing: 3px; animation: pulse 1.5s infinite; }
+        /* Ultra Stylish Splash Screen */
+        #splash { position: fixed; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle, #220000 0%, #000000 100%); z-index:9999; display:flex; flex-direction:column; justify-content:center; align-items:center; transition: opacity 0.8s ease-out; }
+        .splash-logo { font-size: 45px; font-weight: 900; color: #fff; letter-spacing: 4px; animation: pulse 1.5s infinite; text-shadow: 0 0 20px rgba(255,69,0,0.8); }
         .splash-logo span { color: var(--accent-main); }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); text-shadow: 0 0 20px var(--accent-main); } 100% { transform: scale(1); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        
+        /* Login Transition Overlay */
+        #loginTransition { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index:9990; display:none; flex-direction:column; justify-content:center; align-items:center; backdrop-filter: blur(10px); }
+        .spinner { width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid var(--accent-main); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
     </style>
 </head>
 <body>
 
-    <!-- ==========================================================================
-         0. SPLASH SCREEN
-         ========================================================================== -->
+    <!-- 0. SPLASH SCREEN -->
     <div id="splash">
         <div class="splash-logo">KUMAR <span>ESPORTS</span></div>
-        <p style="color:#666; margin-top:10px; font-weight:bold; letter-spacing:2px;">LOADING BATTLEFIELD...</p>
+        <p style="color:var(--accent-main); margin-top:15px; font-weight:900; letter-spacing:3px;">INITIALIZING SYSTEM...</p>
     </div>
 
-    <!-- ==========================================================================
-         1. LOGIN SCREEN
-         ========================================================================== -->
+    <!-- 0.1 LOGIN TRANSITION -->
+    <div id="loginTransition">
+        <div class="spinner"></div>
+        <h2 style="color:#fff; font-weight:900; letter-spacing:2px;">AUTHENTICATING...</h2>
+    </div>
+
+    <!-- 1. LOGIN SCREEN (Google Autofill Enabled) -->
     <div class="container screen" id="loginScreen">
         <h1>KUMAR <span>ESPORTS</span></h1>
         <p class="subtitle">Enter the battleground</p>
         
-        <label>TELEGRAM CHAT ID</label>
-        <input type="number" id="loginId" placeholder="e.g. 123456789">
+        <form onsubmit="event.preventDefault(); loginUser();">
+            <label>TELEGRAM CHAT ID</label>
+            <input type="number" id="loginId" autocomplete="username" placeholder="e.g. 123456789" required>
+            
+            <label>ACCOUNT PASSWORD</label>
+            <input type="password" id="loginPass" autocomplete="current-password" placeholder="Enter Password" required>
+            
+            <button type="submit" class="btn btn-gold">LOGIN NOW</button>
+        </form>
         
-        <label>ACCOUNT PASSWORD</label>
-        <input type="password" id="loginPass" placeholder="Enter Password">
-        
-        <button class="btn btn-gold" onclick="loginUser()">LOGIN NOW</button>
         <br>
         <span class="link-text" onclick="showScreen('signupScreen')">Create New Account</span>
     </div>
 
-    <!-- ==========================================================================
-         2. SIGNUP SCREEN
-         ========================================================================== -->
+    <!-- 2. SIGNUP SCREEN -->
     <div class="container screen" id="signupScreen">
         <h1>JOIN <span>THE BATTLE</span></h1>
         
-        <label>GAMER TAG (NAME)</label>
-        <input type="text" id="regName" placeholder="e.g. ProGamer">
-        
-        <label>PASSWORD</label>
-        <input type="password" id="regPass" placeholder="Secure Password">
-        
-        <label>TELEGRAM ID</label>
-        <input type="number" id="regTgId" placeholder="Telegram Chat ID">
+        <form onsubmit="event.preventDefault();">
+            <label>GAMER TAG (NAME)</label>
+            <input type="text" id="regName" autocomplete="name" placeholder="e.g. ProGamer">
+            
+            <label>PASSWORD</label>
+            <input type="password" id="regPass" autocomplete="new-password" placeholder="Secure Password">
+            
+            <label>TELEGRAM ID</label>
+            <input type="number" id="regTgId" autocomplete="username" placeholder="Telegram Chat ID">
+        </form>
         
         <button class="btn btn-dark" onclick="window.open('https://t.me/Kumarotpbot', '_blank')">✈️ 1. START BOT</button>
         <button class="btn btn-gold" id="sendOtpBtn" onclick="sendOTP()">📩 2. SEND OTP</button>
@@ -217,15 +223,13 @@
         <span class="link-text" onclick="showScreen('loginScreen')">Back to Login</span>
     </div>
 
-    <!-- ==========================================================================
-         3. MAIN DASHBOARD (FREE FIRE STYLE)
-         ========================================================================== -->
+    <!-- 3. MAIN DASHBOARD -->
     <div class="container screen" id="homeScreen">
         
         <div class="profile-card" id="profileCardBg">
             <div class="rank-glow" id="rankGlow"></div>
             <div class="profile-header">
-                <!-- Clickable Avatar for Upload -->
+                <!-- Avatar Upload -->
                 <div class="avatar-wrapper" onclick="document.getElementById('avatarUpload').click()">
                     <img src="" id="dashAvatar" class="profile-avatar" alt="DP" onerror="this.style.display='none'; document.getElementById('dashAvatarText').style.display='flex';">
                     <div id="dashAvatarText" class="profile-avatar" style="display:none;">👤</div>
@@ -236,10 +240,15 @@
                 <div>
                     <div class="profile-name" id="dashName">Loading...</div>
                     <div class="rank-badge" id="dashRank">BRONZE I</div>
-                    <div class="coin-display"><span>🪙</span> <span id="dashCoins" style="color:#fff;">0</span></div>
+                    
+                    <!-- REFRESH COIN BUTTON -->
+                    <div class="balance-area">
+                        <div class="coin-display"><span>🪙</span> <span id="dashCoins" style="color:#fff;">0</span></div>
+                        <button class="refresh-btn" onclick="refreshBalance()" title="Refresh Coins">🔄</button>
+                    </div>
                 </div>
             </div>
-            <p style="text-align:left; margin-top:15px; font-size:11px; color:#888; font-weight:bold;">* Play daily to maintain your rank! (-10 Coins for inactivity)</p>
+            <p style="text-align:left; margin-top:15px; font-size:11px; color:#888; font-weight:bold;">* Play daily to maintain rank! (-10 Coins for inactivity)</p>
         </div>
         
         <button class="btn btn-gold" style="font-size: 22px; padding: 22px;" onclick="showScreen('gameSelectScreen')">⚔️ PLAY GAMES</button>
@@ -255,9 +264,7 @@
         <button class="btn btn-danger" onclick="logoutUser()">🚪 LOGOUT</button>
     </div>
 
-    <!-- ==========================================================================
-         4. GAME SELECTION
-         ========================================================================== -->
+    <!-- 4. GAME SELECTION -->
     <div class="container screen" id="gameSelectScreen">
         <h1>BATTLE <span>ARENA</span></h1>
         <p class="subtitle">Choose your battlefield</p>
@@ -266,16 +273,14 @@
             ❌ OX GAME (CLASSIC) ⭕
         </button>
         
-        <button class="btn btn-gold" onclick="startRPSGame()" style="padding: 25px; font-size: 18px; margin-top:20px;">
-            ✊ ROCK PAPER SCISSORS ✌️<br><span style="font-size:12px; font-weight:normal;">(NEW ADDITION!)</span>
+        <button class="btn btn-gold" onclick="startDotsGame()" style="padding: 25px; font-size: 18px; margin-top:20px;">
+            🔲 DOTS & BOXES (NEW) 🔲
         </button>
         
         <button class="btn btn-danger" style="margin-top:30px;" onclick="showScreen('homeScreen')">⬅ Back to Base</button>
     </div>
 
-    <!-- ==========================================================================
-         5. OX GAME (FIXED & FLAWLESS)
-         ========================================================================== -->
+    <!-- 5. OX GAME -->
     <div class="container screen" id="oxScreen">
         <h1>OX <span>CLASSIC</span></h1>
         
@@ -287,76 +292,69 @@
         <p class="subtitle" id="oxStatus" style="color:var(--success); font-size:18px; font-weight:900;">YOUR TURN (🔥)</p>
         
         <div class="board-wrapper">
-            <div id="winLine" class="win-line"></div>
             <div class="board" id="oxBoard"></div>
+            <!-- Win Line is drawn over the board dynamically -->
+            <div id="winLine" class="win-line"></div>
         </div>
         
         <button class="btn btn-gold" id="oxPlayAgain" style="display:none;" onclick="resetOXGame()">🔄 PLAY AGAIN</button>
         <button class="btn btn-danger" style="margin-top:15px;" onclick="showScreen('homeScreen')">🏠 SURRENDER</button>
     </div>
 
-    <!-- ==========================================================================
-         6. ROCK PAPER SCISSORS (NEW GAME!)
-         ========================================================================== -->
-    <div class="container screen" id="rpsScreen">
-        <h1>RPS <span>ARENA</span></h1>
-        <p class="subtitle">Cost: 5 Coins | Reward: 10 Coins</p>
+    <!-- 6. DOTS & BOXES GAME -->
+    <div class="container screen" id="dotsScreen">
+        <h1>DOTS & <span>BOXES</span></h1>
         
-        <div class="powerup-bar" style="justify-content:center;">
-            <span style="font-weight:900; color:#fff;">BALANCE: <span style="color:var(--gold);" id="rpsCoinDisp">0</span></span>
+        <div class="powerup-bar">
+            <span style="font-weight:900; color:var(--success);">YOU: <span id="dotsUserScore">0</span></span>
+            <span style="font-weight:900; color:#fff;">COINS: <span style="color:var(--gold);" id="dotsCoinDisp">0</span></span>
+            <span style="font-weight:900; color:var(--danger);">AI: <span id="dotsAiScore">0</span></span>
         </div>
 
-        <p id="rpsStatus" style="font-size:22px; font-weight:900; color:#fff; margin-bottom:10px;">MAKE YOUR MOVE!</p>
-
-        <div class="rps-arena">
-            <div class="rps-player">
-                <span style="color:var(--success); font-weight:900;">YOU</span>
-                <div class="rps-choice-display" id="rpsUserChoice">❓</div>
-            </div>
-            <div style="font-size:30px; font-weight:900; color:#555;">VS</div>
-            <div class="rps-player">
-                <span style="color:var(--danger); font-weight:900;">AI BOT</span>
-                <div class="rps-choice-display" id="rpsAiChoice">❓</div>
+        <p class="subtitle" id="dotsStatus" style="color:var(--success); font-size:16px; font-weight:900;">YOUR TURN! DRAW A LINE.</p>
+        
+        <div class="db-container">
+            <div class="db-board" id="dbBoard">
+                <!-- Dynamically Generated by JS -->
             </div>
         </div>
-
-        <div class="rps-controls" id="rpsControls">
-            <button class="rps-btn" onclick="playRPS('✊')">✊</button>
-            <button class="rps-btn" onclick="playRPS('🖐️')">🖐️</button>
-            <button class="rps-btn" onclick="playRPS('✌️')">✌️</button>
-        </div>
-
-        <button class="btn btn-gold" id="rpsPlayAgain" style="display:none; margin-top:20px;" onclick="resetRPSGame()">🔄 NEXT ROUND</button>
+        
+        <button class="btn btn-gold" id="dotsPlayAgain" style="display:none; margin-top:20px;" onclick="initDotsGame()">🔄 NEXT MATCH</button>
         <button class="btn btn-danger" style="margin-top:15px;" onclick="showScreen('homeScreen')">🏠 LEAVE ARENA</button>
     </div>
 
-    <!-- ==========================================================================
-         7. DAILY MISSIONS (QUESTS)
-         ========================================================================== -->
+    <!-- 7. PROGRESSIVE MISSIONS (QUESTS) -->
     <div class="container screen" id="questScreen">
-        <h1>DAILY <span>MISSIONS</span></h1>
+        <h1>PROGRESSIVE <span>MISSIONS</span></h1>
         
         <div style="background:#111; padding:25px; border-radius:15px; margin:20px 0; border:1px solid #333;">
-            <h3 style="color:#fff; font-size:18px; margin-bottom:15px; text-transform:uppercase;">🔥 Play 3 Matches</h3>
-            <p style="font-size:16px; margin-bottom:10px; color:#aaa;">Progress: <strong id="questProg" style="color:var(--success); font-size:20px;">0</strong> / 3</p>
-            <p style="font-size:14px; color:var(--gold); font-weight:bold; margin-bottom:20px;">REWARD: +15 COINS</p>
-            <button class="btn btn-gold" id="claimBtn" onclick="claimQuest()" disabled style="opacity:0.5;">🔒 INCOMPLETE</button>
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <span style="color:var(--gold); font-weight:bold; font-size:12px;">LEVEL <span id="qLevel">1</span></span>
+            </div>
+            
+            <h3 id="qTitle" style="color:#fff; font-size:20px; margin-bottom:15px; text-transform:uppercase;">🔥 Play Matches</h3>
+            
+            <!-- Custom Progress Bar -->
+            <div style="width:100%; background:#222; height:15px; border-radius:10px; margin-bottom:15px; overflow:hidden; border:1px solid #444;">
+                <div id="qProgressBar" style="width:0%; height:100%; background:var(--success); transition:0.5s;"></div>
+            </div>
+            
+            <p style="font-size:16px; margin-bottom:10px; color:#aaa;">Progress: <strong id="qProg" style="color:var(--success); font-size:20px;">0</strong> / <span id="qTarget">3</span></p>
+            <p style="font-size:14px; color:var(--gold); font-weight:bold; margin-bottom:20px;">REWARD: +<span id="qReward">10</span> COINS</p>
+            
+            <button class="btn btn-gold" id="claimBtn" onclick="claimProgressiveQuest()" disabled style="opacity:0.5;">🔒 INCOMPLETE</button>
         </div>
         <button class="btn btn-danger" onclick="showScreen('homeScreen')">⬅ BACK</button>
     </div>
 
-    <!-- ==========================================================================
-         8. LEADERBOARD (RANKINGS)
-         ========================================================================== -->
+    <!-- 8. LEADERBOARD -->
     <div class="container screen" id="leaderboardScreen">
         <h1>GLOBAL <span>RANKINGS</span></h1>
         <div class="list-container" id="leaderboardList"></div>
         <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ BACK</button>
     </div>
 
-    <!-- ==========================================================================
-         9. STATS HISTORY
-         ========================================================================== -->
+    <!-- 9. STATS HISTORY -->
     <div class="container screen" id="historyScreen">
         <h1>PLAYER <span>STATS</span></h1>
         <div class="list-container" style="background:#111; padding:25px; border-radius:15px; border:1px solid #333;">
@@ -373,9 +371,7 @@
         <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ BACK</button>
     </div>
 
-    <!-- ==========================================================================
-         10. ADMIN PANEL
-         ========================================================================== -->
+    <!-- 10. ADMIN PANEL -->
     <div class="container screen" id="adminScreen">
         <h1>👑 ADMIN <span>PANEL</span></h1>
         
@@ -391,12 +387,6 @@
             <input type="number" id="admId" placeholder="Enter ID">
             <input type="number" id="admCoins" placeholder="e.g. 100 or -50">
             <button class="btn btn-gold" onclick="adminAction('coins')">UPDATE COINS</button>
-        </div>
-        
-        <div style="background:#111; padding:20px; border-radius:15px; border:1px solid #333; text-align:left;">
-            <h3 style="color:#8b5cf6; font-size:14px; margin-bottom:15px;">📢 BROADCAST MESSAGE</h3>
-            <input type="text" id="admMsg" placeholder="Type message for all bot users...">
-            <button class="btn btn-admin" onclick="adminAction('broadcast')">SEND TO ALL</button>
         </div>
         
         <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ Exit Admin Panel</button>
@@ -428,11 +418,21 @@
         let generatedOTP = null;
         let todayDateStr = new Date().toLocaleDateString();
 
+        // 🟢 PROGRESSIVE TASKS CONFIG
+        const PROGRESSIVE_TASKS = [
+            { level: 1, target: 3, reward: 10, title: "PLAY 3 MATCHES" },
+            { level: 2, target: 5, reward: 20, title: "PLAY 5 MATCHES" },
+            { level: 3, target: 10, reward: 50, title: "PLAY 10 MATCHES" },
+            { level: 4, target: 20, reward: 100, title: "PLAY 20 MATCHES" },
+            { level: 5, target: 50, reward: 300, title: "PLAY 50 MATCHES" },
+            { level: 6, target: 100, reward: 1000, title: "PLAY 100 MATCHES" }
+        ];
+
         // 🟢 SPLASH SCREEN LOGIC
         window.onload = () => {
             setTimeout(() => {
                 document.getElementById('splash').style.opacity = '0';
-                setTimeout(() => { document.getElementById('splash').style.display = 'none'; showScreen('loginScreen'); }, 500);
+                setTimeout(() => { document.getElementById('splash').style.display = 'none'; showScreen('loginScreen'); }, 800);
             }, 1500);
         };
 
@@ -453,13 +453,21 @@
             return { name: "GRANDMASTER", color: "var(--grandmaster)", bg: "rgba(255, 0, 255, 0.2)" };
         }
 
-        // 🟢 SECURITY & DATA FIXER
+        // 🟢 FIX CORRUPT DATA & STATS (No more NaN/undefined)
         function sanitizeUserData(data) {
             data.coins = parseInt(data.coins) || 0;
             data.name = data.name || "Player";
-            data.avatar = data.avatar || ""; // Empty means show default icon
+            data.avatar = data.avatar || "";
+            
+            // Fix History Stats precisely
             if (!data.history) data.history = { w: 0, l: 0, d: 0 };
-            if (!data.quest) data.quest = { plays: 0, claimed: false, date: todayDateStr };
+            data.history.w = (isNaN(parseInt(data.history.w))) ? 0 : parseInt(data.history.w);
+            data.history.l = (isNaN(parseInt(data.history.l))) ? 0 : parseInt(data.history.l);
+            data.history.d = (isNaN(parseInt(data.history.d))) ? 0 : parseInt(data.history.d);
+            
+            // Fix Quests/Tasks
+            if (!data.taskLevel) data.taskLevel = 0;
+            if (!data.taskProgress) data.taskProgress = 0;
             if (!data.lastPlayed) data.lastPlayed = todayDateStr;
             return data;
         }
@@ -472,15 +480,14 @@
             }
         }
 
-        // 🟢 AUTHENTICATION
+        // 🟢 AUTHENTICATION & REFRESH
         function sendOTP() {
             let tgId = document.getElementById("regTgId").value;
             if (!tgId) return alert("Enter Telegram ID!");
             generatedOTP = Math.floor(1000 + Math.random() * 9000); 
-            let msg = encodeURIComponent(`🔒 *KUMAR ESPORTS*\nYour OTP: \`${generatedOTP}\``);
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${tgId}&text=${msg}&parse_mode=Markdown`)
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${tgId}&text=OTP: ${generatedOTP}`)
             .then(res => res.json()).then(data => {
-                if(data.ok) { document.getElementById("otpBox").style.display = "block"; } 
+                if(data.ok) document.getElementById("otpBox").style.display = "block";
                 else alert("Start bot first!");
             });
         }
@@ -496,50 +503,56 @@
 
         function loginUser() {
             let id = document.getElementById('loginId').value, pass = document.getElementById('loginPass').value;
+            if(!id || !pass) return alert("Enter credentials");
+            
+            // Show Transition
+            document.getElementById('loginTransition').style.display = 'flex';
+
             db.ref('users/' + id).once('value', snapshot => {
-                if(snapshot.exists()) {
-                    let data = snapshot.val();
-                    if(data.password === pass) {
-                        if(data.isBanned) return alert("🚫 ACCOUNT BANNED.");
-                        user = sanitizeUserData(data);
-                        
-                        // RANK DECAY (Minus System)
-                        if(user.lastPlayed !== todayDateStr) {
-                            let lastDate = new Date(user.lastPlayed);
-                            let today = new Date();
-                            let diffTime = Math.abs(today - lastDate);
-                            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                setTimeout(() => { // Simulate processing delay for style
+                    document.getElementById('loginTransition').style.display = 'none';
+                    if(snapshot.exists()) {
+                        let data = snapshot.val();
+                        if(data.password === pass) {
+                            if(data.isBanned) return alert("🚫 ACCOUNT BANNED.");
+                            user = sanitizeUserData(data);
                             
-                            if(diffDays > 1) {
-                                user.coins -= 10; // Minus 10 coins for inactivity
-                                if(user.coins < 0) user.coins = 0;
-                                alert("⚠️ Rank Drop! -10 Coins for inactivity.");
+                            // Rank Decay
+                            if(user.lastPlayed !== todayDateStr) {
+                                let lastDate = new Date(user.lastPlayed); let today = new Date();
+                                let diffDays = Math.ceil(Math.abs(today - lastDate) / (1000 * 60 * 60 * 24)); 
+                                if(diffDays > 1) { user.coins = Math.max(0, user.coins - 10); alert("⚠️ Rank Drop! -10 Coins for inactivity."); }
+                                user.lastPlayed = todayDateStr; saveUserToDatabase();
                             }
                             
-                            // Reset Quests
-                            user.quest = { plays: 0, claimed: false, date: todayDateStr };
-                            user.lastPlayed = todayDateStr;
-                            saveUserToDatabase();
-                        }
-                        
-                        updateDashboardUI(); showScreen('homeScreen');
-                        if(id === ADMIN_TG_ID) document.getElementById('adminBtn').style.display = 'block';
-                    } else alert("❌ Incorrect Password!");
-                } else alert("❌ Account not found!");
+                            updateDashboardUI(); showScreen('homeScreen');
+                            if(id === ADMIN_TG_ID) document.getElementById('adminBtn').style.display = 'block';
+                        } else alert("❌ Incorrect Password!");
+                    } else alert("❌ Account not found!");
+                }, 1000);
             });
         }
+
         function logoutUser() { user = null; showScreen('loginScreen'); }
 
-        // 🟢 PROFILE PHOTO UPLOAD (Base64)
+        // Refresh Balance specific function
+        function refreshBalance() {
+            if(!user) return;
+            db.ref('users/' + user.tgId + '/coins').once('value', s => {
+                if(s.exists()) {
+                    user.coins = parseInt(s.val()) || 0;
+                    saveUserToDatabase(); // This will trigger UI update
+                    alert("✅ Balance Synchronized!");
+                }
+            });
+        }
+
         function uploadProfilePhoto(event) {
             const file = event.target.files[0];
             if(file) {
-                if(file.size > 1048576) return alert("Image too large! Max 1MB."); // 1MB limit
+                if(file.size > 1048576) return alert("Image too large! Max 1MB.");
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    user.avatar = e.target.result; // Save Base64 string
-                    saveUserToDatabase();
-                }
+                reader.onload = function(e) { user.avatar = e.target.result; saveUserToDatabase(); }
                 reader.readAsDataURL(file);
             }
         }
@@ -550,35 +563,42 @@
             document.getElementById('dashName').innerText = user.name;
             document.getElementById('dashCoins').innerText = user.coins;
             
-            // Avatar Handle
+            // Avatar
             if(user.avatar && user.avatar.startsWith('data:image')) {
-                document.getElementById('dashAvatar').src = user.avatar;
-                document.getElementById('dashAvatar').style.display = 'block';
-                document.getElementById('dashAvatarText').style.display = 'none';
+                document.getElementById('dashAvatar').src = user.avatar; document.getElementById('dashAvatar').style.display = 'block'; document.getElementById('dashAvatarText').style.display = 'none';
             } else {
-                document.getElementById('dashAvatar').style.display = 'none';
-                document.getElementById('dashAvatarText').style.display = 'flex';
+                document.getElementById('dashAvatar').style.display = 'none'; document.getElementById('dashAvatarText').style.display = 'flex';
             }
 
-            // Rank Handle
+            // Rank
             let rank = getRankDetails(user.coins);
             let rankBadge = document.getElementById('dashRank');
-            rankBadge.innerText = rank.name;
-            rankBadge.style.backgroundColor = rank.bg;
-            rankBadge.style.color = rank.color;
-            rankBadge.style.border = `1px solid ${rank.color}`;
+            rankBadge.innerText = rank.name; rankBadge.style.backgroundColor = rank.bg; rankBadge.style.color = rank.color; rankBadge.style.border = `1px solid ${rank.color}`;
             document.getElementById('rankGlow').style.backgroundColor = rank.color;
 
-            // Quests
-            let q = user.quest; document.getElementById('questProg').innerText = q.plays;
+            // Progressive Quests UI
+            let lvl = user.taskLevel || 0;
+            if(lvl >= PROGRESSIVE_TASKS.length) lvl = PROGRESSIVE_TASKS.length - 1; // Max level cap
+            let curTask = PROGRESSIVE_TASKS[lvl];
+            
+            document.getElementById('qLevel').innerText = curTask.level;
+            document.getElementById('qTitle').innerText = curTask.title;
+            document.getElementById('qProg').innerText = user.taskProgress;
+            document.getElementById('qTarget').innerText = curTask.target;
+            document.getElementById('qReward').innerText = curTask.reward;
+            
+            let percent = (user.taskProgress / curTask.target) * 100;
+            if(percent > 100) percent = 100;
+            document.getElementById('qProgressBar').style.width = percent + "%";
+            
             let claimBtn = document.getElementById('claimBtn');
-            if(q.plays >= 3 && !q.claimed) { 
-                claimBtn.disabled = false; claimBtn.innerText = "🎁 CLAIM 15 COINS"; claimBtn.style.opacity = "1";
-            } else { 
-                claimBtn.disabled = true; claimBtn.innerText = q.claimed ? "✅ CLAIMED" : "🔒 INCOMPLETE"; claimBtn.style.opacity = "0.5";
+            if(user.taskProgress >= curTask.target) {
+                claimBtn.disabled = false; claimBtn.innerText = `🎁 CLAIM ${curTask.reward} COINS`; claimBtn.style.opacity = "1";
+            } else {
+                claimBtn.disabled = true; claimBtn.innerText = "🔒 INCOMPLETE"; claimBtn.style.opacity = "0.5";
             }
             
-            // History
+            // History Stats
             document.getElementById('histW').innerText = user.history.w;
             document.getElementById('histL').innerText = user.history.l;
             document.getElementById('histD').innerText = user.history.d;
@@ -587,7 +607,27 @@
         // 🟢 QUESTS & LEADERBOARD
         function openQuests() { updateDashboardUI(); showScreen('questScreen'); }
         function openHistory() { updateDashboardUI(); showScreen('historyScreen'); }
-        function claimQuest() { user.coins += 15; user.quest.claimed = true; saveUserToDatabase(); alert("🎉 15 Coins Claimed!"); }
+        
+        function updateTaskProgress() {
+            let lvl = user.taskLevel || 0;
+            if(lvl >= PROGRESSIVE_TASKS.length) return; // All tasks completed
+            user.taskProgress++;
+            saveUserToDatabase();
+        }
+
+        function claimProgressiveQuest() {
+            let lvl = user.taskLevel || 0;
+            if(lvl >= PROGRESSIVE_TASKS.length) return;
+            let curTask = PROGRESSIVE_TASKS[lvl];
+            
+            if(user.taskProgress >= curTask.target) {
+                user.coins += curTask.reward;
+                user.taskLevel++; // Move to next level
+                user.taskProgress = 0; // Reset progress for next level
+                saveUserToDatabase();
+                alert(`🎉 Awesome! ${curTask.reward} Coins Claimed. Next level unlocked!`);
+            }
+        }
 
         function loadLeaderboard() {
             showScreen('leaderboardScreen'); document.getElementById('leaderboardList').innerHTML = "<p style='padding:20px;'>Loading Rankings...</p>";
@@ -595,19 +635,13 @@
                 let players = []; snapshot.forEach(child => { if(!child.val().isBanned) players.push(sanitizeUserData(child.val())); });
                 players.reverse(); let html = "";
                 players.forEach((p, index) => {
-                    let rank = getRankDetails(p.coins);
-                    let rankNum = index + 1;
+                    let rank = getRankDetails(p.coins); let rankNum = index + 1;
                     let avatarImg = p.avatar ? `<img src="${p.avatar}" class="leaderboard-avatar">` : `<div class="leaderboard-avatar" style="display:flex; justify-content:center; align-items:center; background:#222; font-size:20px;">👤</div>`;
-                    
                     html += `
                         <div class="list-item" style="border-left: 5px solid ${rank.color};">
                             <div style="display:flex; align-items:center;">
-                                <div class="rank-number">#${rankNum}</div>
-                                ${avatarImg}
-                                <div style="display:flex; flex-direction:column;">
-                                    <span style="font-weight:900; font-size:15px; color:#fff;">${p.name}</span>
-                                    <span style="font-size:10px; font-weight:bold; color:${rank.color};">${rank.name}</span>
-                                </div>
+                                <div class="rank-number">#${rankNum}</div>${avatarImg}
+                                <div style="display:flex; flex-direction:column;"><span style="font-weight:900; font-size:15px; color:#fff;">${p.name}</span><span style="font-size:10px; font-weight:bold; color:${rank.color};">${rank.name}</span></div>
                             </div>
                             <strong style="color:var(--gold); font-size:18px;">🪙 ${p.coins}</strong>
                         </div>`;
@@ -619,44 +653,23 @@
         function adminAction(type) {
             if (user.tgId !== ADMIN_TG_ID) return;
             if (type === 'ban' || type === 'unban') {
-                let id = document.getElementById('admBanId').value;
-                if(!id) return alert("Enter ID");
-                db.ref('users/' + id).update({ isBanned: (type === 'ban') });
-                alert(`User ${type}ned!`); document.getElementById('admBanId').value = "";
+                let id = document.getElementById('admBanId').value; if(!id) return;
+                db.ref('users/' + id).update({ isBanned: (type === 'ban') }); alert(`User ${type}ned!`);
             }
             if (type === 'coins') {
                 let id = document.getElementById('admId').value, amt = parseInt(document.getElementById('admCoins').value);
                 if (!id || isNaN(amt)) return;
                 db.ref('users/' + id).once('value', s => {
-                    if (s.exists()) {
-                        let c = parseInt(s.val().coins) || 0;
-                        db.ref('users/' + id).update({ coins: c + amt });
-                        alert(`Success! Updated balance: ${c + amt}`);
-                    }
-                });
-            }
-            if (type === 'broadcast') {
-                let msg = document.getElementById('admMsg').value; if(!msg) return;
-                db.ref('users').once('value', s => {
-                    s.forEach(child => {
-                        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${child.val().tgId}&text=📢 *ADMIN*\n${encodeURIComponent(msg)}&parse_mode=Markdown`);
-                    }); alert("Broadcast Sent!"); document.getElementById('admMsg').value = "";
+                    if (s.exists()) { let c = parseInt(s.val().coins) || 0; db.ref('users/' + id).update({ coins: c + amt }); alert(`Success! New balance: ${c + amt}`); }
                 });
             }
         }
 
         // ==========================================================================
-        // 🟢 1. OX GAME ENGINE (FLAWLESS LOGIC & FIXED LINE)
+        // 🟢 1. OX GAME ENGINE (FLAWLESS)
         // ==========================================================================
         let oxBoard = ["", "", "", "", "", "", "", "", ""];
         let oxHistory = []; let oxActive = false; let oxAiThinking = false;
-        
-        // Exact Win Lines corresponding to CSS classes
-        const oxWinLines = [
-            [0,1,2,'line-row-0'], [3,4,5,'line-row-1'], [6,7,8,'line-row-2'],
-            [0,3,6,'line-col-0'], [1,4,7,'line-col-1'], [2,5,8,'line-col-2'],
-            [0,4,8,'line-diag-0'], [2,4,6,'line-diag-1']
-        ];
         
         function startOXGame() { showScreen('oxScreen'); resetOXGame(); document.getElementById('oxCoinDisp').innerText = user.coins; }
         
@@ -664,19 +677,23 @@
             let b = document.getElementById('oxBoard'); b.innerHTML = ""; 
             oxBoard.forEach((val, i) => {
                 let cell = document.createElement('div'); cell.className = "cell";
-                if (val === 'X') { cell.innerText = '🔥'; } // Player
-                else if (val === 'O') { cell.innerText = '❄️'; } // AI
+                if (val === 'X') { cell.innerText = '🔥'; cell.style.color="var(--danger)";} 
+                else if (val === 'O') { cell.innerText = '❄️'; cell.style.color="#3b82f6";} 
                 cell.onclick = () => moveOX(i); b.appendChild(cell);
             });
         }
 
         function moveOX(i) {
             if (oxBoard[i] === "" && oxActive && !oxAiThinking) {
-                oxHistory.push([...oxBoard]); oxBoard[i] = "X"; 
-                if (checkWinOX()) return; 
-                oxAiThinking = true; document.getElementById('oxStatus').innerText = "🤖 AI THINKING...";
-                document.getElementById('oxStatus').style.color = "#888";
-                setTimeout(() => { aiMoveOX(); oxAiThinking = false; }, 500);
+                oxHistory.push([...oxBoard]); oxBoard[i] = "X"; drawOX(); // Draw user move immediately
+                
+                // Let DOM update before checking win
+                setTimeout(() => {
+                    if (checkWinOX()) return; 
+                    oxAiThinking = true; document.getElementById('oxStatus').innerText = "🤖 AI THINKING...";
+                    document.getElementById('oxStatus').style.color = "#888";
+                    setTimeout(() => { aiMoveOX(); oxAiThinking = false; }, 500);
+                }, 50);
             }
         }
         
@@ -695,7 +712,11 @@
                     if (score > best) { best = score; move = i; }
                 }
             }
-            if (move !== undefined) { oxBoard[move] = "O"; checkWinOX(); }
+            if (move !== undefined) { 
+                oxBoard[move] = "O"; 
+                drawOX(); // Draw AI move immediately
+                setTimeout(() => checkWinOX(), 50); 
+            }
         }
 
         function minimaxOX(b, depth, isMax) {
@@ -710,114 +731,211 @@
             }
         }
 
-        function checkWinnerOnly(b) {
-            for (let [x, y, z] of oxWinLines) { if (b[x] && b[x] === b[y] && b[x] === b[z]) return b[x]; } return null;
-        }
+        const oxWinLines = [[0,1,2,'line-row-0'], [3,4,5,'line-row-1'], [6,7,8,'line-row-2'], [0,3,6,'line-col-0'], [1,4,7,'line-col-1'], [2,5,8,'line-col-2'], [0,4,8,'line-diag-0'], [2,4,6,'line-diag-1']];
+        function checkWinnerOnly(b) { for (let [x, y, z] of oxWinLines) { if (b[x] && b[x] === b[y] && b[x] === b[z]) return b[x]; } return null; }
 
         function checkWinOX() {
             let w = checkWinnerOnly(oxBoard);
             if (w) {
-                oxActive = false; user.quest.plays++; 
-                // Draw Perfect Line
+                oxActive = false; updateTaskProgress();
                 let lineData = oxWinLines.find(([x,y,z]) => oxBoard[x]===w && oxBoard[y]===w && oxBoard[z]===w);
-                if (lineData) { 
-                    let line = document.getElementById('winLine'); 
-                    line.className = `win-line ${lineData[3]}`; 
-                    line.style.display = "block"; 
-                }
+                if (lineData) { let line = document.getElementById('winLine'); line.className = `win-line ${lineData[3]}`; line.style.display = "block"; }
                 
                 if (w === "X") { user.coins++; user.history.w++; document.getElementById('oxStatus').innerHTML = "🎉 YOU WIN! +1 COIN"; document.getElementById('oxStatus').style.color = "var(--success)"; document.getElementById('oxCoinDisp').innerText = user.coins; } 
                 else { user.history.l++; document.getElementById('oxStatus').innerHTML = "💀 DEFEAT!"; document.getElementById('oxStatus').style.color = "var(--danger)"; }
                 
                 saveUserToDatabase(); document.getElementById('oxPlayAgain').style.display = "block"; return true;
             } else if (!oxBoard.includes("")) {
-                oxActive = false; user.quest.plays++; user.history.d++; saveUserToDatabase();
+                oxActive = false; updateTaskProgress(); user.history.d++; saveUserToDatabase();
                 document.getElementById('oxStatus').innerHTML = "🤝 DRAW!"; document.getElementById('oxStatus').style.color = "#888";
                 document.getElementById('oxPlayAgain').style.display = "block"; return true;
             }
-            document.getElementById('oxStatus').innerText = "YOUR TURN (🔥)"; document.getElementById('oxStatus').style.color = "var(--success)"; drawOX(); return false;
+            document.getElementById('oxStatus').innerText = "YOUR TURN (🔥)"; document.getElementById('oxStatus').style.color = "var(--success)"; return false;
         }
 
-        function resetOXGame() { 
-            oxBoard = ["", "", "", "", "", "", "", "", ""]; oxHistory = []; oxActive = true; oxAiThinking = false; 
-            document.getElementById('winLine').style.display = "none"; document.getElementById('oxPlayAgain').style.display = "none"; document.getElementById('oxStatus').innerText = "YOUR TURN (🔥)"; document.getElementById('oxStatus').style.color = "var(--success)"; drawOX(); 
-        }
+        function resetOXGame() { oxBoard = ["", "", "", "", "", "", "", "", ""]; oxHistory = []; oxActive = true; oxAiThinking = false; document.getElementById('winLine').style.display = "none"; document.getElementById('oxPlayAgain').style.display = "none"; document.getElementById('oxStatus').innerText = "YOUR TURN (🔥)"; document.getElementById('oxStatus').style.color = "var(--success)"; drawOX(); }
 
         // ==========================================================================
-        // 🟢 2. ROCK PAPER SCISSORS (NEW GAME)
+        // 🟢 2. DOTS AND BOXES (NEW GAME LOGIC - FULLY WORKING)
         // ==========================================================================
-        let rpsActive = true;
-        const rpsChoices = ['✊', '🖐️', '✌️'];
-        
-        function startRPSGame() { showScreen('rpsScreen'); resetRPSGame(); document.getElementById('rpsCoinDisp').innerText = user.coins; }
-        
-        function playRPS(userChoice) {
-            if(!rpsActive) return;
-            if(user.coins < 5) return alert("You need 5 coins to play!");
+        const GRID_SIZE = 4; // 4x4 dots = 3x3 boxes
+        let hLines = [], vLines = [], boxes = [];
+        let dbActive = false, dbAiThinking = false;
+        let p1Score = 0, aiScore = 0;
+
+        function startDotsGame() { showScreen('dotsScreen'); initDotsGame(); document.getElementById('dotsCoinDisp').innerText = user.coins; }
+
+        function initDotsGame() {
+            hLines = Array(3 * 4).fill(null); // 12 horizontal lines
+            vLines = Array(4 * 3).fill(null); // 12 vertical lines
+            boxes = Array(3 * 3).fill(null);  // 9 boxes
+            p1Score = 0; aiScore = 0; dbActive = true; dbAiThinking = false;
             
-            rpsActive = false;
-            document.getElementById('rpsControls').style.opacity = '0.5';
+            document.getElementById('dotsUserScore').innerText = p1Score;
+            document.getElementById('dotsAiScore').innerText = aiScore;
+            document.getElementById('dotsStatus').innerText = "YOUR TURN! DRAW A LINE.";
+            document.getElementById('dotsStatus').style.color = "var(--success)";
+            document.getElementById('dotsPlayAgain').style.display = "none";
             
-            // Deduct entry fee
-            user.coins -= 5;
-            document.getElementById('rpsCoinDisp').innerText = user.coins;
+            drawDotsBoard();
+        }
+
+        function drawDotsBoard() {
+            let b = document.getElementById('dbBoard'); b.innerHTML = "";
+            let spacing = 80; // Distance between dots
             
-            document.getElementById('rpsUserChoice').innerText = userChoice;
-            
-            // AI Animation effect
-            let ticks = 0;
-            let interval = setInterval(() => {
-                document.getElementById('rpsAiChoice').innerText = rpsChoices[ticks % 3];
-                ticks++;
-                if(ticks > 10) {
-                    clearInterval(interval);
-                    finalizeRPS(userChoice);
+            // Draw Boxes
+            for(let r=0; r<3; r++){
+                for(let c=0; c<3; c++){
+                    let idx = r*3 + c;
+                    let box = document.createElement('div');
+                    box.className = "db-box";
+                    box.style.width = spacing + "px"; box.style.height = spacing + "px";
+                    box.style.left = (c * spacing) + "px"; box.style.top = (r * spacing) + "px";
+                    if(boxes[idx]){
+                        box.classList.add(boxes[idx] === 'P1' ? 'box-p1' : 'box-p2');
+                        box.innerText = boxes[idx] === 'P1' ? '🔥' : '❄️';
+                    }
+                    b.appendChild(box);
                 }
-            }, 100);
+            }
+
+            // Draw Horizontal Lines
+            for(let r=0; r<4; r++){
+                for(let c=0; c<3; c++){
+                    let idx = r*3 + c;
+                    let line = document.createElement('div');
+                    line.className = "db-line-h";
+                    line.style.width = spacing + "px";
+                    line.style.left = (c * spacing) + "px"; line.style.top = (r * spacing) + "px";
+                    if(hLines[idx]) line.classList.add(hLines[idx] === 'P1' ? 'line-p1' : 'line-p2');
+                    else line.onclick = () => moveDB('h', idx);
+                    b.appendChild(line);
+                }
+            }
+
+            // Draw Vertical Lines
+            for(let r=0; r<3; r++){
+                for(let c=0; c<4; c++){
+                    let idx = r*4 + c;
+                    let line = document.createElement('div');
+                    line.className = "db-line-v";
+                    line.style.height = spacing + "px";
+                    line.style.left = (c * spacing) + "px"; line.style.top = (r * spacing) + "px";
+                    if(vLines[idx]) line.classList.add(vLines[idx] === 'P1' ? 'line-p1' : 'line-p2');
+                    else line.onclick = () => moveDB('v', idx);
+                    b.appendChild(line);
+                }
+            }
+
+            // Draw Dots
+            for(let r=0; r<4; r++){
+                for(let c=0; c<4; c++){
+                    let dot = document.createElement('div');
+                    dot.className = "db-dot";
+                    dot.style.left = (c * spacing) + "px"; dot.style.top = (r * spacing) + "px";
+                    b.appendChild(dot);
+                }
+            }
         }
 
-        function finalizeRPS(userChoice) {
-            let aiChoice = rpsChoices[Math.floor(Math.random() * 3)];
-            document.getElementById('rpsAiChoice').innerText = aiChoice;
+        function moveDB(type, idx) {
+            if(!dbActive || dbAiThinking) return;
+            if(type === 'h' && hLines[idx]) return;
+            if(type === 'v' && vLines[idx]) return;
             
-            user.quest.plays++;
-            let status = document.getElementById('rpsStatus');
+            if(type === 'h') hLines[idx] = 'P1';
+            else vLines[idx] = 'P1';
             
-            if (userChoice === aiChoice) {
-                status.innerText = "🤝 IT'S A DRAW! (+5 Coins returned)";
-                status.style.color = "#aaa";
-                user.coins += 5; // Return entry fee
-                user.history.d++;
-            } 
-            else if (
-                (userChoice === '✊' && aiChoice === '✌️') ||
-                (userChoice === '🖐️' && aiChoice === '✊') ||
-                (userChoice === '✌️' && aiChoice === '🖐️')
-            ) {
-                status.innerText = "🎉 YOU WON! (+10 Coins)";
-                status.style.color = "var(--success)";
-                user.coins += 10; // Win double
-                user.history.w++;
-            } 
-            else {
-                status.innerText = "💀 YOU LOST!";
-                status.style.color = "var(--danger)";
-                user.history.l++;
+            let scored = checkBoxesDB('P1');
+            drawDotsBoard();
+            
+            if(isGameOverDB()) return endGameDB();
+            
+            if(!scored) {
+                dbAiThinking = true;
+                document.getElementById('dotsStatus').innerText = "🤖 AI IS THINKING...";
+                document.getElementById('dotsStatus').style.color = "#888";
+                setTimeout(aiMoveDB, 600);
+            }
+        }
+
+        function aiMoveDB() {
+            if(!dbActive) return;
+            
+            let scored = true;
+            while(scored && !isGameOverDB()) {
+                // Simple AI: Pick random empty line
+                let emptyH = [], emptyV = [];
+                hLines.forEach((val, i) => { if(!val) emptyH.push(i); });
+                vLines.forEach((val, i) => { if(!val) emptyV.push(i); });
+                
+                let allEmpty = [];
+                emptyH.forEach(i => allEmpty.push({t:'h', i:i}));
+                emptyV.forEach(i => allEmpty.push({t:'v', i:i}));
+                
+                if(allEmpty.length === 0) break;
+                
+                let choice = allEmpty[Math.floor(Math.random() * allEmpty.length)];
+                if(choice.t === 'h') hLines[choice.i] = 'AI';
+                else vLines[choice.i] = 'AI';
+                
+                scored = checkBoxesDB('AI');
             }
             
-            document.getElementById('rpsCoinDisp').innerText = user.coins;
-            saveUserToDatabase();
-            document.getElementById('rpsPlayAgain').style.display = "block";
+            drawDotsBoard();
+            if(isGameOverDB()) endGameDB();
+            else {
+                dbAiThinking = false;
+                document.getElementById('dotsStatus').innerText = "YOUR TURN! DRAW A LINE.";
+                document.getElementById('dotsStatus').style.color = "var(--success)";
+            }
         }
 
-        function resetRPSGame() {
-            rpsActive = true;
-            document.getElementById('rpsControls').style.opacity = '1';
-            document.getElementById('rpsUserChoice').innerText = '❓';
-            document.getElementById('rpsAiChoice').innerText = '❓';
-            document.getElementById('rpsStatus').innerText = "MAKE YOUR MOVE!";
-            document.getElementById('rpsStatus').style.color = "#fff";
-            document.getElementById('rpsPlayAgain').style.display = "none";
+        function checkBoxesDB(player) {
+            let scored = false;
+            for(let r=0; r<3; r++){
+                for(let c=0; c<3; c++){
+                    let bIdx = r*3 + c;
+                    if(!boxes[bIdx]) {
+                        // A box is surrounded by 4 lines
+                        let top = hLines[r*3 + c];
+                        let bottom = hLines[(r+1)*3 + c];
+                        let left = vLines[r*4 + c];
+                        let right = vLines[r*4 + c + 1];
+                        
+                        if(top && bottom && left && right) {
+                            boxes[bIdx] = player;
+                            if(player === 'P1') p1Score++; else aiScore++;
+                            scored = true;
+                        }
+                    }
+                }
+            }
+            document.getElementById('dotsUserScore').innerText = p1Score;
+            document.getElementById('dotsAiScore').innerText = aiScore;
+            return scored;
+        }
+
+        function isGameOverDB() {
+            return boxes.every(b => b !== null);
+        }
+
+        function endGameDB() {
+            dbActive = false; updateTaskProgress();
+            let status = document.getElementById('dotsStatus');
+            if(p1Score > aiScore) {
+                status.innerText = "🎉 YOU WON! +2 COINS"; status.style.color = "var(--success)";
+                user.coins += 2; user.history.w++;
+            } else if (aiScore > p1Score) {
+                status.innerText = "💀 AI DESTROYED YOU!"; status.style.color = "var(--danger)";
+                user.history.l++;
+            } else {
+                status.innerText = "🤝 IT'S A TIE!"; status.style.color = "#888";
+                user.history.d++;
+            }
+            saveUserToDatabase(); document.getElementById('dotsCoinDisp').innerText = user.coins;
+            document.getElementById('dotsPlayAgain').style.display = "block";
         }
 
     </script>
