@@ -928,11 +928,11 @@
         function updateDashboardUI() {
             if(!user) return;
             
-            // Text updates
-            document.getElementById('dashName').innerText = user.name;
-            document.getElementById('dashCoins').innerText = user.coins;
-            document.getElementById('dashAvatar').innerText = user.avatar;
-            document.getElementById('dashTitle').innerText = `[${user.title}]`;
+            // Text updates (इथे आपण || वापरून जुन्या युजर्सचा प्रॉब्लेम सॉल्व्ह केला आहे)
+            document.getElementById('dashName').innerText = user.name || "Player";
+            document.getElementById('dashCoins').innerText = user.coins || 0;
+            document.getElementById('dashAvatar').innerText = user.avatar || "👤";
+            document.getElementById('dashTitle').innerText = `[${user.title || "NEWBIE"}]`;
             
             // Theme update
             document.getElementById('appBody').className = user.theme || 'theme-classic';
