@@ -448,19 +448,32 @@
         function resetPassword() { if (document.getElementById("forgotOtpInput").value != generatedOTP) return alert("❌ Wrong OTP!"); let tgId = document.getElementById("forgotTgId").value, newPass = document.getElementById("forgotNewPass").value; if(newPass) { db.ref('users/' + tgId).update({password: newPass}); alert("✅ Password Reset!"); showScreen('loginScreen'); } }
         
         function loginUser() {
-            let id = document.getElementById('loginId').value, pass = document.getElementById('loginPass').value;
-            db.ref('users/' + id).once('value', snapshot => {
-                if(snapshot.exists()) {
-                    let data = snapshot.val();
-                    if(data.password === pass) {
-                        playSound(); // 🔥 Play Sound on Success Login
-                        user = sanitizeUserData(data); previousCoins = user.coins;
-                        updateDashboardUI(); showScreen('homeScreen');
-                        if (user.tgId === ADMIN_TG_ID) document.getElementById('adminBtn').style.display = 'block'; else document.getElementById('adminBtn').style.display = 'none';
-                    } else alert("❌ Incorrect Password!");
-                } else alert("❌ Account not found!");
-            });
+            // १. बटन काम करतंय की नाही ते चेक करण्यासाठी मेसेज:
+            alert("लॉगिन चेक करत आहे... कृपया थांबा!"); 
+
+            let id = document.getElementById('loginId').value;
+            let pass = document.getElementById('loginPass').value;
+            if(!id || !pass) return alert("Enter credentials");
+            
+            try {
+                db.ref('users/' + id).once('value', snapshot => {
+                    if(snapshot.exists()) {
+                        let data = snapshot.val();
+                        if(data.password === pass) {
+                            playSound(); // 🔥 Play Sound on Success Login
+                            user = sanitizeUserData(data); previousCoins = user.coins;
+                            updateDashboardUI(); showScreen('homeScreen');
+                            if (user.tgId === ADMIN_TG_ID) document.getElementById('adminBtn').style.display = 'block'; else document.getElementById('adminBtn').style.display = 'none';
+                        } else alert("❌ Incorrect Password!");
+                    } else alert("❌ Account not found!");
+                }).catch(error => {
+                    alert("⚠️ Database Error! तुझे Firebase डिटेल्स बरोबर नाहीत: " + error.message);
+                });
+            } catch(e) {
+                alert("⚠️ System Error! तुझा Firebase कोड चुकीचा टाकला गेला आहे.");
+            }
         }
+        
         function logoutUser() { user = null; showScreen('loginScreen'); }
         function refreshBalance() { if(!user) return; db.ref('users/' + user.tgId + '/coins').once('value', s => { if(s.exists()) { user.coins = parseInt(s.val())||0; previousCoins = user.coins; saveUserToDatabase(); alert("✅ Synced!"); }}); }
         function uploadProfilePhoto(event) { const f = event.target.files[0]; if(f) { const r = new FileReader(); r.onload = function(e) { user.avatar = e.target.result; saveUserToDatabase(); }; r.readAsDataURL(f); } }
