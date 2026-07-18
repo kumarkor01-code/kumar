@@ -23,7 +23,7 @@
             --platinum: #00ced1; --diamond: #b9f2ff; --heroic: #ff0055; --grandmaster: #ff00ff;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; transition: 0.3s; }
         
         body {
             background-color: var(--bg-color); color: var(--text-primary);
@@ -38,7 +38,7 @@
         ::-webkit-scrollbar-thumb { background: var(--accent-main); border-radius: 10px; }
 
         .container {
-            background: var(--box-bg); width: 100%; max-width: 480px; padding: 30px;
+            background: var(--box-bg); width: 100%; max-width: 500px; padding: 30px;
             border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), inset 0 0 10px rgba(255, 69, 0, 0.2);
             border: 1px solid #222; text-align: center; position: relative; margin-bottom: 30px;
         }
@@ -48,13 +48,13 @@
         p.subtitle { color: var(--text-secondary); font-size: 14px; margin-bottom: 30px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
 
         /* ==========================================================================
-           2. FORM ELEMENTS
+           2. FORMS & INPUTS (GOOGLE AUTOFILL SUPPORTED)
            ========================================================================== */
         label { display: block; text-align: left; color: var(--text-secondary); font-size: 12px; font-weight: 700; margin-top: 15px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        input { width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.7); border: 2px solid #333; border-radius: 12px; color: #fff; font-size: 15px; outline: none; margin-bottom: 15px; font-weight: 600; transition: 0.3s;}
+        input { width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.7); border: 2px solid #333; border-radius: 12px; color: #fff; font-size: 15px; outline: none; margin-bottom: 15px; font-weight: 600; }
         input:focus { border-color: var(--accent-main); box-shadow: 0 0 15px rgba(255, 69, 0, 0.3); }
         
-        .btn { width: 100%; padding: 18px; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+        .btn { width: 100%; padding: 18px; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px; }
         .btn-gold { background: var(--gradient-btn); color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); box-shadow: 0 5px 20px rgba(255, 69, 0, 0.4); }
         .btn-gold:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 30px rgba(255, 69, 0, 0.6); }
         .btn-dark { background: transparent; border: 2px solid var(--accent-main); color: var(--accent-main); }
@@ -66,7 +66,7 @@
         .link-text:hover { color: var(--accent-main); }
 
         /* ==========================================================================
-           3. ESPORTS DASHBOARD & PROFILE
+           3. DASHBOARD, AVATAR & STATS
            ========================================================================== */
         .profile-card { background: linear-gradient(145deg, #111, #0a0a0a); padding: 25px; border-radius: 20px; border: 1px solid #333; margin-bottom: 25px; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
         .rank-glow { position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; border-radius: 50%; filter: blur(50px); z-index: 0; opacity: 0.3; }
@@ -84,82 +84,68 @@
         .balance-area { display: flex; align-items: center; gap: 15px; margin-top: 10px; }
         .coin-display { font-size: 26px; font-weight: 900; color: #fff; }
         .coin-display span { color: var(--gold); }
-        .refresh-btn { background: #222; border: 1px solid #444; color: #fff; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; font-size: 16px;}
+        .refresh-btn { background: #222; border: 1px solid #444; color: #fff; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 16px;}
         .refresh-btn:hover { background: var(--accent-main); border-color: #fff; transform: rotate(180deg); }
 
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 25px 0; }
-        .menu-card { background: rgba(0,0,0,0.5); padding: 20px 10px; border-radius: 15px; border: 1px solid #333; cursor: pointer; font-size: 14px; font-weight: 800; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: 0.3s;}
+        .menu-card { background: rgba(0,0,0,0.5); padding: 20px 10px; border-radius: 15px; border: 1px solid #333; cursor: pointer; font-size: 14px; font-weight: 800; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .menu-card:hover { background: rgba(255,69,0,0.1); border-color: var(--accent-main); transform: translateY(-5px); }
-        .menu-icon { font-size: 32px; }
 
         /* ==========================================================================
-           4. LISTS & LEADERBOARD
+           4. LEADERBOARD & GUILDS UI
            ========================================================================== */
-        .list-container { max-height: 400px; overflow-y: auto; text-align: left; padding-right: 5px; }
-        .list-item { background: rgba(0,0,0,0.6); padding: 15px; border: 1px solid #333; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .rank-number { font-size: 20px; font-weight: 900; color: #555; width: 30px; }
+        .tabs-header { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 12px; background: #111; border: 1px solid #333; color: var(--text-secondary); font-weight: 900; border-radius: 10px; cursor: pointer; }
+        .tab-btn.active { background: var(--gradient-btn); color: #000; border-color: var(--accent-main); }
+        
+        .list-container { max-height: 450px; overflow-y: auto; text-align: left; padding-right: 5px; }
+        .list-item { background: rgba(0,0,0,0.6); padding: 15px; border: 1px solid #333; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
+        .list-item:hover { border-color: var(--accent-main); background: rgba(255,69,0,0.05); }
+        .rank-number { font-size: 20px; font-weight: 900; color: #555; width: 35px; }
         .leaderboard-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #555; margin-right: 10px; }
 
+        .total-count { font-size: 14px; color: var(--accent-main); font-weight: 900; margin-bottom: 15px; letter-spacing: 1px; }
+
         /* ==========================================================================
-           5. OX GAME (FIXED LINE CSS)
+           5. GAMES UI (OX, DOTS, MEMORY MATCH)
            ========================================================================== */
-        .board-wrapper { position: relative; display: inline-block; margin: 25px 0; }
-        .board { position: relative; display: grid; grid-template-columns: repeat(3, 90px); gap: 10px; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 20px; border: 1px solid #333; z-index: 1;}
-        .cell { width: 90px; height: 90px; background: #111; font-size: 50px; display: flex; align-items: center; justify-content: center; border-radius: 15px; cursor: pointer; border: 2px solid #222; }
-        .cell:active { transform: scale(0.95); }
+        .powerup-bar { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); padding: 15px 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #333; }
         
-        /* Perfect Centered Winning Lines */
-        .win-line { position: absolute; background: var(--success); border-radius: 10px; z-index: 10; display: none; box-shadow: 0 0 20px var(--success); opacity: 0.85; transition: 0.3s; }
-        
-        /* Box total width: 15px padding + 3*90px + 2*10px gap + 15px padding = 320px */
+        /* OX Board */
+        .ox-board { position: relative; display: grid; grid-template-columns: repeat(3, 90px); gap: 10px; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 20px; border: 1px solid #333; margin: 0 auto; width: fit-content;}
+        .ox-cell { width: 90px; height: 90px; background: #111; font-size: 50px; display: flex; align-items: center; justify-content: center; border-radius: 15px; cursor: pointer; border: 2px solid #222; }
+        .ox-cell:active { transform: scale(0.95); }
+        .win-line { position: absolute; background: var(--success); border-radius: 10px; z-index: 10; display: none; box-shadow: 0 0 20px var(--success); opacity: 0.85; }
         .line-row-0 { top: 18.7%; left: 5%; width: 90%; height: 6px; }
         .line-row-1 { top: 50%; left: 5%; width: 90%; height: 6px; transform: translateY(-50%); }
         .line-row-2 { top: 81.3%; left: 5%; width: 90%; height: 6px; }
-        
         .line-col-0 { left: 18.7%; top: 5%; height: 90%; width: 6px; }
         .line-col-1 { left: 50%; top: 5%; height: 90%; width: 6px; transform: translateX(-50%); }
         .line-col-2 { left: 81.3%; top: 5%; height: 90%; width: 6px; }
-        
         .line-diag-0 { top: 49%; left: -2%; width: 104%; height: 6px; transform: rotate(45deg); }
         .line-diag-1 { top: 49%; left: -2%; width: 104%; height: 6px; transform: rotate(-45deg); }
 
-        .powerup-bar { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); padding: 15px 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #333; }
+        /* Memory Match Board */
+        .memory-board { display: grid; grid-template-columns: repeat(4, 70px); gap: 10px; justify-content: center; margin: 20px auto; }
+        .mem-card { width: 70px; height: 70px; background: #222; border-radius: 10px; border: 2px solid #444; display: flex; justify-content: center; align-items: center; font-size: 35px; cursor: pointer; transform-style: preserve-3d; transition: transform 0.5s; }
+        .mem-card.flipped { background: var(--box-bg); border-color: var(--accent-main); transform: rotateY(180deg); }
+        .mem-card.matched { background: rgba(0, 255, 0, 0.2); border-color: var(--success); transform: rotateY(180deg); opacity: 0.8; cursor: default; }
 
         /* ==========================================================================
-           6. DOTS & BOXES GAME (NEW CSS)
-           ========================================================================== */
-        .db-container { position: relative; margin: 20px auto; width: 280px; height: 280px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border: 1px solid #333; }
-        .db-board { position: relative; width: 240px; height: 240px; margin: 0 auto; }
-        .db-dot { position: absolute; width: 14px; height: 14px; background: #666; border-radius: 50%; transform: translate(-50%, -50%); z-index: 5; box-shadow: 0 0 5px #000; }
-        
-        .db-line-h { position: absolute; height: 16px; background: rgba(255,255,255,0.05); cursor: pointer; transform: translateY(-50%); border-radius: 8px; z-index: 2; transition: 0.2s;}
-        .db-line-v { position: absolute; width: 16px; background: rgba(255,255,255,0.05); cursor: pointer; transform: translateX(-50%); border-radius: 8px; z-index: 2; transition: 0.2s;}
-        .db-line-h:hover, .db-line-v:hover { background: rgba(255,255,255,0.2); }
-        
-        .line-p1 { background: var(--success) !important; box-shadow: 0 0 10px var(--success); }
-        .line-p2 { background: var(--danger) !important; box-shadow: 0 0 10px var(--danger); }
-        
-        .db-box { position: absolute; display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: 900; z-index: 1; opacity: 0; transition: 0.3s; border-radius: 10px;}
-        .box-p1 { background: rgba(0, 255, 0, 0.2); color: var(--success); opacity: 1; }
-        .box-p2 { background: rgba(255, 0, 0, 0.2); color: var(--danger); opacity: 1; }
-
-        /* ==========================================================================
-           7. SCREEN ANIMATIONS & SPLASH
+           6. SCREENS & ANIMATIONS
            ========================================================================== */
         .screen { display: none; }
         .active-screen { display: block; animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         
-        /* Ultra Stylish Splash Screen */
         #splash { position: fixed; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle, #220000 0%, #000000 100%); z-index:9999; display:flex; flex-direction:column; justify-content:center; align-items:center; transition: opacity 0.8s ease-out; }
         .splash-logo { font-size: 45px; font-weight: 900; color: #fff; letter-spacing: 4px; animation: pulse 1.5s infinite; text-shadow: 0 0 20px rgba(255,69,0,0.8); }
         .splash-logo span { color: var(--accent-main); }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
         
-        /* Login Transition Overlay */
-        #loginTransition { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index:9990; display:none; flex-direction:column; justify-content:center; align-items:center; backdrop-filter: blur(10px); }
-        .spinner { width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid var(--accent-main); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* Modal Profile / Guild Info */
+        .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9990; display:none; justify-content:center; align-items:center; backdrop-filter:blur(5px); }
+        .modal-box { background: var(--box-bg); padding: 30px; border-radius: 20px; border: 1px solid var(--accent-main); width: 90%; max-width: 400px; text-align: center; }
 
     </style>
 </head>
@@ -168,68 +154,71 @@
     <!-- 0. SPLASH SCREEN -->
     <div id="splash">
         <div class="splash-logo">KUMAR <span>ESPORTS</span></div>
-        <p style="color:var(--accent-main); margin-top:15px; font-weight:900; letter-spacing:3px;">INITIALIZING SYSTEM...</p>
+        <p style="color:var(--accent-main); margin-top:15px; font-weight:900; letter-spacing:3px;">SYSTEM LOADING...</p>
     </div>
 
-    <!-- 0.1 LOGIN TRANSITION -->
-    <div id="loginTransition">
-        <div class="spinner"></div>
-        <h2 style="color:#fff; font-weight:900; letter-spacing:2px;">AUTHENTICATING...</h2>
-    </div>
-
-    <!-- 1. LOGIN SCREEN (Google Autofill Enabled) -->
+    <!-- 1. LOGIN SCREEN (Google Autofill) -->
     <div class="container screen" id="loginScreen">
         <h1>KUMAR <span>ESPORTS</span></h1>
-        <p class="subtitle">Enter the battleground</p>
-        
+        <p class="subtitle">Enter the battlefield</p>
         <form onsubmit="event.preventDefault(); loginUser();">
             <label>TELEGRAM CHAT ID</label>
             <input type="number" id="loginId" autocomplete="username" placeholder="e.g. 123456789" required>
-            
             <label>ACCOUNT PASSWORD</label>
             <input type="password" id="loginPass" autocomplete="current-password" placeholder="Enter Password" required>
-            
             <button type="submit" class="btn btn-gold">LOGIN NOW</button>
         </form>
-        
-        <br>
-        <span class="link-text" onclick="showScreen('signupScreen')">Create New Account</span>
+        <div style="display: flex; justify-content: space-between; margin-top: 25px;">
+            <span class="link-text" style="margin-top:0;" onclick="showScreen('forgotPassScreen')">Forgot Password?</span>
+            <span class="link-text" style="margin-top:0;" onclick="showScreen('signupScreen')">Create Account</span>
+        </div>
     </div>
 
     <!-- 2. SIGNUP SCREEN -->
     <div class="container screen" id="signupScreen">
         <h1>JOIN <span>THE BATTLE</span></h1>
-        
         <form onsubmit="event.preventDefault();">
             <label>GAMER TAG (NAME)</label>
-            <input type="text" id="regName" autocomplete="name" placeholder="e.g. ProGamer">
-            
-            <label>PASSWORD</label>
-            <input type="password" id="regPass" autocomplete="new-password" placeholder="Secure Password">
-            
+            <input type="text" id="regName" autocomplete="name" placeholder="e.g. ProGamer" required>
+            <label>CREATE PASSWORD</label>
+            <input type="password" id="regPass" autocomplete="new-password" placeholder="Secure Password" required>
             <label>TELEGRAM ID</label>
-            <input type="number" id="regTgId" autocomplete="username" placeholder="Telegram Chat ID">
+            <input type="number" id="regTgId" autocomplete="username" placeholder="Telegram Chat ID" required>
         </form>
-        
         <button class="btn btn-dark" onclick="window.open('https://t.me/Kumarotpbot', '_blank')">✈️ 1. START BOT</button>
-        <button class="btn btn-gold" id="sendOtpBtn" onclick="sendOTP()">📩 2. SEND OTP</button>
+        <button class="btn btn-gold" id="sendOtpBtn" onclick="sendOTP('register')">📩 2. SEND OTP</button>
         
         <div id="otpBox" style="display:none; margin-top:20px; background:#111; padding:20px; border-radius:15px; border:1px solid #333;">
             <label style="color:#fff;">ENTER 4-DIGIT OTP</label>
             <input type="number" id="regOtpInput" placeholder="OTP from Telegram">
-            <button class="btn btn-gold" onclick="registerUser()">✅ REGISTER</button>
+            <button class="btn btn-gold" onclick="registerUser()">✅ VERIFY & REGISTER</button>
         </div>
-        <br>
-        <span class="link-text" onclick="showScreen('loginScreen')">Back to Login</span>
+        <br><span class="link-text" onclick="showScreen('loginScreen')">Back to Login</span>
+    </div>
+
+    <!-- 2.5 FORGOT PASSWORD SCREEN -->
+    <div class="container screen" id="forgotPassScreen">
+        <h1>RESET <span>PASSWORD</span></h1>
+        <p class="subtitle">Your data is 100% safe!</p>
+        <label>ENTER YOUR TELEGRAM ID</label>
+        <input type="number" id="forgotTgId" placeholder="Telegram Chat ID">
+        <button class="btn btn-dark" onclick="sendOTP('forgot')">📩 SEND RECOVERY OTP</button>
+        
+        <div id="forgotOtpBox" style="display:none; margin-top:20px; background:#111; padding:20px; border-radius:15px; border:1px solid #333;">
+            <label style="color:#fff;">ENTER 4-DIGIT OTP</label>
+            <input type="number" id="forgotOtpInput" placeholder="OTP from Telegram">
+            <label style="color:#fff;">NEW PASSWORD</label>
+            <input type="password" id="forgotNewPass" placeholder="Enter New Password">
+            <button class="btn btn-gold" onclick="resetPassword()">🔄 SAVE NEW PASSWORD</button>
+        </div>
+        <br><span class="link-text" onclick="showScreen('loginScreen')">Back to Login</span>
     </div>
 
     <!-- 3. MAIN DASHBOARD -->
     <div class="container screen" id="homeScreen">
-        
         <div class="profile-card" id="profileCardBg">
             <div class="rank-glow" id="rankGlow"></div>
             <div class="profile-header">
-                <!-- Avatar Upload -->
                 <div class="avatar-wrapper" onclick="document.getElementById('avatarUpload').click()">
                     <img src="" id="dashAvatar" class="profile-avatar" alt="DP" onerror="this.style.display='none'; document.getElementById('dashAvatarText').style.display='flex';">
                     <div id="dashAvatarText" class="profile-avatar" style="display:none;">👤</div>
@@ -240,15 +229,13 @@
                 <div>
                     <div class="profile-name" id="dashName">Loading...</div>
                     <div class="rank-badge" id="dashRank">BRONZE I</div>
-                    
-                    <!-- REFRESH COIN BUTTON -->
+                    <div class="rank-badge" id="dashGuildBadge" style="background:#8b5cf6; color:#fff; display:none;">NO GUILD</div>
                     <div class="balance-area">
                         <div class="coin-display"><span>🪙</span> <span id="dashCoins" style="color:#fff;">0</span></div>
                         <button class="refresh-btn" onclick="refreshBalance()" title="Refresh Coins">🔄</button>
                     </div>
                 </div>
             </div>
-            <p style="text-align:left; margin-top:15px; font-size:11px; color:#888; font-weight:bold;">* Play daily to maintain rank! (-10 Coins for inactivity)</p>
         </div>
         
         <button class="btn btn-gold" style="font-size: 22px; padding: 22px;" onclick="showScreen('gameSelectScreen')">⚔️ PLAY GAMES</button>
@@ -256,8 +243,8 @@
         <div class="menu-grid">
             <div class="menu-card" onclick="openQuests()"><span class="menu-icon">🎯</span> MISSIONS</div>
             <div class="menu-card" onclick="loadLeaderboard()"><span class="menu-icon">🏆</span> LEADERBOARD</div>
+            <div class="menu-card" onclick="openGuilds()"><span class="menu-icon">🤝</span> MY GUILD</div>
             <div class="menu-card" onclick="openHistory()"><span class="menu-icon">📜</span> STATS</div>
-            <div class="menu-card" onclick="alert('Shop is removed. Focus on ranking up!')"><span class="menu-icon">🚫</span> NO SHOP</div>
         </div>
         
         <button class="btn btn-admin" id="adminBtn" style="display:none; margin-bottom: 15px;" onclick="showScreen('adminScreen')">👑 ADMIN PANEL</button>
@@ -268,93 +255,105 @@
     <div class="container screen" id="gameSelectScreen">
         <h1>BATTLE <span>ARENA</span></h1>
         <p class="subtitle">Choose your battlefield</p>
-        
-        <button class="btn btn-dark" onclick="startOXGame()" style="padding: 25px; font-size: 18px; color:#fff; border-color:#ff4500; background:rgba(255,69,0,0.1);">
-            ❌ OX GAME (CLASSIC) ⭕
-        </button>
-        
-        <button class="btn btn-gold" onclick="startDotsGame()" style="padding: 25px; font-size: 18px; margin-top:20px;">
-            🔲 DOTS & BOXES (NEW) 🔲
-        </button>
-        
+        <button class="btn btn-dark" onclick="startOXGame()" style="padding: 20px; font-size: 16px; color:#fff; border-color:#ff4500;">❌ OX GAME (CLASSIC) ⭕</button>
+        <button class="btn btn-dark" onclick="alert('Dots & Boxes is undergoing AI upgrades. Play Memory Match!')" style="padding: 20px; font-size: 16px; margin-top:15px; color:#fff;">🔲 DOTS & BOXES (SOON)</button>
+        <button class="btn btn-gold" onclick="startMemoryGame()" style="padding: 20px; font-size: 16px; margin-top:15px;">🃏 MEMORY MATCH (NEW!)</button>
         <button class="btn btn-danger" style="margin-top:30px;" onclick="showScreen('homeScreen')">⬅ Back to Base</button>
     </div>
 
     <!-- 5. OX GAME -->
     <div class="container screen" id="oxScreen">
         <h1>OX <span>CLASSIC</span></h1>
-        
         <div class="powerup-bar">
             <span style="font-weight:900; color:#fff;">COINS: <span style="color:var(--gold);" id="oxCoinDisp">0</span></span>
             <button class="btn btn-dark" style="margin:0; width:auto; padding:8px 15px; font-size:12px;" onclick="undoMoveOX()">⏪ UNDO (5)</button>
         </div>
-
         <p class="subtitle" id="oxStatus" style="color:var(--success); font-size:18px; font-weight:900;">YOUR TURN (🔥)</p>
-        
-        <div class="board-wrapper">
-            <div class="board" id="oxBoard"></div>
-            <!-- Win Line is drawn over the board dynamically -->
+        <div style="position:relative; display:inline-block; margin-top:10px;">
+            <div class="ox-board" id="oxBoard"></div>
             <div id="winLine" class="win-line"></div>
         </div>
-        
-        <button class="btn btn-gold" id="oxPlayAgain" style="display:none;" onclick="resetOXGame()">🔄 PLAY AGAIN</button>
+        <button class="btn btn-gold" id="oxPlayAgain" style="display:none; margin-top:20px;" onclick="resetOXGame()">🔄 PLAY AGAIN</button>
         <button class="btn btn-danger" style="margin-top:15px;" onclick="showScreen('homeScreen')">🏠 SURRENDER</button>
     </div>
 
-    <!-- 6. DOTS & BOXES GAME -->
-    <div class="container screen" id="dotsScreen">
-        <h1>DOTS & <span>BOXES</span></h1>
-        
-        <div class="powerup-bar">
-            <span style="font-weight:900; color:var(--success);">YOU: <span id="dotsUserScore">0</span></span>
-            <span style="font-weight:900; color:#fff;">COINS: <span style="color:var(--gold);" id="dotsCoinDisp">0</span></span>
-            <span style="font-weight:900; color:var(--danger);">AI: <span id="dotsAiScore">0</span></span>
+    <!-- 6. MEMORY MATCH (NEW GAME) -->
+    <div class="container screen" id="memoryScreen">
+        <h1>MEMORY <span>MATCH</span></h1>
+        <p class="subtitle">Find pairs. Entry: 10 Coins | Win: 30 Coins</p>
+        <div class="powerup-bar" style="justify-content:center;">
+            <span style="font-weight:900; color:#fff;">BALANCE: <span style="color:var(--gold);" id="memCoinDisp">0</span></span>
         </div>
-
-        <p class="subtitle" id="dotsStatus" style="color:var(--success); font-size:16px; font-weight:900;">YOUR TURN! DRAW A LINE.</p>
+        <p id="memStatus" style="font-size:18px; font-weight:900; color:var(--success); margin-bottom:10px;">MATCH ALL CARDS!</p>
         
-        <div class="db-container">
-            <div class="db-board" id="dbBoard">
-                <!-- Dynamically Generated by JS -->
-            </div>
-        </div>
+        <div class="memory-board" id="memoryBoard"></div>
         
-        <button class="btn btn-gold" id="dotsPlayAgain" style="display:none; margin-top:20px;" onclick="initDotsGame()">🔄 NEXT MATCH</button>
+        <button class="btn btn-gold" id="memPlayAgain" style="display:none; margin-top:20px;" onclick="startMemoryGame()">🔄 NEXT ROUND</button>
         <button class="btn btn-danger" style="margin-top:15px;" onclick="showScreen('homeScreen')">🏠 LEAVE ARENA</button>
     </div>
 
-    <!-- 7. PROGRESSIVE MISSIONS (QUESTS) -->
+    <!-- 7. PROGRESSIVE MISSIONS -->
     <div class="container screen" id="questScreen">
         <h1>PROGRESSIVE <span>MISSIONS</span></h1>
-        
         <div style="background:#111; padding:25px; border-radius:15px; margin:20px 0; border:1px solid #333;">
             <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
                 <span style="color:var(--gold); font-weight:bold; font-size:12px;">LEVEL <span id="qLevel">1</span></span>
             </div>
-            
             <h3 id="qTitle" style="color:#fff; font-size:20px; margin-bottom:15px; text-transform:uppercase;">🔥 Play Matches</h3>
-            
-            <!-- Custom Progress Bar -->
             <div style="width:100%; background:#222; height:15px; border-radius:10px; margin-bottom:15px; overflow:hidden; border:1px solid #444;">
-                <div id="qProgressBar" style="width:0%; height:100%; background:var(--success); transition:0.5s;"></div>
+                <div id="qProgressBar" style="width:0%; height:100%; background:var(--success);"></div>
             </div>
-            
             <p style="font-size:16px; margin-bottom:10px; color:#aaa;">Progress: <strong id="qProg" style="color:var(--success); font-size:20px;">0</strong> / <span id="qTarget">3</span></p>
             <p style="font-size:14px; color:var(--gold); font-weight:bold; margin-bottom:20px;">REWARD: +<span id="qReward">10</span> COINS</p>
-            
-            <button class="btn btn-gold" id="claimBtn" onclick="claimProgressiveQuest()" disabled style="opacity:0.5;">🔒 INCOMPLETE</button>
+            <button class="btn btn-gold" id="claimBtn" onclick="claimProgressiveQuest()">🔒 INCOMPLETE</button>
         </div>
         <button class="btn btn-danger" onclick="showScreen('homeScreen')">⬅ BACK</button>
     </div>
 
-    <!-- 8. LEADERBOARD -->
+    <!-- 8. LEADERBOARD (PLAYERS & GUILDS) -->
     <div class="container screen" id="leaderboardScreen">
         <h1>GLOBAL <span>RANKINGS</span></h1>
+        <div class="total-count" id="totalPlayersCount">Total Players: Loading...</div>
+        
+        <div class="tabs-header">
+            <button class="tab-btn active" id="tabPlayers" onclick="switchLbdTab('players')">TOP PLAYERS</button>
+            <button class="tab-btn" id="tabGuilds" onclick="switchLbdTab('guilds')">TOP GUILDS</button>
+        </div>
+        
         <div class="list-container" id="leaderboardList"></div>
         <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ BACK</button>
     </div>
 
-    <!-- 9. STATS HISTORY -->
+    <!-- 9. GUILD / SQUAD SYSTEM -->
+    <div class="container screen" id="guildScreen">
+        <h1>MY <span>GUILD</span></h1>
+        <p class="subtitle">Max 10 Members per Guild</p>
+        
+        <div id="noGuildSection" style="display:none;">
+            <div style="background:#111; padding:20px; border-radius:15px; border:1px solid #333; margin-bottom:20px;">
+                <h3 style="color:#fff; margin-bottom:10px;">CREATE NEW GUILD</h3>
+                <input type="text" id="createGuildName" placeholder="Enter Guild Name (e.g. TeamAlpha)">
+                <button class="btn btn-gold" onclick="createGuild()">CREATE (Cost: 100 Coins)</button>
+            </div>
+            <div style="background:#111; padding:20px; border-radius:15px; border:1px solid #333;">
+                <h3 style="color:#fff; margin-bottom:10px;">JOIN EXISTING GUILD</h3>
+                <input type="text" id="joinGuildName" placeholder="Enter Exact Guild Name">
+                <button class="btn btn-dark" onclick="joinGuild()">JOIN GUILD</button>
+            </div>
+        </div>
+
+        <div id="myGuildSection" style="display:none; text-align:left;">
+            <h2 id="myGuildTitle" style="color:var(--accent-main); text-align:center; font-weight:900; text-transform:uppercase;">GUILD NAME</h2>
+            <p style="text-align:center; color:var(--gold); font-weight:bold; margin-bottom:20px;">Total Guild Coins: <span id="myGuildCoins">0</span></p>
+            <h3 style="color:#fff; margin-bottom:10px; font-size:14px;">MEMBERS (<span id="guildMemCount">0</span>/10)</h3>
+            <div class="list-container" id="guildMembersList" style="max-height: 250px;"></div>
+            <button class="btn btn-danger" style="margin-top:20px;" onclick="leaveGuild()">LEAVE GUILD</button>
+        </div>
+
+        <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ BACK TO BASE</button>
+    </div>
+
+    <!-- 10. STATS HISTORY -->
     <div class="container screen" id="historyScreen">
         <h1>PLAYER <span>STATS</span></h1>
         <div class="list-container" style="background:#111; padding:25px; border-radius:15px; border:1px solid #333;">
@@ -371,25 +370,40 @@
         <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ BACK</button>
     </div>
 
-    <!-- 10. ADMIN PANEL -->
+    <!-- 11. ADMIN PANEL -->
     <div class="container screen" id="adminScreen">
         <h1>👑 ADMIN <span>PANEL</span></h1>
-        
         <div style="background:#111; padding:20px; border-radius:15px; margin-bottom:20px; border:1px solid #333; text-align:left;">
             <h3 style="color:var(--accent-main); font-size:14px; margin-bottom:15px;">🛡️ BAN / UNBAN USER</h3>
             <input type="number" id="admBanId" placeholder="User Telegram ID">
             <button class="btn btn-danger" style="padding:10px; margin-top:5px;" onclick="adminAction('ban')">BAN</button>
             <button class="btn btn-dark" style="padding:10px; margin-top:5px;" onclick="adminAction('unban')">UNBAN</button>
         </div>
-
         <div style="background:#111; padding:20px; border-radius:15px; margin-bottom:20px; border:1px solid #333; text-align:left;">
             <h3 style="color:var(--gold); font-size:14px; margin-bottom:15px;">💰 ADD / REMOVE COINS</h3>
             <input type="number" id="admId" placeholder="Enter ID">
             <input type="number" id="admCoins" placeholder="e.g. 100 or -50">
             <button class="btn btn-gold" onclick="adminAction('coins')">UPDATE COINS</button>
         </div>
-        
         <button class="btn btn-danger" style="margin-top:20px;" onclick="showScreen('homeScreen')">⬅ Exit Admin Panel</button>
+    </div>
+
+    <!-- 12. USER PROFILE MODAL (Clicking on Leaderboard) -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-box">
+            <h2 style="color:var(--accent-main); font-weight:900; margin-bottom:15px;">PLAYER PROFILE</h2>
+            <img src="" id="modalAvatar" style="width:80px; height:80px; border-radius:50%; border:3px solid #fff; margin:0 auto 10px; display:none; object-fit:cover;">
+            <div id="modalAvatarText" style="width:80px; height:80px; border-radius:50%; border:3px solid #fff; margin:0 auto 10px; display:flex; justify-content:center; align-items:center; font-size:35px; background:#222;">👤</div>
+            <h3 id="modalName" style="color:#fff; font-size:22px; font-weight:800;">Name</h3>
+            <p id="modalRank" style="color:var(--gold); font-weight:900; margin-bottom:15px;">RANK</p>
+            <div style="background:#111; padding:15px; border-radius:10px; text-align:left; border:1px solid #333;">
+                <p style="color:#fff; margin-bottom:5px;"><strong>TG ID:</strong> <span id="modalTgId" style="color:#aaa;">-</span></p>
+                <p style="color:var(--success); margin-bottom:5px;"><strong>Wins:</strong> <span id="modalW">0</span></p>
+                <p style="color:var(--danger); margin-bottom:5px;"><strong>Losses:</strong> <span id="modalL">0</span></p>
+                <p style="color:#888;"><strong>Draws:</strong> <span id="modalD">0</span></p>
+            </div>
+            <button class="btn btn-danger" style="padding:12px; margin-top:20px;" onclick="document.getElementById('profileModal').style.display='none'">CLOSE</button>
+        </div>
     </div>
 
     <!-- ==========================================================================
@@ -414,11 +428,8 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-        let user = null;
-        let generatedOTP = null;
-        let todayDateStr = new Date().toLocaleDateString();
+        let user = null; let generatedOTP = null; let todayDateStr = new Date().toLocaleDateString();
 
-        // 🟢 PROGRESSIVE TASKS CONFIG
         const PROGRESSIVE_TASKS = [
             { level: 1, target: 3, reward: 10, title: "PLAY 3 MATCHES" },
             { level: 2, target: 5, reward: 20, title: "PLAY 5 MATCHES" },
@@ -428,20 +439,10 @@
             { level: 6, target: 100, reward: 1000, title: "PLAY 100 MATCHES" }
         ];
 
-        // 🟢 SPLASH SCREEN LOGIC
-        window.onload = () => {
-            setTimeout(() => {
-                document.getElementById('splash').style.opacity = '0';
-                setTimeout(() => { document.getElementById('splash').style.display = 'none'; showScreen('loginScreen'); }, 800);
-            }, 1500);
-        };
+        window.onload = () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => { document.getElementById('splash').style.display = 'none'; showScreen('loginScreen'); }, 800); }, 1000); };
+        function showScreen(screenId) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen')); document.getElementById(screenId).classList.add('active-screen'); }
 
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
-            document.getElementById(screenId).classList.add('active-screen');
-        }
-
-        // 🟢 RANKING SYSTEM (FREE FIRE STYLE)
+        // Rank System
         function getRankDetails(coins) {
             let c = parseInt(coins) || 0;
             if(c < 50) return { name: "BRONZE", color: "var(--bronze)", bg: "rgba(205, 127, 50, 0.2)" };
@@ -453,42 +454,38 @@
             return { name: "GRANDMASTER", color: "var(--grandmaster)", bg: "rgba(255, 0, 255, 0.2)" };
         }
 
-        // 🟢 FIX CORRUPT DATA & STATS (No more NaN/undefined)
+        // Data Sanitization
         function sanitizeUserData(data) {
-            data.coins = parseInt(data.coins) || 0;
-            data.name = data.name || "Player";
-            data.avatar = data.avatar || "";
-            
-            // Fix History Stats precisely
+            data.coins = parseInt(data.coins) || 0; data.name = data.name || "Player"; data.avatar = data.avatar || ""; data.guild = data.guild || "";
             if (!data.history) data.history = { w: 0, l: 0, d: 0 };
-            data.history.w = (isNaN(parseInt(data.history.w))) ? 0 : parseInt(data.history.w);
-            data.history.l = (isNaN(parseInt(data.history.l))) ? 0 : parseInt(data.history.l);
-            data.history.d = (isNaN(parseInt(data.history.d))) ? 0 : parseInt(data.history.d);
-            
-            // Fix Quests/Tasks
-            if (!data.taskLevel) data.taskLevel = 0;
-            if (!data.taskProgress) data.taskProgress = 0;
-            if (!data.lastPlayed) data.lastPlayed = todayDateStr;
+            data.history.w = parseInt(data.history.w) || 0; data.history.l = parseInt(data.history.l) || 0; data.history.d = parseInt(data.history.d) || 0;
+            if (!data.taskLevel) data.taskLevel = 0; if (!data.taskProgress) data.taskProgress = 0; if (!data.lastPlayed) data.lastPlayed = todayDateStr;
             return data;
         }
 
-        function saveUserToDatabase() {
-            if (user && user.tgId) {
-                user = sanitizeUserData(user);
-                db.ref('users/' + user.tgId).update(user);
-                updateDashboardUI();
-            }
+        function saveUserToDatabase() { if (user && user.tgId) { user = sanitizeUserData(user); db.ref('users/' + user.tgId).update(user); updateDashboardUI(); } }
+
+        // OTP & AUTH
+        function sendOTP(mode) {
+            let tgId = mode === 'register' ? document.getElementById("regTgId").value : document.getElementById("forgotTgId").value;
+            if (!tgId) return alert("Enter Telegram ID!");
+            
+            if(mode === 'forgot') {
+                db.ref('users/' + tgId).once('value', s => {
+                    if(!s.exists()) return alert("Account not found with this ID!");
+                    triggerBotOTP(tgId, mode);
+                });
+            } else triggerBotOTP(tgId, mode);
         }
 
-        // 🟢 AUTHENTICATION & REFRESH
-        function sendOTP() {
-            let tgId = document.getElementById("regTgId").value;
-            if (!tgId) return alert("Enter Telegram ID!");
+        function triggerBotOTP(tgId, mode) {
             generatedOTP = Math.floor(1000 + Math.random() * 9000); 
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${tgId}&text=OTP: ${generatedOTP}`)
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${tgId}&text=KUMAR ESPORTS OTP: ${generatedOTP}`)
             .then(res => res.json()).then(data => {
-                if(data.ok) document.getElementById("otpBox").style.display = "block";
-                else alert("Start bot first!");
+                if(data.ok) {
+                    if(mode === 'register') document.getElementById("otpBox").style.display = "block";
+                    if(mode === 'forgot') document.getElementById("forgotOtpBox").style.display = "block";
+                } else alert("Please Start Bot First in Telegram!");
             });
         }
 
@@ -497,445 +494,325 @@
             let tgId = document.getElementById("regTgId").value, name = document.getElementById("regName").value, pass = document.getElementById("regPass").value;
             if(!name || !pass) return alert("Fill all details!");
             let newUser = sanitizeUserData({ tgId: tgId, name: name, password: pass, coins: 20, isBanned: false });
-            db.ref('users/' + tgId).set(newUser);
-            alert("✅ Registered! 20 Coins Awarded."); showScreen('loginScreen');
+            db.ref('users/' + tgId).set(newUser); alert("✅ Registered! Login to play."); showScreen('loginScreen');
+        }
+
+        function resetPassword() {
+            if (document.getElementById("forgotOtpInput").value != generatedOTP) return alert("❌ Wrong OTP!");
+            let tgId = document.getElementById("forgotTgId").value, newPass = document.getElementById("forgotNewPass").value;
+            if(!newPass) return alert("Enter new password");
+            db.ref('users/' + tgId).update({password: newPass});
+            alert("✅ Password Reset Successful! No data was lost. Please Login."); showScreen('loginScreen');
         }
 
         function loginUser() {
             let id = document.getElementById('loginId').value, pass = document.getElementById('loginPass').value;
             if(!id || !pass) return alert("Enter credentials");
-            
-            // Show Transition
-            document.getElementById('loginTransition').style.display = 'flex';
-
             db.ref('users/' + id).once('value', snapshot => {
-                setTimeout(() => { // Simulate processing delay for style
-                    document.getElementById('loginTransition').style.display = 'none';
-                    if(snapshot.exists()) {
-                        let data = snapshot.val();
-                        if(data.password === pass) {
-                            if(data.isBanned) return alert("🚫 ACCOUNT BANNED.");
-                            user = sanitizeUserData(data);
-                            
-                            // Rank Decay
-                            if(user.lastPlayed !== todayDateStr) {
-                                let lastDate = new Date(user.lastPlayed); let today = new Date();
-                                let diffDays = Math.ceil(Math.abs(today - lastDate) / (1000 * 60 * 60 * 24)); 
-                                if(diffDays > 1) { user.coins = Math.max(0, user.coins - 10); alert("⚠️ Rank Drop! -10 Coins for inactivity."); }
-                                user.lastPlayed = todayDateStr; saveUserToDatabase();
-                            }
-                            
-                            updateDashboardUI(); showScreen('homeScreen');
-                            if(id === ADMIN_TG_ID) document.getElementById('adminBtn').style.display = 'block';
-                        } else alert("❌ Incorrect Password!");
-                    } else alert("❌ Account not found!");
-                }, 1000);
+                if(snapshot.exists()) {
+                    let data = snapshot.val();
+                    if(data.password === pass) {
+                        if(data.isBanned) return alert("🚫 ACCOUNT BANNED.");
+                        user = sanitizeUserData(data);
+                        if(user.lastPlayed !== todayDateStr) {
+                            let diffDays = Math.ceil(Math.abs(new Date() - new Date(user.lastPlayed)) / (1000 * 60 * 60 * 24)); 
+                            if(diffDays > 1) { user.coins = Math.max(0, user.coins - 10); alert("⚠️ -10 Coins for inactivity."); }
+                            user.lastPlayed = todayDateStr; saveUserToDatabase();
+                        }
+                        updateDashboardUI(); showScreen('homeScreen');
+                        if(id === ADMIN_TG_ID) document.getElementById('adminBtn').style.display = 'block';
+                    } else alert("❌ Incorrect Password!");
+                } else alert("❌ Account not found!");
             });
         }
 
         function logoutUser() { user = null; showScreen('loginScreen'); }
-
-        // Refresh Balance specific function
-        function refreshBalance() {
-            if(!user) return;
-            db.ref('users/' + user.tgId + '/coins').once('value', s => {
-                if(s.exists()) {
-                    user.coins = parseInt(s.val()) || 0;
-                    saveUserToDatabase(); // This will trigger UI update
-                    alert("✅ Balance Synchronized!");
-                }
-            });
-        }
+        function refreshBalance() { if(!user) return; db.ref('users/' + user.tgId + '/coins').once('value', s => { if(s.exists()) { user.coins = parseInt(s.val())||0; saveUserToDatabase(); }}); }
 
         function uploadProfilePhoto(event) {
             const file = event.target.files[0];
-            if(file) {
-                if(file.size > 1048576) return alert("Image too large! Max 1MB.");
-                const reader = new FileReader();
-                reader.onload = function(e) { user.avatar = e.target.result; saveUserToDatabase(); }
-                reader.readAsDataURL(file);
+            if(file) { if(file.size > 1048576) return alert("Image too large! Max 1MB.");
+                const reader = new FileReader(); reader.onload = function(e) { user.avatar = e.target.result; saveUserToDatabase(); }; reader.readAsDataURL(file);
             }
         }
 
-        // 🟢 DASHBOARD UI
         function updateDashboardUI() {
             if(!user) return;
-            document.getElementById('dashName').innerText = user.name;
-            document.getElementById('dashCoins').innerText = user.coins;
-            
-            // Avatar
-            if(user.avatar && user.avatar.startsWith('data:image')) {
-                document.getElementById('dashAvatar').src = user.avatar; document.getElementById('dashAvatar').style.display = 'block'; document.getElementById('dashAvatarText').style.display = 'none';
-            } else {
-                document.getElementById('dashAvatar').style.display = 'none'; document.getElementById('dashAvatarText').style.display = 'flex';
-            }
+            document.getElementById('dashName').innerText = user.name; document.getElementById('dashCoins').innerText = user.coins;
+            if(user.avatar && user.avatar.startsWith('data:image')) { document.getElementById('dashAvatar').src = user.avatar; document.getElementById('dashAvatar').style.display = 'block'; document.getElementById('dashAvatarText').style.display = 'none'; } 
+            else { document.getElementById('dashAvatar').style.display = 'none'; document.getElementById('dashAvatarText').style.display = 'flex'; }
 
-            // Rank
-            let rank = getRankDetails(user.coins);
-            let rankBadge = document.getElementById('dashRank');
+            let rank = getRankDetails(user.coins); let rankBadge = document.getElementById('dashRank');
             rankBadge.innerText = rank.name; rankBadge.style.backgroundColor = rank.bg; rankBadge.style.color = rank.color; rankBadge.style.border = `1px solid ${rank.color}`;
             document.getElementById('rankGlow').style.backgroundColor = rank.color;
+            
+            let gBadge = document.getElementById('dashGuildBadge');
+            if(user.guild) { gBadge.style.display = "inline-block"; gBadge.innerText = user.guild; } else { gBadge.style.display = "none"; }
 
-            // Progressive Quests UI
-            let lvl = user.taskLevel || 0;
-            if(lvl >= PROGRESSIVE_TASKS.length) lvl = PROGRESSIVE_TASKS.length - 1; // Max level cap
+            // Tasks
+            let lvl = user.taskLevel || 0; if(lvl >= PROGRESSIVE_TASKS.length) lvl = PROGRESSIVE_TASKS.length - 1; 
             let curTask = PROGRESSIVE_TASKS[lvl];
-            
-            document.getElementById('qLevel').innerText = curTask.level;
-            document.getElementById('qTitle').innerText = curTask.title;
-            document.getElementById('qProg').innerText = user.taskProgress;
-            document.getElementById('qTarget').innerText = curTask.target;
-            document.getElementById('qReward').innerText = curTask.reward;
-            
-            let percent = (user.taskProgress / curTask.target) * 100;
-            if(percent > 100) percent = 100;
-            document.getElementById('qProgressBar').style.width = percent + "%";
+            document.getElementById('qLevel').innerText = curTask.level; document.getElementById('qTitle').innerText = curTask.title; document.getElementById('qProg').innerText = user.taskProgress; document.getElementById('qTarget').innerText = curTask.target; document.getElementById('qReward').innerText = curTask.reward;
+            let percent = Math.min((user.taskProgress / curTask.target) * 100, 100); document.getElementById('qProgressBar').style.width = percent + "%";
             
             let claimBtn = document.getElementById('claimBtn');
-            if(user.taskProgress >= curTask.target) {
-                claimBtn.disabled = false; claimBtn.innerText = `🎁 CLAIM ${curTask.reward} COINS`; claimBtn.style.opacity = "1";
-            } else {
-                claimBtn.disabled = true; claimBtn.innerText = "🔒 INCOMPLETE"; claimBtn.style.opacity = "0.5";
-            }
+            if(user.taskProgress >= curTask.target) { claimBtn.disabled = false; claimBtn.innerText = `🎁 CLAIM ${curTask.reward} COINS`; claimBtn.style.opacity = "1"; } 
+            else { claimBtn.disabled = true; claimBtn.innerText = "🔒 INCOMPLETE"; claimBtn.style.opacity = "0.5"; }
             
-            // History Stats
-            document.getElementById('histW').innerText = user.history.w;
-            document.getElementById('histL').innerText = user.history.l;
-            document.getElementById('histD').innerText = user.history.d;
+            document.getElementById('histW').innerText = user.history.w; document.getElementById('histL').innerText = user.history.l; document.getElementById('histD').innerText = user.history.d;
         }
 
-        // 🟢 QUESTS & LEADERBOARD
         function openQuests() { updateDashboardUI(); showScreen('questScreen'); }
         function openHistory() { updateDashboardUI(); showScreen('historyScreen'); }
         
-        function updateTaskProgress() {
-            let lvl = user.taskLevel || 0;
-            if(lvl >= PROGRESSIVE_TASKS.length) return; // All tasks completed
-            user.taskProgress++;
-            saveUserToDatabase();
+        function updateTaskProgress() { let lvl = user.taskLevel || 0; if(lvl >= PROGRESSIVE_TASKS.length) return; user.taskProgress++; saveUserToDatabase(); }
+        function claimProgressiveQuest() {
+            let lvl = user.taskLevel || 0; if(lvl >= PROGRESSIVE_TASKS.length) return;
+            let curTask = PROGRESSIVE_TASKS[lvl];
+            if(user.taskProgress >= curTask.target) { user.coins += curTask.reward; user.taskLevel++; user.taskProgress = 0; saveUserToDatabase(); alert(`🎉 ${curTask.reward} Coins Claimed!`); }
         }
 
-        function claimProgressiveQuest() {
-            let lvl = user.taskLevel || 0;
-            if(lvl >= PROGRESSIVE_TASKS.length) return;
-            let curTask = PROGRESSIVE_TASKS[lvl];
-            
-            if(user.taskProgress >= curTask.target) {
-                user.coins += curTask.reward;
-                user.taskLevel++; // Move to next level
-                user.taskProgress = 0; // Reset progress for next level
-                saveUserToDatabase();
-                alert(`🎉 Awesome! ${curTask.reward} Coins Claimed. Next level unlocked!`);
-            }
+        // 🟢 LEADERBOARD (UNLIMITED & PROFILES)
+        let currentLbdTab = 'players';
+        function switchLbdTab(tab) {
+            currentLbdTab = tab;
+            document.getElementById('tabPlayers').classList.remove('active'); document.getElementById('tabGuilds').classList.remove('active');
+            document.getElementById(tab === 'players' ? 'tabPlayers' : 'tabGuilds').classList.add('active');
+            loadLeaderboard();
         }
 
         function loadLeaderboard() {
             showScreen('leaderboardScreen'); document.getElementById('leaderboardList').innerHTML = "<p style='padding:20px;'>Loading Rankings...</p>";
-            db.ref('users').orderByChild('coins').limitToLast(10).once('value', snapshot => {
-                let players = []; snapshot.forEach(child => { if(!child.val().isBanned) players.push(sanitizeUserData(child.val())); });
-                players.reverse(); let html = "";
-                players.forEach((p, index) => {
-                    let rank = getRankDetails(p.coins); let rankNum = index + 1;
-                    let avatarImg = p.avatar ? `<img src="${p.avatar}" class="leaderboard-avatar">` : `<div class="leaderboard-avatar" style="display:flex; justify-content:center; align-items:center; background:#222; font-size:20px;">👤</div>`;
-                    html += `
-                        <div class="list-item" style="border-left: 5px solid ${rank.color};">
-                            <div style="display:flex; align-items:center;">
-                                <div class="rank-number">#${rankNum}</div>${avatarImg}
-                                <div style="display:flex; flex-direction:column;"><span style="font-weight:900; font-size:15px; color:#fff;">${p.name}</span><span style="font-size:10px; font-weight:bold; color:${rank.color};">${rank.name}</span></div>
-                            </div>
-                            <strong style="color:var(--gold); font-size:18px;">🪙 ${p.coins}</strong>
-                        </div>`;
-                }); document.getElementById('leaderboardList').innerHTML = html;
+            
+            if(currentLbdTab === 'players') {
+                db.ref('users').once('value', snapshot => {
+                    let players = []; let total = snapshot.numChildren();
+                    document.getElementById('totalPlayersCount').innerText = `Total Players: ${total.toLocaleString()}+`;
+                    snapshot.forEach(child => { if(!child.val().isBanned) players.push(sanitizeUserData(child.val())); });
+                    players.sort((a, b) => b.coins - a.coins); // Unlimited sort
+                    
+                    let html = "";
+                    players.forEach((p, index) => {
+                        let rank = getRankDetails(p.coins); let rankNum = index + 1;
+                        let avatarImg = p.avatar ? `<img src="${p.avatar}" class="leaderboard-avatar">` : `<div class="leaderboard-avatar" style="display:flex; justify-content:center; align-items:center; background:#222; font-size:20px;">👤</div>`;
+                        html += `
+                            <div class="list-item" style="border-left: 5px solid ${rank.color};" onclick="viewProfile('${p.tgId}')">
+                                <div style="display:flex; align-items:center;">
+                                    <div class="rank-number">#${rankNum}</div>${avatarImg}
+                                    <div style="display:flex; flex-direction:column;"><span style="font-weight:900; font-size:15px; color:#fff;">${p.name}</span><span style="font-size:10px; font-weight:bold; color:${rank.color};">${rank.name}</span></div>
+                                </div>
+                                <strong style="color:var(--gold); font-size:18px;">🪙 ${p.coins}</strong>
+                            </div>`;
+                    }); document.getElementById('leaderboardList').innerHTML = html;
+                });
+            } else {
+                db.ref('guilds').once('value', snapshot => {
+                    let guilds = []; snapshot.forEach(child => { guilds.push({name: child.key, data: child.val()}); });
+                    document.getElementById('totalPlayersCount').innerText = `Total Guilds: ${guilds.length}`;
+                    guilds.sort((a,b) => b.data.totalCoins - a.data.totalCoins);
+                    
+                    let html = "";
+                    guilds.forEach((g, index) => {
+                        html += `
+                            <div class="list-item" style="border-left: 5px solid #8b5cf6;">
+                                <div style="display:flex; align-items:center;">
+                                    <div class="rank-number">#${index+1}</div>
+                                    <div class="leaderboard-avatar" style="display:flex; justify-content:center; align-items:center; background:#222; font-size:20px; border-color:#8b5cf6;">🤝</div>
+                                    <div style="display:flex; flex-direction:column;"><span style="font-weight:900; font-size:15px; color:#fff;">${g.name}</span><span style="font-size:10px; font-weight:bold; color:#8b5cf6;">Members: ${Object.keys(g.data.members).length}/10</span></div>
+                                </div>
+                                <strong style="color:var(--gold); font-size:18px;">🪙 ${g.data.totalCoins}</strong>
+                            </div>`;
+                    }); document.getElementById('leaderboardList').innerHTML = html || "<p style='padding:20px;'>No Guilds Found.</p>";
+                });
+            }
+        }
+
+        function viewProfile(tgId) {
+            db.ref('users/' + tgId).once('value', s => {
+                if(!s.exists()) return; let p = sanitizeUserData(s.val());
+                if(p.avatar) { document.getElementById('modalAvatar').src = p.avatar; document.getElementById('modalAvatar').style.display="block"; document.getElementById('modalAvatarText').style.display="none"; }
+                else { document.getElementById('modalAvatar').style.display="none"; document.getElementById('modalAvatarText').style.display="flex"; }
+                
+                document.getElementById('modalName').innerText = p.name;
+                document.getElementById('modalRank').innerText = getRankDetails(p.coins).name;
+                document.getElementById('modalRank').style.color = getRankDetails(p.coins).color;
+                document.getElementById('modalTgId').innerText = p.tgId;
+                document.getElementById('modalW').innerText = p.history.w; document.getElementById('modalL').innerText = p.history.l; document.getElementById('modalD').innerText = p.history.d;
+                
+                document.getElementById('profileModal').style.display = 'flex';
             });
+        }
+
+        // 🟢 GUILD SYSTEM
+        function openGuilds() {
+            showScreen('guildScreen');
+            if(user.guild) {
+                document.getElementById('noGuildSection').style.display = "none"; document.getElementById('myGuildSection').style.display = "block";
+                db.ref('guilds/' + user.guild).once('value', s => {
+                    if(s.exists()) {
+                        let g = s.val(); document.getElementById('myGuildTitle').innerText = user.guild; document.getElementById('myGuildCoins').innerText = g.totalCoins;
+                        let memKeys = Object.keys(g.members); document.getElementById('guildMemCount').innerText = memKeys.length;
+                        
+                        let html = "";
+                        memKeys.forEach(mId => {
+                            db.ref('users/'+mId).once('value', us => {
+                                if(us.exists()) { let u = us.val(); html += `<div class="list-item" style="padding:10px;"><span style="color:#fff; font-weight:bold;">${u.name}</span> <span style="color:var(--gold);">🪙 ${u.coins}</span></div>`; }
+                                document.getElementById('guildMembersList').innerHTML = html;
+                            });
+                        });
+                    } else { user.guild = ""; saveUserToDatabase(); openGuilds(); } // Error fix
+                });
+            } else {
+                document.getElementById('noGuildSection').style.display = "block"; document.getElementById('myGuildSection').style.display = "none";
+            }
+        }
+
+        function createGuild() {
+            if(user.coins < 100) return alert("You need 100 Coins to create a guild!");
+            let name = document.getElementById('createGuildName').value.trim();
+            if(!name || name.length < 3) return alert("Enter valid name (min 3 chars)");
+            
+            db.ref('guilds/' + name).once('value', s => {
+                if(s.exists()) return alert("Guild name already exists!");
+                user.coins -= 100; user.guild = name; saveUserToDatabase();
+                
+                let gData = { leader: user.tgId, totalCoins: user.coins, members: {} };
+                gData.members[user.tgId] = true;
+                db.ref('guilds/' + name).set(gData);
+                alert("✅ Guild Created Successfully!"); openGuilds();
+            });
+        }
+
+        function joinGuild() {
+            let name = document.getElementById('joinGuildName').value.trim(); if(!name) return;
+            db.ref('guilds/' + name).once('value', s => {
+                if(!s.exists()) return alert("Guild not found!");
+                let g = s.val(); let memCount = Object.keys(g.members).length;
+                if(memCount >= 10) return alert("Guild is Full (Max 10)!");
+                
+                user.guild = name; saveUserToDatabase();
+                g.members[user.tgId] = true; g.totalCoins += user.coins;
+                db.ref('guilds/' + name).update({ members: g.members, totalCoins: g.totalCoins });
+                alert("✅ Joined Guild!"); openGuilds();
+            });
+        }
+
+        function leaveGuild() {
+            if(!user.guild) return;
+            let gName = user.guild; user.guild = ""; saveUserToDatabase();
+            db.ref('guilds/' + gName).once('value', s => {
+                if(s.exists()) {
+                    let g = s.val(); delete g.members[user.tgId]; g.totalCoins -= user.coins;
+                    if(Object.keys(g.members).length === 0) db.ref('guilds/' + gName).remove(); // Delete if empty
+                    else db.ref('guilds/' + gName).update({ members: g.members, totalCoins: g.totalCoins });
+                }
+            }); openGuilds();
         }
 
         // 🟢 ADMIN PANEL
         function adminAction(type) {
             if (user.tgId !== ADMIN_TG_ID) return;
-            if (type === 'ban' || type === 'unban') {
-                let id = document.getElementById('admBanId').value; if(!id) return;
-                db.ref('users/' + id).update({ isBanned: (type === 'ban') }); alert(`User ${type}ned!`);
-            }
+            if (type === 'ban' || type === 'unban') { let id = document.getElementById('admBanId').value; if(id) { db.ref('users/' + id).update({ isBanned: (type === 'ban') }); alert(`User ${type}ned!`); document.getElementById('admBanId').value=""; } }
             if (type === 'coins') {
                 let id = document.getElementById('admId').value, amt = parseInt(document.getElementById('admCoins').value);
-                if (!id || isNaN(amt)) return;
-                db.ref('users/' + id).once('value', s => {
-                    if (s.exists()) { let c = parseInt(s.val().coins) || 0; db.ref('users/' + id).update({ coins: c + amt }); alert(`Success! New balance: ${c + amt}`); }
-                });
+                if (id && !isNaN(amt)) db.ref('users/' + id).once('value', s => { if (s.exists()) { let c = parseInt(s.val().coins) || 0; db.ref('users/' + id).update({ coins: c + amt }); alert(`Success!`); } });
             }
         }
 
         // ==========================================================================
-        // 🟢 1. OX GAME ENGINE (FLAWLESS)
+        // 🟢 OX GAME ENGINE
         // ==========================================================================
-        let oxBoard = ["", "", "", "", "", "", "", "", ""];
-        let oxHistory = []; let oxActive = false; let oxAiThinking = false;
-        
+        let oxBoard = ["", "", "", "", "", "", "", "", ""]; let oxHistory = []; let oxActive = false; let oxAiThinking = false;
         function startOXGame() { showScreen('oxScreen'); resetOXGame(); document.getElementById('oxCoinDisp').innerText = user.coins; }
         
         function drawOX() {
             let b = document.getElementById('oxBoard'); b.innerHTML = ""; 
             oxBoard.forEach((val, i) => {
-                let cell = document.createElement('div'); cell.className = "cell";
-                if (val === 'X') { cell.innerText = '🔥'; cell.style.color="var(--danger)";} 
-                else if (val === 'O') { cell.innerText = '❄️'; cell.style.color="#3b82f6";} 
+                let cell = document.createElement('div'); cell.className = "ox-cell";
+                if (val === 'X') { cell.innerText = '🔥'; cell.style.color="var(--danger)";} else if (val === 'O') { cell.innerText = '❄️'; cell.style.color="#3b82f6";} 
                 cell.onclick = () => moveOX(i); b.appendChild(cell);
             });
         }
-
         function moveOX(i) {
             if (oxBoard[i] === "" && oxActive && !oxAiThinking) {
-                oxHistory.push([...oxBoard]); oxBoard[i] = "X"; drawOX(); // Draw user move immediately
-                
-                // Let DOM update before checking win
-                setTimeout(() => {
-                    if (checkWinOX()) return; 
-                    oxAiThinking = true; document.getElementById('oxStatus').innerText = "🤖 AI THINKING...";
-                    document.getElementById('oxStatus').style.color = "#888";
-                    setTimeout(() => { aiMoveOX(); oxAiThinking = false; }, 500);
-                }, 50);
+                oxHistory.push([...oxBoard]); oxBoard[i] = "X"; drawOX();
+                setTimeout(() => { if (checkWinOX()) return; oxAiThinking = true; document.getElementById('oxStatus').innerText = "🤖 AI THINKING..."; document.getElementById('oxStatus').style.color = "#888"; setTimeout(() => { aiMoveOX(); oxAiThinking = false; }, 500); }, 50);
             }
         }
+        function undoMoveOX() { if (oxHistory.length > 0 && oxActive && user.coins >= 5) { user.coins -= 5; saveUserToDatabase(); document.getElementById('oxCoinDisp').innerText = user.coins; oxBoard = oxHistory.pop(); drawOX(); } }
+        function aiMoveOX() { let best = -Infinity, move; for (let i = 0; i < 9; i++) { if (oxBoard[i] === "") { oxBoard[i] = "O"; let score = minimaxOX(oxBoard, 0, false); oxBoard[i] = ""; if (score > best) { best = score; move = i; } } } if (move !== undefined) { oxBoard[move] = "O"; drawOX(); setTimeout(() => checkWinOX(), 50); } }
+        function minimaxOX(b, d, isMax) { let w = checkWinnerOnly(b); if (w === "O") return 10 - d; if (w === "X") return d - 10; if (!b.includes("")) return 0; if (isMax) { let max = -Infinity; for (let i=0; i<9; i++) { if (b[i]==="") { b[i]="O"; max = Math.max(max, minimaxOX(b, d+1, false)); b[i]=""; } } return max; } else { let min = Infinity; for (let i=0; i<9; i++) { if (b[i]==="") { b[i]="X"; min = Math.min(min, minimaxOX(b, d+1, true)); b[i]=""; } } return min; } }
         
-        function undoMoveOX() {
-            if (oxHistory.length > 0 && oxActive && user.coins >= 5) {
-                user.coins -= 5; document.getElementById('oxCoinDisp').innerText = user.coins; saveUserToDatabase();
-                oxBoard = oxHistory.pop(); drawOX();
-            } else if (user.coins < 5) alert("Not enough coins!");
-        }
-
-        function aiMoveOX() {
-            let best = -Infinity, move;
-            for (let i = 0; i < 9; i++) {
-                if (oxBoard[i] === "") {
-                    oxBoard[i] = "O"; let score = minimaxOX(oxBoard, 0, false); oxBoard[i] = "";
-                    if (score > best) { best = score; move = i; }
-                }
-            }
-            if (move !== undefined) { 
-                oxBoard[move] = "O"; 
-                drawOX(); // Draw AI move immediately
-                setTimeout(() => checkWinOX(), 50); 
-            }
-        }
-
-        function minimaxOX(b, depth, isMax) {
-            let w = checkWinnerOnly(b);
-            if (w === "O") return 10 - depth; if (w === "X") return depth - 10; if (!b.includes("")) return 0;
-            if (isMax) {
-                let max = -Infinity;
-                for (let i=0; i<9; i++) { if (b[i]==="") { b[i]="O"; max = Math.max(max, minimaxOX(b, depth+1, false)); b[i]=""; } } return max;
-            } else {
-                let min = Infinity;
-                for (let i=0; i<9; i++) { if (b[i]==="") { b[i]="X"; min = Math.min(min, minimaxOX(b, depth+1, true)); b[i]=""; } } return min;
-            }
-        }
-
         const oxWinLines = [[0,1,2,'line-row-0'], [3,4,5,'line-row-1'], [6,7,8,'line-row-2'], [0,3,6,'line-col-0'], [1,4,7,'line-col-1'], [2,5,8,'line-col-2'], [0,4,8,'line-diag-0'], [2,4,6,'line-diag-1']];
         function checkWinnerOnly(b) { for (let [x, y, z] of oxWinLines) { if (b[x] && b[x] === b[y] && b[x] === b[z]) return b[x]; } return null; }
-
+        
         function checkWinOX() {
             let w = checkWinnerOnly(oxBoard);
             if (w) {
                 oxActive = false; updateTaskProgress();
                 let lineData = oxWinLines.find(([x,y,z]) => oxBoard[x]===w && oxBoard[y]===w && oxBoard[z]===w);
                 if (lineData) { let line = document.getElementById('winLine'); line.className = `win-line ${lineData[3]}`; line.style.display = "block"; }
-                
-                if (w === "X") { user.coins++; user.history.w++; document.getElementById('oxStatus').innerHTML = "🎉 YOU WIN! +1 COIN"; document.getElementById('oxStatus').style.color = "var(--success)"; document.getElementById('oxCoinDisp').innerText = user.coins; } 
-                else { user.history.l++; document.getElementById('oxStatus').innerHTML = "💀 DEFEAT!"; document.getElementById('oxStatus').style.color = "var(--danger)"; }
-                
-                saveUserToDatabase(); document.getElementById('oxPlayAgain').style.display = "block"; return true;
-            } else if (!oxBoard.includes("")) {
-                oxActive = false; updateTaskProgress(); user.history.d++; saveUserToDatabase();
-                document.getElementById('oxStatus').innerHTML = "🤝 DRAW!"; document.getElementById('oxStatus').style.color = "#888";
-                document.getElementById('oxPlayAgain').style.display = "block"; return true;
-            }
+                if (w === "X") { user.coins++; user.history.w++; document.getElementById('oxStatus').innerHTML = "🎉 YOU WIN! +1 COIN"; document.getElementById('oxStatus').style.color = "var(--success)"; } else { user.history.l++; document.getElementById('oxStatus').innerHTML = "💀 DEFEAT!"; document.getElementById('oxStatus').style.color = "var(--danger)"; }
+                saveUserToDatabase(); document.getElementById('oxCoinDisp').innerText = user.coins; document.getElementById('oxPlayAgain').style.display = "block"; return true;
+            } else if (!oxBoard.includes("")) { oxActive = false; updateTaskProgress(); user.history.d++; saveUserToDatabase(); document.getElementById('oxStatus').innerHTML = "🤝 DRAW!"; document.getElementById('oxStatus').style.color = "#888"; document.getElementById('oxPlayAgain').style.display = "block"; return true; }
             document.getElementById('oxStatus').innerText = "YOUR TURN (🔥)"; document.getElementById('oxStatus').style.color = "var(--success)"; return false;
         }
-
         function resetOXGame() { oxBoard = ["", "", "", "", "", "", "", "", ""]; oxHistory = []; oxActive = true; oxAiThinking = false; document.getElementById('winLine').style.display = "none"; document.getElementById('oxPlayAgain').style.display = "none"; document.getElementById('oxStatus').innerText = "YOUR TURN (🔥)"; document.getElementById('oxStatus').style.color = "var(--success)"; drawOX(); }
 
         // ==========================================================================
-        // 🟢 2. DOTS AND BOXES (NEW GAME LOGIC - FULLY WORKING)
+        // 🟢 2. MEMORY MATCH GAME
         // ==========================================================================
-        const GRID_SIZE = 4; // 4x4 dots = 3x3 boxes
-        let hLines = [], vLines = [], boxes = [];
-        let dbActive = false, dbAiThinking = false;
-        let p1Score = 0, aiScore = 0;
+        let memCards = ['🍎','🍎','🍌','🍌','🍉','🍉','🍇','🍇','🍓','🍓','🥑','🥑','🥕','🥕','🌽','🌽'];
+        let memBoard = []; let flippedCards = []; let matchedPairs = 0; let memActive = false;
 
-        function startDotsGame() { showScreen('dotsScreen'); initDotsGame(); document.getElementById('dotsCoinDisp').innerText = user.coins; }
-
-        function initDotsGame() {
-            hLines = Array(3 * 4).fill(null); // 12 horizontal lines
-            vLines = Array(4 * 3).fill(null); // 12 vertical lines
-            boxes = Array(3 * 3).fill(null);  // 9 boxes
-            p1Score = 0; aiScore = 0; dbActive = true; dbAiThinking = false;
+        function startMemoryGame() {
+            if(user.coins < 10) return alert("You need 10 Coins to play Memory Match!");
+            user.coins -= 10; saveUserToDatabase(); showScreen('memoryScreen');
+            document.getElementById('memCoinDisp').innerText = user.coins;
             
-            document.getElementById('dotsUserScore').innerText = p1Score;
-            document.getElementById('dotsAiScore').innerText = aiScore;
-            document.getElementById('dotsStatus').innerText = "YOUR TURN! DRAW A LINE.";
-            document.getElementById('dotsStatus').style.color = "var(--success)";
-            document.getElementById('dotsPlayAgain').style.display = "none";
-            
-            drawDotsBoard();
+            // Shuffle
+            memBoard = [...memCards].sort(() => 0.5 - Math.random());
+            flippedCards = []; matchedPairs = 0; memActive = true;
+            document.getElementById('memStatus').innerText = "MATCH ALL CARDS!"; document.getElementById('memStatus').style.color = "var(--success)";
+            document.getElementById('memPlayAgain').style.display = "none";
+            drawMemBoard();
         }
 
-        function drawDotsBoard() {
-            let b = document.getElementById('dbBoard'); b.innerHTML = "";
-            let spacing = 80; // Distance between dots
+        function drawMemBoard() {
+            let b = document.getElementById('memoryBoard'); b.innerHTML = "";
+            memBoard.forEach((val, i) => {
+                let card = document.createElement('div'); card.className = "mem-card"; card.dataset.idx = i;
+                card.onclick = () => flipCard(card, i, val);
+                b.appendChild(card);
+            });
+        }
+
+        function flipCard(cardEl, idx, val) {
+            if(!memActive || flippedCards.length >= 2 || cardEl.classList.contains('flipped') || cardEl.classList.contains('matched')) return;
             
-            // Draw Boxes
-            for(let r=0; r<3; r++){
-                for(let c=0; c<3; c++){
-                    let idx = r*3 + c;
-                    let box = document.createElement('div');
-                    box.className = "db-box";
-                    box.style.width = spacing + "px"; box.style.height = spacing + "px";
-                    box.style.left = (c * spacing) + "px"; box.style.top = (r * spacing) + "px";
-                    if(boxes[idx]){
-                        box.classList.add(boxes[idx] === 'P1' ? 'box-p1' : 'box-p2');
-                        box.innerText = boxes[idx] === 'P1' ? '🔥' : '❄️';
-                    }
-                    b.appendChild(box);
+            cardEl.classList.add('flipped'); cardEl.innerText = val;
+            flippedCards.push({el: cardEl, idx: idx, val: val});
+            
+            if(flippedCards.length === 2) {
+                setTimeout(checkMemMatch, 800);
+            }
+        }
+
+        function checkMemMatch() {
+            let [c1, c2] = flippedCards;
+            if(c1.val === c2.val) {
+                c1.el.classList.add('matched'); c2.el.classList.add('matched'); matchedPairs++;
+                if(matchedPairs === 8) {
+                    memActive = false; updateTaskProgress();
+                    user.coins += 30; user.history.w++; saveUserToDatabase();
+                    document.getElementById('memCoinDisp').innerText = user.coins;
+                    document.getElementById('memStatus').innerText = "🎉 AMAZING! +30 COINS!"; document.getElementById('memPlayAgain').style.display = "block";
                 }
-            }
-
-            // Draw Horizontal Lines
-            for(let r=0; r<4; r++){
-                for(let c=0; c<3; c++){
-                    let idx = r*3 + c;
-                    let line = document.createElement('div');
-                    line.className = "db-line-h";
-                    line.style.width = spacing + "px";
-                    line.style.left = (c * spacing) + "px"; line.style.top = (r * spacing) + "px";
-                    if(hLines[idx]) line.classList.add(hLines[idx] === 'P1' ? 'line-p1' : 'line-p2');
-                    else line.onclick = () => moveDB('h', idx);
-                    b.appendChild(line);
-                }
-            }
-
-            // Draw Vertical Lines
-            for(let r=0; r<3; r++){
-                for(let c=0; c<4; c++){
-                    let idx = r*4 + c;
-                    let line = document.createElement('div');
-                    line.className = "db-line-v";
-                    line.style.height = spacing + "px";
-                    line.style.left = (c * spacing) + "px"; line.style.top = (r * spacing) + "px";
-                    if(vLines[idx]) line.classList.add(vLines[idx] === 'P1' ? 'line-p1' : 'line-p2');
-                    else line.onclick = () => moveDB('v', idx);
-                    b.appendChild(line);
-                }
-            }
-
-            // Draw Dots
-            for(let r=0; r<4; r++){
-                for(let c=0; c<4; c++){
-                    let dot = document.createElement('div');
-                    dot.className = "db-dot";
-                    dot.style.left = (c * spacing) + "px"; dot.style.top = (r * spacing) + "px";
-                    b.appendChild(dot);
-                }
-            }
-        }
-
-        function moveDB(type, idx) {
-            if(!dbActive || dbAiThinking) return;
-            if(type === 'h' && hLines[idx]) return;
-            if(type === 'v' && vLines[idx]) return;
-            
-            if(type === 'h') hLines[idx] = 'P1';
-            else vLines[idx] = 'P1';
-            
-            let scored = checkBoxesDB('P1');
-            drawDotsBoard();
-            
-            if(isGameOverDB()) return endGameDB();
-            
-            if(!scored) {
-                dbAiThinking = true;
-                document.getElementById('dotsStatus').innerText = "🤖 AI IS THINKING...";
-                document.getElementById('dotsStatus').style.color = "#888";
-                setTimeout(aiMoveDB, 600);
-            }
-        }
-
-        function aiMoveDB() {
-            if(!dbActive) return;
-            
-            let scored = true;
-            while(scored && !isGameOverDB()) {
-                // Simple AI: Pick random empty line
-                let emptyH = [], emptyV = [];
-                hLines.forEach((val, i) => { if(!val) emptyH.push(i); });
-                vLines.forEach((val, i) => { if(!val) emptyV.push(i); });
-                
-                let allEmpty = [];
-                emptyH.forEach(i => allEmpty.push({t:'h', i:i}));
-                emptyV.forEach(i => allEmpty.push({t:'v', i:i}));
-                
-                if(allEmpty.length === 0) break;
-                
-                let choice = allEmpty[Math.floor(Math.random() * allEmpty.length)];
-                if(choice.t === 'h') hLines[choice.i] = 'AI';
-                else vLines[choice.i] = 'AI';
-                
-                scored = checkBoxesDB('AI');
-            }
-            
-            drawDotsBoard();
-            if(isGameOverDB()) endGameDB();
-            else {
-                dbAiThinking = false;
-                document.getElementById('dotsStatus').innerText = "YOUR TURN! DRAW A LINE.";
-                document.getElementById('dotsStatus').style.color = "var(--success)";
-            }
-        }
-
-        function checkBoxesDB(player) {
-            let scored = false;
-            for(let r=0; r<3; r++){
-                for(let c=0; c<3; c++){
-                    let bIdx = r*3 + c;
-                    if(!boxes[bIdx]) {
-                        // A box is surrounded by 4 lines
-                        let top = hLines[r*3 + c];
-                        let bottom = hLines[(r+1)*3 + c];
-                        let left = vLines[r*4 + c];
-                        let right = vLines[r*4 + c + 1];
-                        
-                        if(top && bottom && left && right) {
-                            boxes[bIdx] = player;
-                            if(player === 'P1') p1Score++; else aiScore++;
-                            scored = true;
-                        }
-                    }
-                }
-            }
-            document.getElementById('dotsUserScore').innerText = p1Score;
-            document.getElementById('dotsAiScore').innerText = aiScore;
-            return scored;
-        }
-
-        function isGameOverDB() {
-            return boxes.every(b => b !== null);
-        }
-
-        function endGameDB() {
-            dbActive = false; updateTaskProgress();
-            let status = document.getElementById('dotsStatus');
-            if(p1Score > aiScore) {
-                status.innerText = "🎉 YOU WON! +2 COINS"; status.style.color = "var(--success)";
-                user.coins += 2; user.history.w++;
-            } else if (aiScore > p1Score) {
-                status.innerText = "💀 AI DESTROYED YOU!"; status.style.color = "var(--danger)";
-                user.history.l++;
             } else {
-                status.innerText = "🤝 IT'S A TIE!"; status.style.color = "#888";
-                user.history.d++;
+                c1.el.classList.remove('flipped'); c1.el.innerText = "";
+                c2.el.classList.remove('flipped'); c2.el.innerText = "";
             }
-            saveUserToDatabase(); document.getElementById('dotsCoinDisp').innerText = user.coins;
-            document.getElementById('dotsPlayAgain').style.display = "block";
+            flippedCards = [];
         }
 
     </script>
