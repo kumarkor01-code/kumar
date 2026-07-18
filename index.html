@@ -394,12 +394,21 @@
          JAVASCRIPT LOGIC 
          ========================================================================== -->
     <script>
+        // ----------------------------------------------------------------------
         // 🚨 CONFIGURATION 🚨
         const BOT_TOKEN = "8861473974:AAENTh2kYJbApxH8JFTsURJkDeYoixm8mtg"; 
-        const ADMIN_TG_ID = "7335163273"; // 👈 तुझा टेलिग्राम आयडी
+        const ADMIN_TG_ID = "7335163273"; // उदा. "123456789"
         
-        const firebaseConfig = { apiKey: "AIzaSyC8umQwCdC9EJ7rbOxI1MKik4L9SNvAIBw", authDomain: "kumarkor.firebaseapp.com", databaseURL: "https://kumarkor-default-rtdb.firebaseio.com", projectId: "kumarkor", storageBucket: "kumarkor.appspot.com", messagingSenderId: "123", appId: "1:167839596471:web:ab0fe79da9fa2c03beb232" };
-        firebase.initializeApp(firebaseConfig); const db = firebase.database();
+        const firebaseConfig = {
+            apiKey: "AIzaSyC8umQwCdC9EJ7rbOxI1MKik4L9SNvAIBw", 
+            authDomain: "kumarkor.firebaseapp.com",
+            databaseURL: "https://kumarkor-default-rtdb.firebaseio.com", 
+            projectId: "kumarkor",
+            storageBucket: "kumarkor.appspot.com",
+            messagingSenderId: "167839596471",
+            appId: "1:167839596471:web:ab0fe79da9fa2c03beb232"
+        };
+        // ----------------------------------------------------------------------
         
         let user = null; let generatedOTP = null; let previousCoins = 0; let viewTargetId = null;
 
