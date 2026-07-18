@@ -131,6 +131,17 @@
         .mem-card.flipped { background: var(--box-bg); border-color: var(--accent-main); transform: rotateY(180deg); }
         .mem-card.matched { background: rgba(0, 255, 0, 0.2); border-color: var(--success); transform: rotateY(180deg); opacity: 0.8; cursor: default; }
 
+        /* Dots & Boxes CSS */
+        .db-dot { position: absolute; width: 14px; height: 14px; background: #666; border-radius: 50%; transform: translate(-50%, -50%); z-index: 5; box-shadow: 0 0 5px #000; }
+        .db-line-h { position: absolute; height: 16px; background: rgba(255,255,255,0.05); cursor: pointer; transform: translateY(-50%); border-radius: 8px; z-index: 2; transition: 0.2s;}
+        .db-line-v { position: absolute; width: 16px; background: rgba(255,255,255,0.05); cursor: pointer; transform: translateX(-50%); border-radius: 8px; z-index: 2; transition: 0.2s;}
+        .db-line-h:hover, .db-line-v:hover { background: rgba(255,255,255,0.2); }
+        .line-p1 { background: var(--success) !important; box-shadow: 0 0 10px var(--success); }
+        .line-p2 { background: var(--danger) !important; box-shadow: 0 0 10px var(--danger); }
+        .db-box { position: absolute; display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: 900; z-index: 1; opacity: 0; transition: 0.3s; border-radius: 10px;}
+        .box-p1 { background: rgba(0, 255, 0, 0.2); color: var(--success); opacity: 1; }
+        .box-p2 { background: rgba(255, 0, 0, 0.2); color: var(--danger); opacity: 1; }
+        
         /* ==========================================================================
            6. SCREENS & ANIMATIONS
            ========================================================================== */
@@ -256,7 +267,7 @@
         <h1>BATTLE <span>ARENA</span></h1>
         <p class="subtitle">Choose your battlefield</p>
         <button class="btn btn-dark" onclick="startOXGame()" style="padding: 20px; font-size: 16px; color:#fff; border-color:#ff4500;">❌ OX GAME (CLASSIC) ⭕</button>
-        <button class="btn btn-dark" onclick="alert('Dots & Boxes is undergoing AI upgrades. Play Memory Match!')" style="padding: 20px; font-size: 16px; margin-top:15px; color:#fff;">🔲 DOTS & BOXES (SOON)</button>
+        <button class="btn btn-gold" onclick="startDotsGame()" style="padding: 20px; font-size: 16px; margin-top:15px; color:#fff;">🔲 DOTS & BOXES (PLAY) </button>
         <button class="btn btn-gold" onclick="startMemoryGame()" style="padding: 20px; font-size: 16px; margin-top:15px;">🃏 MEMORY MATCH (NEW!)</button>
         <button class="btn btn-danger" style="margin-top:30px;" onclick="showScreen('homeScreen')">⬅ Back to Base</button>
     </div>
@@ -277,6 +288,24 @@
         <button class="btn btn-danger" style="margin-top:15px;" onclick="showScreen('homeScreen')">🏠 SURRENDER</button>
     </div>
 
+    <!-- 5.5 DOTS & BOXES GAME -->
+    <div class="container screen" id="dotsScreen">
+        <h1>DOTS & <span>BOXES</span></h1>
+        <div class="powerup-bar">
+            <span style="font-weight:900; color:var(--success);">YOU: <span id="dotsUserScore">0</span></span>
+            <span style="font-weight:900; color:#fff;">COINS: <span style="color:var(--gold);" id="dotsCoinDisp">0</span></span>
+            <span style="font-weight:900; color:var(--danger);">AI: <span id="dotsAiScore">0</span></span>
+        </div>
+        <p class="subtitle" id="dotsStatus" style="color:var(--success); font-size:16px; font-weight:900;">YOUR TURN! DRAW A LINE.</p>
+        
+        <div class="db-container" style="position: relative; margin: 20px auto; width: 280px; height: 280px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border: 1px solid #333;">
+            <div class="db-board" id="dbBoard" style="position: relative; width: 240px; height: 240px; margin: 0 auto;"></div>
+        </div>
+        
+        <button class="btn btn-gold" id="dotsPlayAgain" style="display:none; margin-top:20px;" onclick="startDotsGame()">🔄 NEXT MATCH</button>
+        <button class="btn btn-danger" style="margin-top:15px;" onclick="showScreen('homeScreen')">🏠 LEAVE ARENA</button>
+    </div>
+    
     <!-- 6. MEMORY MATCH (NEW GAME) -->
     <div class="container screen" id="memoryScreen">
         <h1>MEMORY <span>MATCH</span></h1>
