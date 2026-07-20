@@ -611,7 +611,7 @@
         function endGameDB() { dbActive = false; updateTaskProgress(); let status = document.getElementById('dotsStatus'); if(p1Score > aiScore) { status.innerText = "🎉 YOU WON! +10 COINS"; status.style.color = "var(--success)"; user.coins += 10; user.history.w++; } else if (aiScore > p1Score) { status.innerText = "💀 AI DESTROYED YOU!"; status.style.color = "var(--danger)"; user.history.l++; } else { status.innerText = "🤝 IT'S A TIE!"; status.style.color = "#888"; user.history.d++; } saveUserToDatabase(); document.getElementById('dotsCoinDisp').innerText = user.coins; document.getElementById('dotsPlayAgain').style.display = "block"; }
 
         // 🃏 MEMORY MATCH GAME
-        let memCards = ['🎉','🎉','🥺','🥺','✅','✅','😁','😁','🤖','🤖','🥑','🥑','🥕','🥕','🌽','🌽'];
+        let memCards = ['🦊','🦊','🚀','🚀','🍕','🍕','🎮','🎮','🎸','🎸','🌍','🌍','🔥','🔥','🍔','🍔'];
         let memBoard = []; let flippedCards = []; let memMatched = []; let memActive = false;
         let memP1Score = 0; let memAiScore = 0; let memTurn = 'P1'; let memAiMemory = {};
         function startMemoryGame() { if(user.coins < 10) return alert("You need 10 Coins to play!"); user.coins -= 10; saveUserToDatabase(); showScreen('memoryScreen'); document.getElementById('memCoinDisp').innerText = user.coins; memBoard = [...memCards].sort(() => 0.5 - Math.random()); flippedCards = []; memMatched = []; memAiMemory = {}; memP1Score = 0; memAiScore = 0; memTurn = 'P1'; memActive = true; updateMemStatus(); document.getElementById('memPlayAgain').style.display = "none"; drawMemBoard(); }
@@ -621,9 +621,52 @@
         function updateMemStatus() { document.getElementById('memStatus').innerText = memTurn === 'P1' ? `YOUR TURN (Score: ${memP1Score})` : `🤖 AI THINKING... (Score: ${memAiScore})`; document.getElementById('memStatus').style.color = memTurn === 'P1' ? "var(--success)" : "var(--danger)"; }
         function endGameMem() { memActive = false; updateTaskProgress(); let status = document.getElementById('memStatus'); if(memP1Score > memAiScore) { status.innerText = `🎉 YOU WON! (${memP1Score}-${memAiScore}) +30 COINS`; status.style.color = "var(--success)"; user.coins += 30; user.history.w++; } else if(memAiScore > memP1Score) { status.innerText = `💀 AI WON! (${memAiScore}-${memP1Score})`; status.style.color = "var(--danger)"; user.history.l++; } else { status.innerText = `🤝 DRAW! (${memP1Score}-${memAiScore})`; status.style.color = "#888"; user.history.d++; } saveUserToDatabase(); document.getElementById('memCoinDisp').innerText = user.coins; document.getElementById('memPlayAgain').style.display = "block"; }
 
-        // 🧠 SUPER AI LOGIC
-        function playSuperAI() { if(!memActive || memTurn !== 'AI') return; let unmatched = Object.keys(memAiMemory).map(Number).filter(i => !memMatched.includes(i)); let seen = {}; let pair = null; for(let idx of unmatched) { let val = memAiMemory[idx]; if(seen[val] !== undefined) { pair = [seen[val], idx]; break; } seen[val] = idx; } if(pair) { doAIFlip(pair[0], () => doAIFlip(pair[1])); return; } let unknown = []; for(let i=0; i<16; i++) { if(!memMatched.includes(i) && memAiMemory[i] === undefined) unknown.push(i); } if(unknown.length === 0) unknown = unmatched; let pick1 = unknown[Math.floor(Math.random() * unknown.length)]; doAIFlip(pick1, () => { let val1 = memBoard[pick1]; let matchIdx = unmatched.find(i => i !== pick1 && memAiMemory[i] === val1); if(matchIdx !== undefined) { doAIFlip(matchIdx); } else { let rem = unknown.filter(i => i !== pick1); if(rem.length === 0) rem = unmatched.filter(i => i !== pick1); let pick2 = rem[Math.floor(Math.random() * rem.length)]; doAIFlip(pick2); } }); }
-        function doAIFlip(idx, cb) { let cardEl = document.querySelector(`.mem-card[data-idx='${idx}']`); flipCard(cardEl, idx, memBoard[idx]); if(cb) setTimeout(cb, 800); }
+        // 🧠 BALANCED AI LOGIC (Makes intentional mistakes ~40% of the time)
+        function playSuperAI() { 
+        if(!memActive || memTurn !== 'AI') return; 
+    
+    // AI decides whether to use its super memory or act like a normal player (60% Super / 40% Random)
+    let useSuperBrain = Math.random() < 0.6; 
+    
+    let unmatched = Object.keys(memAiMemory).map(Number).filter(i => !memMatched.includes(i)); 
+    let seen = {}; let pair = null; 
+    
+    if (useSuperBrain) {
+        for(let idx of unmatched) { 
+            let val = memAiMemory[idx]; 
+            if(seen[val] !== undefined) { pair = [seen[val], idx]; break; } 
+            seen[val] = idx; 
+        } 
+    }
+    
+    if(pair) { 
+        doAIFlip(pair[0], () => doAIFlip(pair[1])); 
+        return; 
+    } 
+    
+    let unknown = []; 
+    for(let i=0; i<16; i++) { 
+        if(!memMatched.includes(i) && memAiMemory[i] === undefined) unknown.push(i); 
+    } 
+    if(unknown.length === 0) unknown = unmatched; 
+    
+    let pick1 = unknown[Math.floor(Math.random() * unknown.length)]; 
+    doAIFlip(pick1, () => { 
+        let val1 = memBoard[pick1]; 
+        let matchIdx = unmatched.find(i => i !== pick1 && memAiMemory[i] === val1); 
+        
+        if(matchIdx !== undefined && useSuperBrain) { 
+            doAIFlip(matchIdx); 
+        } else { 
+            let rem = unknown.filter(i => i !== pick1); 
+            if(rem.length === 0) rem = unmatched.filter(i => i !== pick1); 
+            let pick2 = rem[Math.floor(Math.random() * rem.length)]; 
+            doAIFlip(pick2); 
+        } 
+    }); 
+}
+
+function doAIFlip(idx, cb) { let cardEl = document.querySelector(`.mem-card[data-idx='${idx}']`); flipCard(cardEl, idx, memBoard[idx]); if(cb) setTimeout(cb, 800); }
     </script>
 </body>
 </html>
