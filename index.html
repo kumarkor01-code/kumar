@@ -596,53 +596,6 @@
 
         function adminAction(type) { if (user.tgId !== ADMIN_TG_ID) return; if (type === 'ban' || type === 'unban') { let id = document.getElementById('admBanId').value; if(id) { db.ref('users/' + id).update({ isBanned: (type === 'ban') }); alert(`User ${type}ned!`); document.getElementById('admBanId').value=""; } } if (type === 'coins') { let id = document.getElementById('admId').value, amt = parseInt(document.getElementById('admCoins').value); if (id && !isNaN(amt)) db.ref('users/' + id).once('value', s => { if (s.exists()) { let c = parseInt(s.val().coins) || 0; db.ref('users/' + id).update({ coins: c + amt }); alert(`Success!`); } }); } }
 
-        // Global database (to store generated codes)
-        window.generatedGameCodes = {};
-
-        // 1. Function to generate a code (to be called when a game ends)
-        function generateWinLossCode(gameName, status) {
-        // Generate a random 8-character string (e.g., jwhxvsksn)
-        let randomString = Math.random().toString(36).substring(2, 10);
-        let finalCode = `${gameName} ${randomString}`;
-    
-        // Save the code data for the admin to verify
-        window.generatedGameCodes[finalCode] = {
-        game: gameName,
-        status: status, // 'Win' or 'Loss'
-        time: new Date().toLocaleTimeString()
-    };
-    
-    return finalCode;
-}
-
-        // 2. Function to verify the code from the admin panel
-        function verifyGameCode() {
-        let inputCode = document.getElementById('admVerifyCode').value.trim();
-        let resultEl = document.getElementById('verifyResult');
-    
-    if (inputCode === "") {
-        resultEl.style.color = "orange";
-        resultEl.innerText = "⚠️ Please enter a code!";
-        return;
-    }
-
-    // Check if the code exists in the database
-    let codeData = window.generatedGameCodes[inputCode];
-
-    if (codeData) {
-        if (codeData.status === 'Win') {
-            resultEl.style.color = "#10b981"; // Green
-            resultEl.innerHTML = `✅ <b>REAL WIN!</b><br>Game: ${codeData.game}<br>Time: ${codeData.time}`;
-        } else {
-            resultEl.style.color = "#ef4444"; // Red
-            resultEl.innerHTML = `❌ <b>THIS IS A LOSS CODE!</b><br>Game: ${codeData.game}<br>Time: ${codeData.time}`;
-        }
-    } else {
-        resultEl.style.color = "orange";
-        resultEl.innerText = `⚠️ FAKE OR INVALID CODE!`;
-    }
-}
-        
         // ==========================================================================
         // 🟢 GAMES: OX, DOTS, MEMORY
         // ==========================================================================
