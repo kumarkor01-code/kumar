@@ -644,73 +644,7 @@ function verifyGameCode() {
 }
         
         // (तुझ्याकडे युझर्सचा डेटाबेस localStorage मध्ये असेल)
-let usersDatabase = JSON.parse(localStorage.getItem("allGameUsers")) || {};
-
-// तात्पुरता OTP सेव्ह करण्यासाठी व्हेरिएबल
-let generatedOTP = "";
-
-async function sendOTP(actionType) {
-    if (actionType === 'register') {
-        let name = document.getElementById('regName').value.trim();
-        let pass = document.getElementById('regPass').value.trim();
-        let tgId = document.getElementById('regTgId').value.trim();
-
-        // १. माहिती रिकामी तर नाही ना हे चेक करणे
-        if (name === "" || pass === "" || tgId === "") {
-            return alert("⚠️ Please fill all details first!");
-        }
-
-        // २. अकाउंट आधीच आहे का ते चेक करणे
-        if (usersDatabase[tgId]) {
-            alert("⚠️ ACCOUNT ALREADY EXISTS!\nया टेलिग्राम आयडीवर आधीच अकाउंट आहे. कृपया लॉगीन करा.");
-            showScreen('loginScreen'); 
-            return; 
-        }
-
-        // ३. 4-अंकी रँडम OTP तयार करणे (उदा. 4829)
-        generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
-
-        // 🟢 (कोडमध्ये आधीपासून असलेला 'botToken' इथे थेट वापरला आहे)
-        if (typeof botToken === 'undefined' || !botToken) {
-            alert("❌ Error: Bot Token is missing in the code!");
-            return;
-        }
-
-        const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-        
-        let messageText = `🔐 *KUMAR GAME OTP*\n\nHello ${name},\nYour verification code is: *${generatedOTP}*\n\nDo not share this code with anyone.`;
-
-        let btn = document.getElementById('sendOtpBtn');
-        if(btn) btn.innerText = "⏳ Sending...";
-
-        try {
-            // Telegram Server ला Request पाठवणे
-            let response = await fetch(telegramApiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: tgId,
-                    text: messageText,
-                    parse_mode: "Markdown"
-                })
-            });
-
-            let data = await response.json();
-
-            if (data.ok) {
-                alert("✅ OTP successfully sent to your Telegram Chat ID!");
-                document.getElementById('otpBox').style.display = "block";
-            } else {
-                alert("❌ Failed to send OTP! Make sure the user started the Bot first (@Kumarotpbot) and entered the correct Telegram ID.");
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("❌ Network Error! Check your internet connection.");
-        } finally {
-            if(btn) btn.innerText = "📩 2. SEND OTP";
-        }
-    }
-}
+let user
         
         // ==========================================================================
         // 🟢 GAMES: OX, DOTS, MEMORY
